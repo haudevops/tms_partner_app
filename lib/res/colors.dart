@@ -7,7 +7,7 @@ class AppColor extends ChangeNotifier {
   static Color colorPrimaryDark = const Color(0xFF004B81);
   static Color colorBackground = const Color(0xFF222222);
   static Color colorAppBarDark = const Color(0xFF2a2a2a);
-  static Color colorPrimaryButton = const Color(0xFFF28022);
+  static Color colorPrimaryButton = const Color(0xFFF3C74C);
   static Color colorBlack = const Color(0xFF000016);
   static Color colorDarkGray = const Color(0xFFEEEEEE);
   static Color colorItemDarkWhite = const Color(0xFF333333);

@@ -231,6 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickup": MessageLookupByLibrary.simpleMessage("Pickup"),
         "please_enter_code_has_sent": MessageLookupByLibrary.simpleMessage(
             "Please enter the confirmation code sent"),
+        "please_enter_phone_and_password": MessageLookupByLibrary.simpleMessage(
+            "Please enter your phone number and password to login."),
         "point": MessageLookupByLibrary.simpleMessage("point"),
         "point_install":
             MessageLookupByLibrary.simpleMessage("Installation point"),

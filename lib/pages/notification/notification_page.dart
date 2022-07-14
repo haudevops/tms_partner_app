@@ -1,27 +1,52 @@
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
+import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/utils/common_utils/date_util.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 
+import '../../data/model/demo/notificate_model.dart';
 import 'notification_bloc.dart';
 
 class NotificationPage extends BasePage {
   NotificationPage({Key? key}) : super(key: key, bloc: NotificationBloc());
 
-  // static const routeName = '/NavigationPage';
+  static const routeName = '/NotificationPage';
 
   @override
-  State<StatefulWidget> createState()  => _NotificationPageState();
+  State<StatefulWidget> createState() => _NotificationPageState();
 }
 
 class _NotificationPageState extends BasePageState<NotificationPage, BaseBloc> {
-  late NotificationBloc _bloc;
+  // late NotificationBloc _bloc;
   int page = 1;
   bool isFinish = false;
+
+  List<NotificationData> getItemsListOne() {
+    return [
+      NotificationData(
+          name: 'Thông báo 1',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+          day: '01/07/2020  05:20'),
+      NotificationData(
+          name: 'Thông báo 2',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+          day: '01/07/2020  05:20'),
+      NotificationData(
+          name: 'Thông báo 3',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+          day: '01/07/2020  05:20'),
+      NotificationData(
+          name: 'Thông báo 4',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+          day: '01/07/2020  05:20'),
+    ];
+  }
 
   @override
   void onCreate() {
@@ -37,15 +62,31 @@ class _NotificationPageState extends BasePageState<NotificationPage, BaseBloc> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(S.of(context).notification_title),
-          titleSpacing: ScreenUtil.getInstance().getAdapterSize(16),
-          actions: <Widget>[
-            Container(
-              child: Icon(Icons.check),
-              margin: EdgeInsets.only(
-                  right: ScreenUtil.getInstance().getAdapterSize(16)),
-            )
-          ]),
+        title: Text(
+          S
+              .of(context)
+              .notification_title,
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+              fontSize: ScreenUtil.getInstance().getAdapterSize(18)),
+        ),
+        centerTitle: true,
+        elevation: 1,
+        titleSpacing: ScreenUtil.getInstance().getAdapterSize(16),
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(
+                right: ScreenUtil.getInstance().getAdapterSize(16)),
+            child: const Icon(
+              Icons.check,
+              color: Colors.black,
+            ),
+          )
+        ],
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColor.colorWhiteDark,
+      ),
       // body: Container(
       //     child: StreamBuilder<ActivitiesModel>(
       //   stream: _bloc.listNotificationStream,
@@ -145,6 +186,78 @@ class _NotificationPageState extends BasePageState<NotificationPage, BaseBloc> {
       //     );
       //   },
       // )),
+      body: Container(
+        width: ScreenUtil.getInstance().screenWidth,
+        height: ScreenUtil.getInstance().screenHeight,
+        padding: EdgeInsets.symmetric(vertical: ScreenUtil.getInstance().getAdapterSize(16)),
+        color: Colors.white,
+        child: Column(
+          children: [
+            _itemCard(getItemsListOne()),
+          ],
+        ),
+      )
+    );
+  }
+
+  Widget _listNotification({
+    required String text,
+    required String content,
+    required String day,
+    required GestureTapCallback onTap}) {
+    return ListTile(
+      leading: Container(
+        height: ScreenUtil.getInstance().getAdapterSize(35),
+        width: ScreenUtil.getInstance().getAdapterSize(35),
+        child: const Icon(
+          Icons.email_rounded,
+          color: Colors.orange,
+        ),
+      ),
+      title: Text(
+        text,
+        style: TextStyle(color: AppColor.colorBlack),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            content,
+            style: TextStyle(color: AppColor.colorTextGray),
+          ),
+          Text(
+            day,
+            style: TextStyle(color: AppColor.colorTextGray),
+          ),
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
+  Widget _itemCard(List<NotificationData> items) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Column(
+        children: items
+            .map((e) =>
+            Column(
+              children: [
+                _listNotification(
+                    text: e.name ?? '',
+                    content: e.content ?? '',
+                    day: e.day ?? '',
+                    onTap: () {
+                      // _onClickItem(e.id);
+                    }),
+              ]
+            ))
+            .toList(),
+      ),
     );
   }
 

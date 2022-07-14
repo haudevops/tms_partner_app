@@ -206,5 +206,6 @@
   "introducing_partners": "Giới thiệu đối tác nhận quà vui",
   "your_referral_code": "Mã giới thiệu của bạn",
   "delivery_successful": "Giao hàng thành công",
-  "delivery_failed": "Giao hàng thất bại"
+  "delivery_failed": "Giao hàng thất bại",
+  "please_enter_phone_and_password": "Vui lòng nhập số điện thoại và mât khẩu để đăng nhập."
 }

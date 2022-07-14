@@ -207,5 +207,6 @@
   "introducing_partners": "Introducing partners to receive happy gifts",
   "your_referral_code": "Your Referral Code",
   "delivery_successful": "Delivery successful",
-  "delivery_failed": "Delivery failed"
+  "delivery_failed": "Delivery failed",
+  "please_enter_phone_and_password": "Please enter your phone number and password to login."
 }

@@ -18,7 +18,7 @@ abstract class Lock {
   /// returns true if the lock is currently locked.
   bool get locked;
 
-  /// for reentrant, test whether we are currently in the synchronized section.
+  /// for reentrant, demo whether we are currently in the synchronized section.
   /// for non reentrant, it returns the [locked] status.
   bool get inLock;
 }

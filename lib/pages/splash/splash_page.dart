@@ -1,46 +1,61 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
+
+import '../../utils/common_utils/prefs_util.dart';
+import '../../utils/prefs_const.dart';
 
 class SplashPage extends BasePage {
   static const routeName = '/SplashPage';
 
   const SplashPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends BasePageState<SplashPage, BaseBloc>{
+class _SplashPageState extends BasePageState<SplashPage, BaseBloc> {
   // late AnimationController _controller;
   // late SplashBloc _bloc;
-
-
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/images/bg_login.png',
-            width: ScreenUtil.getInstance().screenWidth,
-            height: ScreenUtil.getInstance().screenHeight,
-            fit: BoxFit.cover,
-          ),
-          Center(
-            child: Image.asset(
-              'assets/images/logo_supra_white.png',
-              width: 300,
-              height: 300,
+      body: SizedBox(
+        width: ScreenUtil.getInstance().screenWidth,
+        height: ScreenUtil.getInstance().screenHeight,
+        child: Stack(
+          children: [
+            Image.asset(
+              'assets/images/splash_screen.png',
+              width: ScreenUtil.getInstance().screenWidth,
+              height: ScreenUtil.getInstance().screenHeight,
+              fit: BoxFit.cover,
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  Future<void> _checkToken() async {
+    final SharedPreferences prefs = await _prefs;
+    final isLogin =
+        prefs.getBool(PrefsCache.IS_LOGIN) ?? false;
+    log('$isLogin');
+    startScreen(
+        isLogin ? NavigationPage.routeName : LoginPage.routeName, context);
+  }
+
+  void startScreen(String route, BuildContext context) {
+    Future.delayed(const Duration(seconds: 2),
+        () => {Navigator.pushReplacementNamed(context, route)});
   }
 
   @override
@@ -51,9 +66,7 @@ class _SplashPageState extends BasePageState<SplashPage, BaseBloc>{
     // _controller = AnimationController(vsync: this);
 
     // _bloc = getBloc();
-    Future.delayed(const Duration(seconds: 2), () => {
-      Navigator.pushNamed(context, LoginPage.routeName)
-    });
+    _checkToken();
   }
 
   @override

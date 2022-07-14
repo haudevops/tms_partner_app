@@ -233,6 +233,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickup": MessageLookupByLibrary.simpleMessage("Lấy hàng"),
         "please_enter_code_has_sent": MessageLookupByLibrary.simpleMessage(
             "Vui lòng nhập mã xác nhận được gửi đến số"),
+        "please_enter_phone_and_password": MessageLookupByLibrary.simpleMessage(
+            "Vui lòng nhập số điện thoại và mât khẩu để đăng nhập."),
         "point": MessageLookupByLibrary.simpleMessage("điểm"),
         "point_install": MessageLookupByLibrary.simpleMessage("Điểm lắp đặt"),
         "point_pickup": MessageLookupByLibrary.simpleMessage("Điểm lấy hàng"),

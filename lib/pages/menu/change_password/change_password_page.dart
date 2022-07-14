@@ -26,7 +26,7 @@ class ChangePasswordPage extends BasePage {
 }
 
 class _ChangePasswordPageState extends BasePageState<ChangePasswordPage, BaseBloc> {
-  late ChangePasswordBloc _bloc;
+  // late ChangePasswordBloc _bloc;
   final _oldPassword = TextEditingController();
   final _newPassword = TextEditingController();
   final _confirmPassword = TextEditingController();

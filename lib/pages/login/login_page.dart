@@ -1,11 +1,16 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/res/colors.dart';
+import 'package:tms_partner_app/utils/prefs_const.dart';
+import 'package:tms_partner_app/utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 
@@ -29,6 +34,7 @@ class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
   final _formKeyPhone = GlobalKey<FormState>();
   final _formKeyPass = GlobalKey<FormState>();
   final RegExp regExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   void onCreate() {
@@ -43,6 +49,11 @@ class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
     _phoneController.clear();
     _focusNodePhoneNumber.unfocus();
     _focusNodePassword.unfocus();
+  }
+
+  Future<void> _initToken(bool token) async{
+    final SharedPreferences prefs = await _prefs;
+    prefs.setBool(PrefsCache.IS_LOGIN, true);
   }
 
   @override
@@ -64,7 +75,7 @@ class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
                       fontSize: ScreenUtil.getInstance().getAdapterSize(30))),
               _itemPadding(12),
               Text(
-                  'Quý khách vui lòng nhập số điện thoại và mật khẩu để đăng nhập.',
+                  S.current.please_enter_phone_and_password,
                   style: TextStyle(
                       fontSize: ScreenUtil.getInstance().getAdapterSize(14),
                       color: AppColor.colorTextGray)),
@@ -129,11 +140,12 @@ class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
               _itemPadding(32),
               ButtonSubmitWidget(
                 onPressed: () {
-                  // if (_formKeyPhone.currentState!.validate() &&
-                  //     _formKeyPass.currentState!.validate()) {
-                  //   _bloc.login(_phoneController.text, _passController.text);
-                  // }
-                  Navigator.pushReplacementNamed(context, NavigationPage.routeName);
+                  if (_formKeyPhone.currentState!.validate() &&
+                      _formKeyPass.currentState!.validate()) {
+                    // _bloc.login(_phoneController.text, _passController.text);
+                    _initToken(true);
+                    Navigator.pushReplacementNamed(context, NavigationPage.routeName);
+                  }
                 },
                 title: S.of(context).login.toUpperCase(),
                 colorTitle: Colors.white,

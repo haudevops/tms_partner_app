@@ -2139,6 +2139,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Please enter your phone number and password to login.`
+  String get please_enter_phone_and_password {
+    return Intl.message(
+      'Please enter your phone number and password to login.',
+      name: 'please_enter_phone_and_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
