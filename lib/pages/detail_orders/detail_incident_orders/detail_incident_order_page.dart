@@ -6,14 +6,14 @@ import 'detail_incident_order_bloc.dart';
 class DetailIncidentOrderPage extends BasePage<DetailIncidentOrderBloc> {
   static const routeName = '/DetailIncidentOrderPage';
 
-  const DetailIncidentOrderPage({Key? key}) : super(key: key);
+  DetailIncidentOrderPage({Key? key});
 
 
   @override
-  State<StatefulWidget> createState() => _DetailIncidentOrderState();
+  BasePageState<BasePage<BaseBloc>> getState()  => _DetailIncidentOrderState();
 }
 
-class _DetailIncidentOrderState extends BasePageState<DetailIncidentOrderPage, BaseBloc> {
+class _DetailIncidentOrderState extends BasePageState<DetailIncidentOrderPage> {
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
@@ -15,7 +14,7 @@ class CustomRouter {
     }
     switch (settings.name) {
       case SplashPage.routeName:
-        return SlideLeftRoute(const SplashPage());
+        return SlideLeftRoute( SplashPage());
       case NavigationPage.routeName:
         return SlideLeftRoute(NavigationPage());
       case LoginPage.routeName:
@@ -37,7 +36,9 @@ class CustomRouter {
       case DetailNewOrderPage.routeName:
         return SlideLeftRoute(DetailNewOrderPage());
       case ShareCodePage.routeName:
-        return SlideLeftRoute(ShareCodePage(data: arg,));
+        return SlideLeftRoute(ShareCodePage(
+          data: arg,
+        ));
       case OrderStatusFilterPage.routeName:
         return SlideLeftRoute(OrderStatusFilterPage(arg));
       case DetailPointPage.routeName:

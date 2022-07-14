@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+//apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 33
@@ -60,6 +61,23 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "partner_app"
+
+    productFlavors {
+        dev {
+            dimension "partner_app"
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "STT Dev"
+            versionNameSuffix ".dev"
+        }
+        prod {
+            dimension "partner_app"
+            applicationIdSuffix ".prod"
+            resValue "string", "app_name", "STT Driver"
+            versionNameSuffix ".prod"
+        }
+    }
 }
 
 flutter {
@@ -68,4 +86,10 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.maps.android:android-maps-utils:1.1.0'
+    implementation 'com.google.firebase:firebase-messaging'
 }

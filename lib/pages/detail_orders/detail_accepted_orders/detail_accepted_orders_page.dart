@@ -20,18 +20,17 @@ import '../../../base/base_dialog.dart';
 
 class DetailAcceptedOrderPage extends BasePage<DetailAcceptedOrderBloc> {
   DetailAcceptedOrderPage({Key? key, required this.arguments})
-      : super(key: key, bloc: DetailAcceptedOrderBloc());
+      : super(bloc: DetailAcceptedOrderBloc());
 
   static const routeName = '/DetailAcceptedOrderPage';
 
   final ScreenArguments arguments;
 
-
   @override
-  State<StatefulWidget> createState() => _DetailNewOrderState();
+  BasePageState<BasePage<BaseBloc>> getState() => _DetailNewOrderState();
 }
 
-class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage, BaseBloc> {
+class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
   late DetailAcceptedOrderBloc _bloc;
 
   @override

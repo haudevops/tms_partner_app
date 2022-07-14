@@ -13,16 +13,16 @@ import 'package:tms_partner_app/widgets/widgets.dart';
 import '../../data/model/models.dart';
 
 class DetailPointPage extends BasePage<DetailPointBloc> {
-  DetailPointPage({Key? key, required this.data}) : super(key: key, bloc: DetailPointBloc());
+  DetailPointPage({Key? key, required this.data}) : super(bloc: DetailPointBloc());
   static const routeName = '/DetailPointPage';
   final ScreenArguments data;
 
 
   @override
-  State<StatefulWidget> createState() => _DetailPointPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _DetailPointPageState();
 }
 
-class _DetailPointPageState extends BasePageState<DetailPointPage, BaseBloc>
+class _DetailPointPageState extends BasePageState<DetailPointPage>
     with SingleTickerProviderStateMixin {
   Point? _pointCurrent;
   OrderModel? _orderModel;

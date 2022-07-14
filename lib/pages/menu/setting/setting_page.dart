@@ -16,10 +16,10 @@ class SettingPage extends BasePage {
   static const routeName = '/SettingPage';
 
   @override
-  State<StatefulWidget> createState() => _SettingPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _SettingPageState();
 }
 
-class _SettingPageState extends BasePageState<SettingPage, BaseBloc> {
+class _SettingPageState extends BasePageState<SettingPage> {
   bool _isOnline = false;
   late bool _checkLanguage;
 
@@ -29,6 +29,9 @@ class _SettingPageState extends BasePageState<SettingPage, BaseBloc> {
       appBar: AppBar(
         title: Text(S.current.menu_setting),
         elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: AppColor.colorWhiteDark,
+        centerTitle: true,
       ),
       backgroundColor: AppColor.colorDarkGray,
       body: Padding(
@@ -51,7 +54,7 @@ class _SettingPageState extends BasePageState<SettingPage, BaseBloc> {
 
   Widget _showSheetLanguage() {
     return Container(
-      color: AppColor.colorBackground,
+      color: AppColor.colorWhiteDark,
       child: ListTile(
         title: Text(
           S.current.language,
@@ -79,10 +82,10 @@ class _SettingPageState extends BasePageState<SettingPage, BaseBloc> {
               context: context,
               isScrollControlled: true,
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(20),
-                topRight: const Radius.circular(20),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               )),
               builder: (context) {
                 return BackdropFilter(
@@ -150,7 +153,7 @@ class _SettingPageState extends BasePageState<SettingPage, BaseBloc> {
 
   Widget _itemSafeModeWidget() {
     return Container(
-      color: AppColor.colorBackground,
+      color: AppColor.colorWhiteDark,
       child: SwitchListTile(
         title: Text(
           S.current.safe_mode,

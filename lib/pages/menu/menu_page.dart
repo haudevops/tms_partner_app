@@ -20,13 +20,13 @@ import '../pages.dart';
 // @Date: 26/11/2021
 
 class MenuPage extends BasePage {
-  MenuPage({Key? key}) : super(key: key, bloc: MenuBloc());
+  MenuPage({Key? key}) : super(bloc: MenuBloc());
 
   @override
-  State<StatefulWidget> createState() => _MenuPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _MenuPageState();
 }
 
-class _MenuPageState extends BasePageState<MenuPage, BaseBloc> {
+class _MenuPageState extends BasePageState<MenuPage> {
   // late MenuBloc _bloc;
   bool checkOrder = false;
   String? phone;
@@ -94,7 +94,7 @@ class _MenuPageState extends BasePageState<MenuPage, BaseBloc> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: ScreenUtil.getInstance().getAdapterSize(10)),
+            horizontal: ScreenUtil.getInstance().getAdapterSize(10),),
         color: AppColor.colorDarkGray,
         width: ScreenUtil.getInstance().screenWidth,
         height: ScreenUtil.getInstance().screenHeight,
@@ -114,6 +114,7 @@ class _MenuPageState extends BasePageState<MenuPage, BaseBloc> {
                 //     return _itemInfoUserWidget(snapshot.data);
                 //   },
                 // ),
+                _itemInfoUserWidget(),
                 _itemCard(getItemsListOne()),
                 _itemCard(getItemsListTwo()),
                 _itemLogoutWidget(),
@@ -128,7 +129,7 @@ class _MenuPageState extends BasePageState<MenuPage, BaseBloc> {
     );
   }
 
-  Widget _itemInfoUserWidget(ProfileModel? userInfo) {
+  Widget _itemInfoUserWidget({ProfileModel? userInfo}) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -150,9 +151,9 @@ class _MenuPageState extends BasePageState<MenuPage, BaseBloc> {
           child: CachedNetworkImage(
             imageUrl: userInfo?.images?[0] ?? '',
             placeholder: (context, url) =>
-                Image.asset('assets/image/user.jpeg'),
+                Image.asset('assets/images/user.jpeg'),
             errorWidget: (context, url, error) =>
-                Image.asset('assets/image/user.jpeg'),
+                Image.asset('assets/images/user.jpeg'),
           ),
         ),
         title: Text(

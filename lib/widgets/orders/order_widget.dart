@@ -41,7 +41,7 @@ class OrderWidget extends StatelessWidget {
           EdgeInsets.only(bottom: ScreenUtil.getInstance().getAdapterSize(8)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: AppColor.colorItemDarkWhite),
+          color: AppColor.colorWhiteDark),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

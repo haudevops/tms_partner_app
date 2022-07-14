@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Vui lòng chọn thời gian dự kiến."),
         "an_unknown_error":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
-        "app_name": MessageLookupByLibrary.simpleMessage("Eton Partner"),
+        "app_name": MessageLookupByLibrary.simpleMessage("STT Partner"),
         "apply": MessageLookupByLibrary.simpleMessage("Áp dụng"),
         "avatar": MessageLookupByLibrary.simpleMessage("Ảnh đại diện"),
         "call_customers":

@@ -14,13 +14,13 @@ import 'package:tms_partner_app/widgets/widgets.dart';
 class NewPasswordPage extends BasePage {
   static const routeName = '/NewPasswordPage';
 
-  const NewPasswordPage({Key? key}) : super(key: key);
+   NewPasswordPage({Key? key});
 
   @override
-  State<StatefulWidget> createState() => _NewPasswordPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _NewPasswordPageState();
 }
 
-class _NewPasswordPageState extends BasePageState<NewPasswordPage, BaseBloc> {
+class _NewPasswordPageState extends BasePageState<NewPasswordPage> {
   final FocusNode _focusNodeNewPassword = FocusNode();
   final FocusNode _focusNodeConfirmPassword = FocusNode();
   final TextEditingController _newPasswordController = TextEditingController();

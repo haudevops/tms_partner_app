@@ -13,15 +13,14 @@ import '../../base/base_page.dart';
 import '../pages.dart';
 
 class NavigationPage extends BasePage {
-  NavigationPage({Key? key}) : super(key: key, bloc: NavigationBloc());
+  NavigationPage({Key? key}) : super(bloc: NavigationBloc());
   static const routeName = '/NavigationPage';
 
-
   @override
-  State<StatefulWidget> createState() => _NavigationPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _NavigationPageState();
 }
 
-class _NavigationPageState extends BasePageState<NavigationPage, BaseBloc> {
+class _NavigationPageState extends BasePageState<NavigationPage> {
   late PageController _pageController;
   late NavigationBloc _bloc;
   int _selectedIndex = 0;

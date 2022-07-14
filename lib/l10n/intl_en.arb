@@ -1,5 +1,5 @@
 {
-  "app_name": "Eton Partner",
+  "app_name": "STT Partner",
   "request_cancel": "Request to API server was cancelled.",
   "connect_timeout": "Connect timeout.",
   "request_timed_out": "Request timed out.",

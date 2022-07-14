@@ -13,16 +13,15 @@ import 'package:tms_partner_app/widgets/bottom_sheet/select_image_bottom_sheet.d
 import '../../pages.dart';
 
 class UserInfoPage extends BasePage {
-  const UserInfoPage({required this.data});
+  UserInfoPage({required this.data});
 
   static const routeName = '/UserInfo';
   final ScreenArguments data;
-
   @override
-  State<StatefulWidget> createState() => _UserInfoPagePageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _UserInfoPagePageState();
 }
 
-class _UserInfoPagePageState extends BasePageState<UserInfoPage, BaseBloc> {
+class _UserInfoPagePageState extends BasePageState<UserInfoPage> {
   late ProfileModel? profileModel;
   final ImagePicker _picker = ImagePicker();
   List<XFile> _imagePicked = [];

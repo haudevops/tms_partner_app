@@ -10,20 +10,20 @@ import 'package:tms_partner_app/widgets/widgets.dart';
 
 import '../pages.dart';
 
-class OrderStatusFilterPage extends BasePage {
+class OrderStatusFilterPage extends BasePage<OrderStatusFilterBloc> {
 
 
   static const routeName = '/OrderStatusFilterPage';
   final ScreenArguments? data;
 
-  const OrderStatusFilterPage(this.data, {Key? key}) : super(key: key);
+  OrderStatusFilterPage(this.data) : super(bloc: OrderStatusFilterBloc());
 
   @override
-  State<StatefulWidget> createState() => _OrderStatusFilterState();
+  BasePageState<BasePage<BaseBloc>> getState() => _OrderStatusFilterState();
 }
 
-class _OrderStatusFilterState extends BasePageState<OrderStatusFilterPage, BaseBloc> {
-  // late OrdersBloc _bloc;
+class _OrderStatusFilterState extends BasePageState<OrderStatusFilterPage> {
+  late OrdersBloc _bloc;
   late List<GlobalKey> _dataKeys;
   late String status;
   OrderWorkingFilterModel _filterModel = OrderWorkingFilterModel();

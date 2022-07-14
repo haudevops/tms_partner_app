@@ -1,84 +1,68 @@
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lottie/lottie.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:tms_partner_app/utils/constants.dart';
-import 'package:tms_partner_app/utils/event_msg.dart';
-import 'package:tms_partner_app/utils/screen_util/size_extension.dart';
+import 'package:flutter/services.dart';
+import 'package:tms_partner_app/base/common_function.dart';
 
 import 'base.dart';
 
 abstract class BasePage<B extends BaseBloc> extends StatefulWidget {
-  const BasePage({Key? key, this.bloc}) : super(key: key);
+  BasePage({this.bloc});
 
+  late final BasePageState basePageState;
   final B? bloc;
+
+  @override
+  BasePageState createState() {
+    basePageState = getState();
+    return basePageState;
+  }
+
+  BasePageState getState();
+
+  String getStateName() {
+    return basePageState.getWidgetName();
+  }
 }
 
-abstract class BasePageState<Page extends BasePage, B extends BaseBloc?>
-    extends State<Page> with WidgetsBindingObserver, BaseWidgetLifeCycle {
-
-  final FToast _fToast = FToast();
+abstract class BasePageState<T extends BasePage> extends State<T>
+    with WidgetsBindingObserver, BaseFunction {
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool _onResumed = false;
   bool _onPause = false;
-  bool _isShowLoading = false;
-  late B? _bloc;
+  bool _isShowCheckInternet = false;
 
-  B get getBloc => _bloc!;
-
-  @mustCallSuper
   @override
   void initState() {
+    initBaseCommon(this);
     NavigatorManger().addWidget(this);
     WidgetsBinding.instance.addObserver(this);
-    _bloc = widget.bloc as B?;
     onCreate();
-    _observerBloc();
+    widget.bloc?.onCreate(context);
+    widget.bloc?.loadingStream.listen((isLoading) {
+      showLoading(isLoading);
+    });
+    widget.bloc?.msgStream.listen((msg) {
+      showToast(msg);
+    });
+    _initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     super.initState();
   }
 
-  @mustCallSuper
-  @override
-  void dispose() {
-    onDestroy();
-    WidgetsBinding.instance.removeObserver(this);
-    NavigatorManger().removeWidget(this);
-    widget.bloc?.dispose();
-    widget.bloc?.onDestroy();
-    super.dispose();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
-  @mustCallSuper
-  @override
-  Widget build(BuildContext context) {
-    if (!_onResumed) {
-      if (NavigatorManger().isTopPage(this)) {
-        _onResumed = true;
-        onResume();
-      }
-    }
-    return Stack(
-      children: [
-        buildWidget(context),
-        StreamBuilder<bool?>(
-            initialData: false,
-            stream: widget.bloc?.loadingStream,
-            builder: (context, snapshot) {
-              _isShowLoading = snapshot.data ?? false;
-              return Visibility(
-                  visible: _isShowLoading,
-                  child: Center(
-                      child: SizedBox(
-                          width: 80.w,
-                          height: 80.h,
-                          child: Lottie.asset(Constants.loadingLottie))));
-            })
-      ],
-    );
+  bool get isLoading => isShowLoading;
+
+  dynamic getBloc() {
+    return widget.bloc;
   }
 
-  Widget buildWidget(BuildContext context);
-
-  @mustCallSuper
   @override
   void deactivate() {
     if (NavigatorManger().isSecondTop(this)) {
@@ -97,7 +81,30 @@ abstract class BasePageState<Page extends BasePage, B extends BaseBloc?>
     super.deactivate();
   }
 
-  @mustCallSuper
+  @override
+  Widget build(BuildContext context) {
+    if (!_onResumed) {
+      if (NavigatorManger().isTopPage(this)) {
+        _onResumed = true;
+        onResume();
+      }
+    }
+    return getBaseView(context);
+  }
+
+  @override
+  void dispose() {
+    onDestroy();
+    WidgetsBinding.instance.removeObserver(this);
+    _onResumed = false;
+    _onPause = false;
+    widget.bloc?.dispose();
+    widget.bloc?.onDestroy();
+    NavigatorManger().removeWidget(this);
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -114,41 +121,35 @@ abstract class BasePageState<Page extends BasePage, B extends BaseBloc?>
     super.didChangeAppLifecycleState(state);
   }
 
-  void _observerBloc() {
-    widget.bloc?.onCreate(context);
-
-    widget.bloc?.msgStream
-        .transform(ThrottleStreamTransformer(
-            (_) => TimerStream(true, const Duration(seconds: 2))))
-        .listen((msg) => showToast(msg));
-  }
-
-  void showToast(EventMsg event) {
-    _fToast.init(context);
-    Widget toast = Container(
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0),
-            color:
-            (event.type == EventMsg.msgError) ? Colors.red : Colors.green),
-        child: Text(event.msg,
-            style: TextStyle(color: Colors.white, fontSize: 20.sp),
-            textAlign: TextAlign.center));
-
-    _fToast.showToast(
-      child: toast,
-      gravity: ToastGravity.TOP,
-      toastDuration: const Duration(seconds: 2),
-    );
-  }
-
-  String getWidgetName() {
-    String className = context.toString();
+  Future<void> _initConnectivity() async {
+    ConnectivityResult result = ConnectivityResult.none;
     try {
-      className = className.substring(0, className.indexOf("("));
-    } catch (err) {
-      className = "";
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print(e.toString());
     }
-    return className;
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    switch (result) {
+      case ConnectivityResult.wifi:
+      case ConnectivityResult.mobile:
+        if (_isShowCheckInternet) {
+          Navigator.of(context).pop();
+          _isShowCheckInternet = false;
+        }
+        break;
+      case ConnectivityResult.none:
+        _isShowCheckInternet = true;
+        showDialogInternetConnect(context);
+        break;
+      default:
+        break;
+    }
   }
 }

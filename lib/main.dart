@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -5,16 +7,27 @@ import 'package:provider/provider.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/routes/route_settings.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/providers/language_provider.dart';
 import 'package:tms_partner_app/utils/screen_util/screen_util_init.dart';
 
 import 'utils/providers/theme_provider.dart';
 
-void main() {
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   // FirebaseDatabase.instance.setPersistenceEnabled(true);
+//   // Firebase.initializeApp();
+//   SystemChrome.setSystemUIOverlayStyle(
+//       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+//   runApp(const MyApp());
+// }
+
+Future<Widget> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  runApp(const MyApp());
+  //FirebaseDatabase.instance.setPersistenceEnabled(true);
+  await PrefsUtil.getInstance();
+  // await Firebase.initializeApp();
+  return MyApp();
 }
 
 class MyApp extends StatelessWidget {
@@ -30,9 +43,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<LanguageProvider>(
               create: (context) => LanguageProvider()),
-          // ChangeNotifierProvider<ThemeProvider>(
-          //   create: (context) => ThemeProvider(),
-          // )
+          ChangeNotifierProvider<ThemeProvider>(
+            create: (context) => ThemeProvider(),
+          )
         ],
         child: Builder(builder: (context) => MaterialApp(
           title: 'STT',
@@ -55,7 +68,7 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: S.delegate.supportedLocales,
           onGenerateRoute: CustomRouter.allRoutes,
-          home: const SplashPage(),
+          home: SplashPage(),
         )),
       ),
     );

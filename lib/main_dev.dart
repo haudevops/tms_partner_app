@@ -5,7 +5,7 @@ import 'main.dart';
 
 void main() async {
   GlobalConfiguration().loadFromMap(debugAppSettings);
-  // WidgetsFlutterBinding.ensureInitialized();
-  // Widget app = await initializeApp();
-  // runApp(app);
+  WidgetsFlutterBinding.ensureInitialized();
+  Widget app = await initializeApp();
+  runApp(app);
 }

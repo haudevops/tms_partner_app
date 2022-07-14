@@ -1,5 +1,5 @@
 {
-  "app_name": "Eton Partner",
+  "app_name": "STT Partner",
   "request_cancel": "Yêu cầu đến máy chủ API đã bị hủy.",
   "connect_timeout": "Kết nối quá hạn.",
   "request_timed_out": "Yêu cầu đã hết thời gian chờ.",

@@ -10,46 +10,37 @@ import 'package:tms_partner_app/utils/prefs_util.dart';
 import '../../pages.dart';
 
 class ChangePasswordBloc extends BaseBloc {
+  final _changePasswordController = BehaviorSubject<PasswordModel>();
+  late BuildContext _context;
+
+  Stream<PasswordModel> get changePasswordStream =>
+      _changePasswordController.stream;
+
   @override
   void dispose() {
-    // TODO: implement dispose
+    _changePasswordController.close();
   }
 
   @override
   void onCreate(BuildContext context) {
-    // TODO: implement onCreate
+    _context = context;
   }
-  // final _changePasswordController = BehaviorSubject<PasswordModel>();
-  // late BuildContext _context;
-  //
-  // Stream<PasswordModel> get changePasswordStream =>
-  //     _changePasswordController.stream;
-  //
-  // @override
-  // void dispose() {
-  //   _changePasswordController.close();
-  // }
-  //
-  // @override
-  // void onCreate(BuildContext context) {
-  //   _context = context;
-  // }
-  //
-  // Future<void> changePassword(
-  //     String currentPassword, String password, String rePassword) async {
-  //   showLoading();
-  //   await AuthService.instance
-  //       .changePassword(currentPassword, password, rePassword)
-  //       .then((value) {
-  //     if (value.errorCode == 0) {
-  //       PrefsUtil.clear();
-  //       Navigator.pushReplacementNamed(_context, LoginPage.routeName);
-  //     }
-  //     showMsg(value.message);
-  //     hiddenLoading();
-  //   }).catchError((error) {
-  //     hiddenLoading();
-  //     DebugLog.show('change password error: ${error.toString()}');
-  //   });
-  // }
+
+  Future<void> changePassword(
+      String currentPassword, String password, String rePassword) async {
+    showLoading();
+    await AuthService.instance
+        .changePassword(currentPassword, password, rePassword)
+        .then((value) {
+      if (value.errorCode == 0) {
+        PrefsUtil.clear();
+        Navigator.pushReplacementNamed(_context, LoginPage.routeName);
+      }
+      showMsg(value.message);
+      hiddenLoading();
+    }).catchError((error) {
+      hiddenLoading();
+      DebugLog.show('change password error: ${error.toString()}');
+    });
+  }
 }

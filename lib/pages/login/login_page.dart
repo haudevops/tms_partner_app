@@ -1,31 +1,23 @@
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 
-import 'login_bloc.dart';
-
 class LoginPage extends BasePage {
-  LoginPage({Key? key}) : super(key: key, bloc: LoginBloc());
+  LoginPage({Key? key}) : super(bloc: LoginBloc());
   static const routeName = '/LoginPage';
 
   @override
-  State<StatefulWidget> createState() => _LoginPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _LoginPageState();
 }
 
-class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
-  // late LoginBloc _bloc;
+class _LoginPageState extends BasePageState<LoginPage> {
   final FocusNode _focusNodePhoneNumber = FocusNode();
   final FocusNode _focusNodePassword = FocusNode();
   final TextEditingController _phoneController = TextEditingController();
@@ -39,8 +31,6 @@ class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
   @override
   void onCreate() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-
-    // _bloc = getBloc();
   }
 
   @override
@@ -142,8 +132,9 @@ class _LoginPageState extends BasePageState<LoginPage, BaseBloc> {
                 onPressed: () {
                   if (_formKeyPhone.currentState!.validate() &&
                       _formKeyPass.currentState!.validate()) {
-                    // _bloc.login(_phoneController.text, _passController.text);
+                    // _bloc.login(_phoneCon-troller.text, _passController.text);
                     _initToken(true);
+                    // getBloc.login(_phoneController.text, _passController.text);
                     Navigator.pushReplacementNamed(context, NavigationPage.routeName);
                   }
                 },

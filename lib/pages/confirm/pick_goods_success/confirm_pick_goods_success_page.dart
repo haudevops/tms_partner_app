@@ -22,18 +22,18 @@ import 'confirm_pick_goods_success_bloc.dart';
 class ConfirmPickGoodsSuccessPage
     extends BasePage<ConfirmPickGoodsSuccessBloc> {
   ConfirmPickGoodsSuccessPage({Key? key, required this.arguments})
-      : super(key: key, bloc: ConfirmPickGoodsSuccessBloc());
+      : super(bloc: ConfirmPickGoodsSuccessBloc());
 
   static const routeName = '/ConfirmPickGoodsSuccessPage';
 
   final ScreenArguments arguments;
 
   @override
-  State<StatefulWidget> createState() => _ConfirmPickGoodsSuccessState();
+  BasePageState<BasePage<BaseBloc>> getState() => _ConfirmPickGoodsSuccessState();
 }
 
 class _ConfirmPickGoodsSuccessState
-    extends BasePageState<ConfirmPickGoodsSuccessPage, BaseBloc> {
+    extends BasePageState<ConfirmPickGoodsSuccessPage> {
   late OrderModel _orderModel;
   late PointTargetFinder _pointTargetFinder;
   late ConfirmPickGoodsSuccessBloc _bloc;

@@ -6,14 +6,14 @@ import 'detail_new_order_bloc.dart';
 class DetailNewOrderPage extends BasePage<DetailNewOrderBloc>{
   static const routeName = '/DetailNewOrderPage';
 
-  const DetailNewOrderPage({Key? key}) : super(key: key);
+  DetailNewOrderPage({Key? key});
 
   @override
-  State<StatefulWidget> createState() => _DetailNewOrderState();
+  BasePageState<BasePage<BaseBloc>> getState() => _DetailNewOrderState();
 
 }
 
-class _DetailNewOrderState extends BasePageState<DetailNewOrderPage, BaseBloc>{
+class _DetailNewOrderState extends BasePageState<DetailNewOrderPage>{
   @override
   Widget buildWidget(BuildContext context) {
     // TODO: implement buildWidget

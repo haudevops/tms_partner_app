@@ -13,17 +13,16 @@ import 'package:tms_partner_app/widgets/widgets.dart';
 import '../pages.dart';
 import 'orders_bloc.dart';
 
-class OrdersPage extends BasePage {
-  const OrdersPage({Key? key}) : super(key: key);
-
+class OrdersPage extends BasePage<OrdersBloc> {
+  OrdersPage() : super(bloc: OrdersBloc());
 
   @override
-  State<StatefulWidget> createState() => _OrdersPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _OrdersPageState();
 }
 
-class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
+class _OrdersPageState extends BasePageState<OrdersPage> {
+  OrdersBloc? _bloc;
   late ScrollController _scrollController;
-  // late OrdersBloc _bloc;
   late List<GlobalKey> _dataKeys;
   bool _isExpanded = true;
   OrderWorkingFilterModel _filterModel = OrderWorkingFilterModel();
@@ -31,9 +30,9 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
   @override
   void onCreate() {
     _handleScroll();
-    // _bloc = getBloc();
-    // _doGetOrders();
-    // _bloc.getStatistical();
+    _bloc = getBloc();
+    _bloc?.getStatistical();
+    _doGetOrders();
   }
 
   void _handleScroll() {
@@ -55,14 +54,14 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
     return _scrollController.hasClients && _scrollController.offset == 0;
   }
 
-  // void _doGetOrders() {
-  //   _bloc.getOrders(
-  //       code: _filterModel.code,
-  //       external: _filterModel.externalCode,
-  //       phone: _filterModel.phone,
-  //       serviceType: _filterModel.services,
-  //       status: _filterModel.status ?? "3,7,9,20");
-  // }
+  void _doGetOrders() {
+    _bloc?.getOrders(
+        code: _filterModel.code,
+        external: _filterModel.externalCode,
+        phone: _filterModel.phone,
+        serviceType: _filterModel.services,
+        status: _filterModel.status ?? "3,7,9,20");
+  }
 
   void _checkNavigation(OrderModel model) {
     switch (model.status) {
@@ -80,7 +79,7 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
                 arguments: ScreenArguments(arg1: model))
             .then((value) {
           if (value != null) {
-            // _doGetOrders();
+            _doGetOrders();
           }
         });
         break;
@@ -93,59 +92,59 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
       backgroundColor: AppColor.lineLayout,
       body: RefreshIndicator(
         onRefresh: () async {
-          // _doGetOrders();
+          _doGetOrders();
         },
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
             _appBarCustom(),
-            // _makeHeader(),
-            SliverToBoxAdapter(
+            _makeHeader(),
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            // StreamBuilder<List<OrderModel>?>(
-            //   stream: _bloc.ordersStream,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasError) {
-            //       return SliverToBoxAdapter(
-            //           child: NoOrderWidget(title: 'Đã có lỗi xảy ra'));
-            //     }
-            //     if (snapshot.data == null) {
-            //       return SliverToBoxAdapter(child: ShimmerOrders());
-            //     }
-            //     _dataKeys = List.generate(
-            //         snapshot.data!.length, (index) => GlobalKey());
-            //
-            //     if (snapshot.data!.isEmpty) {
-            //       return SliverToBoxAdapter(
-            //           child: NoOrderWidget(
-            //         title: 'Không có đơn hàng',
-            //       ));
-            //     }
-            //
-            //     return SliverList(
-            //       delegate: SliverChildBuilderDelegate(
-            //         (context, index) {
-            //           return OrderWidget(
-            //               order: snapshot.data![index],
-            //               globalKey: _dataKeys[index],
-            //               onTapExpand: () {
-            //                 _bloc.updateUIExpand(snapshot.data!, index);
-            //
-            //                 if (!snapshot.data![index].expandGroup) {
-            //                   Scrollable.ensureVisible(
-            //                       _dataKeys[index].currentContext!);
-            //                 }
-            //               },
-            //               onTapOrder: _checkNavigation,
-            //               onTapChild: _checkNavigation);
-            //         },
-            //         childCount: snapshot.data?.length,
-            //       ),
-            //     );
-            //   },
-            // ),
-            SliverToBoxAdapter(
+            StreamBuilder<List<OrderModel>?>(
+              stream: _bloc?.ordersStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const SliverToBoxAdapter(
+                      child: NoOrderWidget(title: 'Đã có lỗi xảy ra'));
+                }
+                if (snapshot.data == null) {
+                  return const SliverToBoxAdapter(child: ShimmerOrders());
+                }
+                _dataKeys = List.generate(
+                    snapshot.data!.length, (index) => GlobalKey());
+
+                if (snapshot.data!.isEmpty) {
+                  return const SliverToBoxAdapter(
+                      child: NoOrderWidget(
+                    title: 'Không có đơn hàng',
+                  ));
+                }
+
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return OrderWidget(
+                          order: snapshot.data![index],
+                          globalKey: _dataKeys[index],
+                          onTapExpand: () {
+                            _bloc?.updateUIExpand(snapshot.data!, index);
+
+                            if (!snapshot.data![index].expandGroup) {
+                              Scrollable.ensureVisible(
+                                  _dataKeys[index].currentContext!);
+                            }
+                          },
+                          onTapOrder: _checkNavigation,
+                          onTapChild: _checkNavigation);
+                    },
+                    childCount: snapshot.data?.length,
+                  ),
+                );
+              },
+            ),
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
           ],
@@ -174,11 +173,11 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
           _isExpanded ? AppColor.lineLayout : AppColor.colorBackground,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.only(left: _isExpanded ? 10 : 0, bottom: 10),
-        title: Container(
+        title: SizedBox(
           width: ScreenUtil.getInstance().screenWidth,
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 width: ScreenUtil.getInstance().screenWidth,
                 child: Text(
                   S.current.order,
@@ -211,7 +210,7 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
           filterModel: _filterModel,
           onFilter: (data) {
             _filterModel = data;
-            // _doGetOrders();
+            _doGetOrders();
           },
           service: [
             FilterModel(id: ServiceType.DELIVERY, name: S.current.delivery),
@@ -250,83 +249,83 @@ class _OrdersPageState extends BasePageState<OrdersPage, BaseBloc> {
     return 0;
   }
 
-  // SliverPersistentHeader _makeHeader() {
-  //   return SliverPersistentHeader(
-  //     pinned: true,
-  //     delegate: DynamicHeader(
-  //         minHeight: ScreenUtil.getInstance().getAdapterSize(60),
-  //         maxHeight: ScreenUtil.getInstance().getAdapterSize(130),
-  //         child: StreamBuilder<StatisticalModel?>(
-  //           stream: _bloc.statisticalStream,
-  //           builder: (context, snapshot) {
-  //             return LayoutBuilder(
-  //                 builder: (BuildContext context, BoxConstraints constraints) {
-  //               return constraints.biggest.height >
-  //                       ScreenUtil.getInstance().getAdapterSize(85)
-  //                   ? Container(
-  //                       color: _isExpanded
-  //                           ? AppColor.lineLayout
-  //                           : AppColor.colorBackground,
-  //                       padding: const EdgeInsets.only(top: 10),
-  //                       child: Row(
-  //                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                         crossAxisAlignment: CrossAxisAlignment.center,
-  //                         children: [
-  //                           _itemStatistical(
-  //                               icon: 'assets/icon/ic_order_accepted.svg',
-  //                               qty: 0,
-  //                               status: S.current.accepted,
-  //                               size:
-  //                                   _calculatorSize(constraints.biggest.height),
-  //                               orderStatus: "${OrderStatus.NEW}"),
-  //                           _itemStatistical(
-  //                               icon: 'assets/icon/ic_order_processing.svg',
-  //                               qty: snapshot.data?.current ?? 0,
-  //                               status: S.current.processing,
-  //                               size:
-  //                                   _calculatorSize(constraints.biggest.height),
-  //                               orderStatus:
-  //                                   "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-  //                           _itemStatistical(
-  //                             icon: 'assets/icon/ic_order_finish.svg',
-  //                             qty: snapshot.data?.finished ?? 0,
-  //                             status: S.current.accomplished,
-  //                             size: _calculatorSize(constraints.biggest.height),
-  //                             orderStatus:
-  //                                 "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
-  //                           )
-  //                         ],
-  //                       ),
-  //                     )
-  //                   : Container(
-  //                       //color: AppColor.colorBackground,
-  //                       decoration: BoxDecoration(
-  //                           color: AppColor.colorBackground,
-  //                           border: Border(
-  //                             bottom: BorderSide(
-  //                               //                   <--- left side
-  //                               color: AppColor.lineLayout,
-  //                               width: 0.5,
-  //                             ),
-  //                           )),
-  //                       child: Row(
-  //                           crossAxisAlignment: CrossAxisAlignment.center,
-  //                           children: [
-  //                             _itemIconHeader(
-  //                                 'assets/icon/ic_order_accepted.svg',
-  //                                 "${OrderStatus.NEW}"),
-  //                             _itemIconHeader(
-  //                                 'assets/icon/ic_order_processing.svg',
-  //                                 "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-  //                             _itemIconHeader('assets/icon/ic_order_finish.svg',
-  //                                 '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
-  //                           ]),
-  //                     );
-  //             });
-  //           },
-  //         )),
-  //   );
-  // }
+  SliverPersistentHeader _makeHeader() {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: DynamicHeader(
+          minHeight: ScreenUtil.getInstance().getAdapterSize(60),
+          maxHeight: ScreenUtil.getInstance().getAdapterSize(130),
+          child: StreamBuilder<StatisticalModel?>(
+            stream: _bloc?.statisticalStream,
+            builder: (context, snapshot) {
+              return LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                return constraints.biggest.height >
+                        ScreenUtil.getInstance().getAdapterSize(85)
+                    ? Container(
+                        color: _isExpanded
+                            ? AppColor.lineLayout
+                            : AppColor.colorBackground,
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _itemStatistical(
+                                icon: 'assets/icon/ic_order_accepted.svg',
+                                qty: 0,
+                                status: S.current.accepted,
+                                size:
+                                    _calculatorSize(constraints.biggest.height),
+                                orderStatus: "${OrderStatus.NEW}"),
+                            _itemStatistical(
+                                icon: 'assets/icon/ic_order_processing.svg',
+                                qty: snapshot.data?.current ?? 0,
+                                status: S.current.processing,
+                                size:
+                                    _calculatorSize(constraints.biggest.height),
+                                orderStatus:
+                                    "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
+                            _itemStatistical(
+                              icon: 'assets/icon/ic_order_finish.svg',
+                              qty: snapshot.data?.finished ?? 0,
+                              status: S.current.accomplished,
+                              size: _calculatorSize(constraints.biggest.height),
+                              orderStatus:
+                                  "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
+                            )
+                          ],
+                        ),
+                      )
+                    : Container(
+                        //color: AppColor.colorBackground,
+                        decoration: BoxDecoration(
+                            color: AppColor.colorBackground,
+                            border: Border(
+                              bottom: BorderSide(
+                                //                   <--- left side
+                                color: AppColor.lineLayout,
+                                width: 0.5,
+                              ),
+                            )),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              _itemIconHeader(
+                                  'assets/icon/ic_order_accepted.svg',
+                                  "${OrderStatus.NEW}"),
+                              _itemIconHeader(
+                                  'assets/icon/ic_order_processing.svg',
+                                  "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
+                              _itemIconHeader('assets/icon/ic_order_finish.svg',
+                                  '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
+                            ]),
+                      );
+              });
+            },
+          )),
+    );
+  }
 
   Widget _itemStatistical(
       {required String icon,

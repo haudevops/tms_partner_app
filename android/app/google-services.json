@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "972940910705",
+    "firebase_url": "https://stt-supra-prod-default-rtdb.firebaseio.com",
+    "project_id": "stt-supra-prod",
+    "storage_bucket": "stt-supra-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972940910705:android:dd2db748ac6ed1e2707bd0",
+        "android_client_info": {
+          "package_name": "com.supra.partner.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972940910705-qjn3vi7v3lfi20tdu6rgcn7orth9fb86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0VwWsoOst3Q3hMwr6NY7au6N9QVeJL_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972940910705-qjn3vi7v3lfi20tdu6rgcn7orth9fb86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

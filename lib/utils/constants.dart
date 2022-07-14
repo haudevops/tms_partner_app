@@ -6,7 +6,7 @@ import 'package:tms_partner_app/utils/order/business_constant.dart';
 class Constants {
   Constants._();
 
-  static const String loadingLottie = 'assets/json/loading_lottie.json';
+  static const String loadingLottie = 'assets/images/loading_lottie.json';
 
   static const String marvelHeroDetectionName = 'Tìm tên siêu anh hùng';
   static const String marvelHeroDetectionId = 'marvel_detection';

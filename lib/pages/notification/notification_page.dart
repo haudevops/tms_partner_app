@@ -13,17 +13,16 @@ import 'package:tms_partner_app/widgets/widgets.dart';
 import '../../data/model/demo/notificate_model.dart';
 import 'notification_bloc.dart';
 
-class NotificationPage extends BasePage {
-  NotificationPage({Key? key}) : super(key: key, bloc: NotificationBloc());
+class NotificationPage extends BasePage<NotificationBloc> {
+  NotificationPage({Key? key}) : super(bloc: NotificationBloc());
 
   static const routeName = '/NotificationPage';
-
   @override
-  State<StatefulWidget> createState() => _NotificationPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _NotificationPageState();
 }
 
-class _NotificationPageState extends BasePageState<NotificationPage, BaseBloc> {
-  // late NotificationBloc _bloc;
+class _NotificationPageState extends BasePageState<NotificationPage> {
+  late NotificationBloc _bloc;
   int page = 1;
   bool isFinish = false;
 
@@ -50,7 +49,8 @@ class _NotificationPageState extends BasePageState<NotificationPage, BaseBloc> {
 
   @override
   void onCreate() {
-    // _bloc = getBloc();
+    _bloc = getBloc();
+    _bloc.getNotification();
   }
 
   @override

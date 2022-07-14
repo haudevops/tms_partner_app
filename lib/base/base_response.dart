@@ -4,4 +4,5 @@ class BaseResponse<T> {
   int errorCode = -1;
   String message;
   T? data;
+
 }

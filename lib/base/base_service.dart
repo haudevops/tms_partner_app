@@ -9,7 +9,6 @@ import 'package:tms_partner_app/utils/logs/logger.dart';
 import 'package:tms_partner_app/utils/logs/logger_interceptor.dart';
 
 import '../config/define_service_api.dart';
-import 'base.dart';
 
 class BaseService {
   factory BaseService() {
@@ -30,7 +29,8 @@ class BaseService {
 
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
-      final token = AccountUtil.instance.getToken();
+      // final token = AccountUtil.instance.getToken();
+      final token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MjM2Y2Y2MDgxYjM4MDIyNzBlM2NjZDEiLCJkYXRhIjp7InVzZXItYWdlbnQiOiJva2h0dHAvMy4xMi42IiwidXVpZCI6ImNvbS5zdXByYS5wYXJ0bmVyLmRldi05ZGEyNThiNC1lNjA2LTM5YzEtOTcxZi1iNGIzN2QyNmUzOGEifSwiaWF0IjoxNjU3Njk0NTI2fQ.QJGiJMq6RQZJDInfVdIaOVTMDU0FjyH9F7YR9VYvBK8';
       if (token != null) {
         options.headers['content-type'] = 'application/json';
         options.headers['Authorization'] = 'Bearer $token';

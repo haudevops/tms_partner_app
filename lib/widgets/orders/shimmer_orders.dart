@@ -25,7 +25,7 @@ class ShimmerOrders extends StatelessWidget {
           bottom: ScreenUtil.getInstance().getAdapterSize(12),
           left: ScreenUtil.getInstance().getAdapterSize(12)),
       decoration: BoxDecoration(
-          color: AppColor.colorBackground,
+          color: AppColor.colorWhiteDark,
           borderRadius: BorderRadius.circular(8)),
       child: Shimmer.fromColors(
         baseColor: Colors.grey[300]!,

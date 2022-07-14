@@ -9,16 +9,17 @@ import 'package:tms_partner_app/utils/screen_util.dart';
 import '../../utils/common_utils/prefs_util.dart';
 import '../../utils/prefs_const.dart';
 
-class SplashPage extends BasePage {
+class SplashPage extends BasePage<SplashBloc> {
   static const routeName = '/SplashPage';
 
-  const SplashPage({Key? key}) : super(key: key);
+  SplashPage() : super(bloc: SplashBloc());
+
 
   @override
-  State<StatefulWidget> createState() => _SplashPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _SplashPageState();
 }
 
-class _SplashPageState extends BasePageState<SplashPage, BaseBloc> {
+class _SplashPageState extends BasePageState<SplashPage> {
   // late AnimationController _controller;
   // late SplashBloc _bloc;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();

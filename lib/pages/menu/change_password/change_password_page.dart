@@ -18,14 +18,14 @@ import 'package:tms_partner_app/utils/screen_util.dart';
 // $
 
 class ChangePasswordPage extends BasePage {
-  ChangePasswordPage({Key? key}) : super(key: key, bloc: ChangePasswordBloc());
+  ChangePasswordPage({Key? key}) : super(bloc: ChangePasswordBloc());
   static const routerName = '/ChangePasswordPage';
 
   @override
-  State<StatefulWidget> createState() => _ChangePasswordPageState();
+  BasePageState<BasePage<BaseBloc>> getState() => _ChangePasswordPageState();
 }
 
-class _ChangePasswordPageState extends BasePageState<ChangePasswordPage, BaseBloc> {
+class _ChangePasswordPageState extends BasePageState<ChangePasswordPage> {
   // late ChangePasswordBloc _bloc;
   final _oldPassword = TextEditingController();
   final _newPassword = TextEditingController();

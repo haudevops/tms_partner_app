@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please select an estimated time."),
         "an_unknown_error":
             MessageLookupByLibrary.simpleMessage("An unknown error"),
-        "app_name": MessageLookupByLibrary.simpleMessage("Eton Partner"),
+        "app_name": MessageLookupByLibrary.simpleMessage("STT Partner"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "avatar": MessageLookupByLibrary.simpleMessage("Avatar"),
         "call_customers":
