@@ -29,6 +29,10 @@ export 'menu/user_info/user_info_page.dart';
 export 'menu/menu_page.dart';
 export 'menu/menu_bloc.dart';
 export 'menu/share_code/share_code_page.dart';
+export 'menu/temp_policy/temp_policy_page.dart';
+export 'menu/helps/help_page.dart';
+export 'menu/helps/contact_helps/contact_helps_page.dart';
+export 'menu/helps/detail_help/detail_help_page.dart';
 
 export 'navigation/navigation_bloc.dart';
 export 'navigation/navigation_page.dart';
@@ -47,3 +51,5 @@ export 'splash/splash_page.dart';
 
 export 'forgot_password/forgot_password_page.dart';
 export 'forgot_password/forgot_password_bloc.dart';
+
+export 'notification/notification_detail/notification_detail_page.dart';

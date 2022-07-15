@@ -17,12 +17,12 @@ class OrdersPage extends BasePage<OrdersBloc> {
   OrdersPage() : super(bloc: OrdersBloc());
 
   @override
-  BasePageState<BasePage<BaseBloc>> getState() => _OrdersPageState();
+  BasePageState<BasePage> getState() => _OrdersPageState();
 }
 
 class _OrdersPageState extends BasePageState<OrdersPage> {
-  OrdersBloc? _bloc;
   late ScrollController _scrollController;
+  late OrdersBloc _bloc;
   late List<GlobalKey> _dataKeys;
   bool _isExpanded = true;
   OrderWorkingFilterModel _filterModel = OrderWorkingFilterModel();
@@ -31,8 +31,8 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
   void onCreate() {
     _handleScroll();
     _bloc = getBloc();
-    _bloc?.getStatistical();
     _doGetOrders();
+    _bloc.getStatistical();
   }
 
   void _handleScroll() {
@@ -55,7 +55,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
   }
 
   void _doGetOrders() {
-    _bloc?.getOrders(
+    _bloc.getOrders(
         code: _filterModel.code,
         external: _filterModel.externalCode,
         phone: _filterModel.phone,
@@ -67,16 +67,16 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
     switch (model.status) {
       case OrderStatus.FINDING:
       case OrderStatus.WAITING_CONFIRM:
-        // New order
+      // New order
         break;
       case OrderStatus.INCIDENT:
       case OrderStatus.IN_PROGRESS_INCIDENT:
-        // Incident order
+      // Incident order
         break;
       default:
-        // Accepted order
+      // Accepted order
         Navigator.pushNamed(context, DetailAcceptedOrderPage.routeName,
-                arguments: ScreenArguments(arg1: model))
+            arguments: ScreenArguments(arg1: model))
             .then((value) {
           if (value != null) {
             _doGetOrders();
@@ -99,37 +99,37 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
           slivers: [
             _appBarCustom(),
             _makeHeader(),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
             StreamBuilder<List<OrderModel>?>(
-              stream: _bloc?.ordersStream,
+              stream: _bloc.ordersStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return const SliverToBoxAdapter(
+                  return SliverToBoxAdapter(
                       child: NoOrderWidget(title: 'Đã có lỗi xảy ra'));
                 }
                 if (snapshot.data == null) {
-                  return const SliverToBoxAdapter(child: ShimmerOrders());
+                  return SliverToBoxAdapter(child: ShimmerOrders());
                 }
                 _dataKeys = List.generate(
                     snapshot.data!.length, (index) => GlobalKey());
 
                 if (snapshot.data!.isEmpty) {
-                  return const SliverToBoxAdapter(
+                  return SliverToBoxAdapter(
                       child: NoOrderWidget(
-                    title: 'Không có đơn hàng',
-                  ));
+                        title: 'Không có đơn hàng',
+                      ));
                 }
 
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) {
+                        (context, index) {
                       return OrderWidget(
                           order: snapshot.data![index],
                           globalKey: _dataKeys[index],
                           onTapExpand: () {
-                            _bloc?.updateUIExpand(snapshot.data!, index);
+                            _bloc.updateUIExpand(snapshot.data!, index);
 
                             if (!snapshot.data![index].expandGroup) {
                               Scrollable.ensureVisible(
@@ -144,7 +144,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                 );
               },
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
           ],
@@ -154,8 +154,8 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
         onPressed: () {
           Navigator.pushNamed(context, ScanPage.routeName,
               arguments: ScreenArguments(arg1: (barCode) {
-            print(barCode);
-          }));
+                print(barCode);
+              }));
         },
         backgroundColor: Colors.black,
         elevation: 0.0,
@@ -170,20 +170,20 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
       expandedHeight: ScreenUtil.getInstance().getHeight(70),
       elevation: 0.5,
       backgroundColor:
-          _isExpanded ? AppColor.lineLayout : AppColor.colorBackground,
+      _isExpanded ? AppColor.lineLayout : AppColor.colorBackground,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.only(left: _isExpanded ? 10 : 0, bottom: 10),
-        title: SizedBox(
+        title: Container(
           width: ScreenUtil.getInstance().screenWidth,
           child: Stack(
             children: [
-              SizedBox(
+              Container(
                 width: ScreenUtil.getInstance().screenWidth,
                 child: Text(
                   S.current.order,
                   textAlign: _isExpanded ? TextAlign.start : TextAlign.center,
                   style:
-                      TextStyle(fontSize: ScreenUtil.getScaleSp(context, 18)),
+                  TextStyle(fontSize: ScreenUtil.getScaleSp(context, 18), color: Colors.black),
                 ),
               ),
               Positioned(
@@ -256,72 +256,72 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
           minHeight: ScreenUtil.getInstance().getAdapterSize(60),
           maxHeight: ScreenUtil.getInstance().getAdapterSize(130),
           child: StreamBuilder<StatisticalModel?>(
-            stream: _bloc?.statisticalStream,
+            stream: _bloc.statisticalStream,
             builder: (context, snapshot) {
               return LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                return constraints.biggest.height >
+                    return constraints.biggest.height >
                         ScreenUtil.getInstance().getAdapterSize(85)
-                    ? Container(
-                        color: _isExpanded
-                            ? AppColor.lineLayout
-                            : AppColor.colorBackground,
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ? Container(
+                      color: _isExpanded
+                          ? AppColor.lineLayout
+                          : AppColor.colorBackground,
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          _itemStatistical(
+                              icon: 'assets/icon/ic_order_accepted.svg',
+                              qty: 0,
+                              status: S.current.accepted,
+                              size:
+                              _calculatorSize(constraints.biggest.height),
+                              orderStatus: "${OrderStatus.NEW}"),
+                          _itemStatistical(
+                              icon: 'assets/icon/ic_order_processing.svg',
+                              qty: snapshot.data?.current ?? 0,
+                              status: S.current.processing,
+                              size:
+                              _calculatorSize(constraints.biggest.height),
+                              orderStatus:
+                              "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
+                          _itemStatistical(
+                            icon: 'assets/icon/ic_order_finish.svg',
+                            qty: snapshot.data?.finished ?? 0,
+                            status: S.current.accomplished,
+                            size: _calculatorSize(constraints.biggest.height),
+                            orderStatus:
+                            "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
+                          )
+                        ],
+                      ),
+                    )
+                        : Container(
+                      //color: AppColor.colorBackground,
+                      decoration: BoxDecoration(
+                          color: AppColor.colorBackground,
+                          border: Border(
+                            bottom: BorderSide(
+                              //                   <--- left side
+                              color: AppColor.lineLayout,
+                              width: 0.5,
+                            ),
+                          )),
+                      child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            _itemStatistical(
-                                icon: 'assets/icon/ic_order_accepted.svg',
-                                qty: 0,
-                                status: S.current.accepted,
-                                size:
-                                    _calculatorSize(constraints.biggest.height),
-                                orderStatus: "${OrderStatus.NEW}"),
-                            _itemStatistical(
-                                icon: 'assets/icon/ic_order_processing.svg',
-                                qty: snapshot.data?.current ?? 0,
-                                status: S.current.processing,
-                                size:
-                                    _calculatorSize(constraints.biggest.height),
-                                orderStatus:
-                                    "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                            _itemStatistical(
-                              icon: 'assets/icon/ic_order_finish.svg',
-                              qty: snapshot.data?.finished ?? 0,
-                              status: S.current.accomplished,
-                              size: _calculatorSize(constraints.biggest.height),
-                              orderStatus:
-                                  "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
-                            )
-                          ],
-                        ),
-                      )
-                    : Container(
-                        //color: AppColor.colorBackground,
-                        decoration: BoxDecoration(
-                            color: AppColor.colorBackground,
-                            border: Border(
-                              bottom: BorderSide(
-                                //                   <--- left side
-                                color: AppColor.lineLayout,
-                                width: 0.5,
-                              ),
-                            )),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              _itemIconHeader(
-                                  'assets/icon/ic_order_accepted.svg',
-                                  "${OrderStatus.NEW}"),
-                              _itemIconHeader(
-                                  'assets/icon/ic_order_processing.svg',
-                                  "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                              _itemIconHeader('assets/icon/ic_order_finish.svg',
-                                  '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
-                            ]),
-                      );
-              });
+                            _itemIconHeader(
+                                'assets/icon/ic_order_accepted.svg',
+                                "${OrderStatus.NEW}"),
+                            _itemIconHeader(
+                                'assets/icon/ic_order_processing.svg',
+                                "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
+                            _itemIconHeader('assets/icon/ic_order_finish.svg',
+                                '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
+                          ]),
+                    );
+                  });
             },
           )),
     );
@@ -329,11 +329,11 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
 
   Widget _itemStatistical(
       {required String icon,
-      required String status,
-      required double size,
-      int? qty,
-      String? orderStatus}) {
-    return Container(
+        required String status,
+        required double size,
+        int? qty,
+        String? orderStatus}) {
+    return SizedBox(
       width: ScreenUtil.getInstance().getWidth(110),
       child: GestureDetector(
         onTap: () {
@@ -347,7 +347,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding:  EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(5)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -360,7 +360,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                   qty?.toString() ?? '0',
                   style: TextStyle(
                       fontSize:
-                          ScreenUtil.getInstance().getAdapterSize(21.0 * size),
+                      ScreenUtil.getInstance().getAdapterSize(21.0 * size),
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -368,7 +368,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                 Text(status,
                     style: TextStyle(
                         fontSize: ScreenUtil.getInstance()
-                            .getAdapterSize(11.0 * size)))
+                            .getAdapterSize(10.0 * size)))
               ],
             ),
           ),

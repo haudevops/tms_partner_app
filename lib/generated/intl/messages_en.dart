@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_information":
             MessageLookupByLibrary.simpleMessage("Account Information"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "agree": MessageLookupByLibrary.simpleMessage("Agree"),
         "alert_choose_warehouse": MessageLookupByLibrary.simpleMessage(
             "Please select a return warehouse"),
         "alert_time_suggest_duration": MessageLookupByLibrary.simpleMessage(
@@ -46,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Can not connect to server"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "change_car": MessageLookupByLibrary.simpleMessage("CHANGE"),
+        "change_pass": MessageLookupByLibrary.simpleMessage("Change Password"),
         "change_password":
             MessageLookupByLibrary.simpleMessage("CHANGE PASSWORD"),
         "change_password_low":
@@ -64,9 +66,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "connect_timeout":
             MessageLookupByLibrary.simpleMessage("Connect timeout."),
+        "contact_help": MessageLookupByLibrary.simpleMessage("Contact help"),
         "continues": MessageLookupByLibrary.simpleMessage("Continue"),
         "create_new_password":
             MessageLookupByLibrary.simpleMessage("Create New Password"),
+        "current_password":
+            MessageLookupByLibrary.simpleMessage("Current password"),
         "customer_service_level":
             MessageLookupByLibrary.simpleMessage("CUSTOMER SERVICE LEVEL"),
         "delivery": MessageLookupByLibrary.simpleMessage("Delivery"),
@@ -96,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "group": MessageLookupByLibrary.simpleMessage("Group"),
         "grouped_order_list":
             MessageLookupByLibrary.simpleMessage("Group order list"),
+        "help_center": MessageLookupByLibrary.simpleMessage("Help Center"),
         "hint_external_filter":
             MessageLookupByLibrary.simpleMessage("Enter the external code"),
         "id_number": MessageLookupByLibrary.simpleMessage("Id number"),
@@ -109,7 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Waiting for progressing"),
         "individual": MessageLookupByLibrary.simpleMessage("Individual"),
         "info_app":
-            MessageLookupByLibrary.simpleMessage("© 2020 - Designed by"),
+            MessageLookupByLibrary.simpleMessage("© 2022 - Designed by"),
         "input_order_code":
             MessageLookupByLibrary.simpleMessage("Enter the order code"),
         "input_phone_number":
@@ -141,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "logout_confirm": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to sign out of this account?"),
+        "mark_as_read": MessageLookupByLibrary.simpleMessage("Mark as read"),
         "media_picture": MessageLookupByLibrary.simpleMessage("MEDIA PICTURE"),
         "menu_help": MessageLookupByLibrary.simpleMessage("Help"),
         "menu_history": MessageLookupByLibrary.simpleMessage("Order history"),
@@ -361,6 +368,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warranty_repair":
             MessageLookupByLibrary.simpleMessage("Warranty repair"),
         "weight": MessageLookupByLibrary.simpleMessage("Weight"),
+        "you_want_mark_as_read": MessageLookupByLibrary.simpleMessage(
+            "Want to mark all notifications as seen?"),
         "your_referral_code":
             MessageLookupByLibrary.simpleMessage("Your Referral Code")
       };

@@ -1,8 +1,4 @@
 import 'dart:convert';
-// @Auth: cuong.nguyen
-// @Description: Json Util
-// @Date: 09/11/2021
-
 //Example
 //  String intListStr = "[1, 2, 3, 4, 5, 6]";
 //   List<int>? intList = JsonUtil.getList(intListStr);

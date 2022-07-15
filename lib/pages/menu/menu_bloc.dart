@@ -10,56 +10,56 @@ import 'package:tms_partner_app/utils/constants.dart';
 import 'package:tms_partner_app/utils/logs/logger.dart';
 
 class MenuBloc extends BaseBloc {
-  // final _getUserInfoController = BehaviorSubject<ProfileModel?>();
-  // final _getVersionAppController = BehaviorSubject<String>();
-  //
-  // Stream<ProfileModel?> get userInfoStream => _getUserInfoController.stream;
-  //
-  // Stream<String> get versionAppStream => _getVersionAppController.stream;
-  //
-  // Future<void> getUserInfo() async {
-  //   showLoading();
-  //   // Get info user from API
-  //   await AuthService.instance.getInfoUser().then((value) {
-  //     if (value.errorCode != Constants.ERROR_CODE) {
-  //       // Update UI
-  //       _getUserInfoController.sink.add(value);
-  //       // Save data to storage
-  //       _updateDataLocal(value);
-  //     } else {
-  //       DebugLog.show(value.message);
-  //     }
-  //     hiddenLoading();
-  //   }).catchError((error) {
-  //     DebugLog.show('Menu bloc getInfoUser: ${error.toString()}');
-  //     hiddenLoading();
-  //   });
-  // }
-  //
-  // Future<void> _getVersion() async {
-  //   // PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  //   // _getVersionAppController.sink.add(packageInfo.version);
-  // }
-  //
-  // void _updateDataLocal(ProfileModel? profileModel) {
-  //   AccountUtil.instance.updateUserData(profileModel);
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   _getUserInfoController.close();
-  //   _getVersionAppController.close();
-  // }
-  //
-  // @override
-  // void onCreate(BuildContext context) {
-  //   // Get info user from local
-  //   _getUserInfoController.sink.add(AccountUtil.instance.getUserData());
-  //   // Get info user from API
-  //   getUserInfo();
-  //   // get version app
-  //   _getVersion();
-  // }
+  final _getUserInfoController = BehaviorSubject<ProfileModel?>();
+  final _getVersionAppController = BehaviorSubject<String>();
+
+  Stream<ProfileModel?> get userInfoStream => _getUserInfoController.stream;
+
+  Stream<String> get versionAppStream => _getVersionAppController.stream;
+
+  Future<void> getUserInfo() async {
+    showLoading();
+    // Get info user from API
+    await AuthService.instance.getInfoUser().then((value) {
+      if (value.errorCode != Constants.ERROR_CODE) {
+        // Update UI
+        _getUserInfoController.sink.add(value);
+        // Save data to storage
+        _updateDataLocal(value);
+      } else {
+        DebugLog.show(value.message);
+      }
+      hiddenLoading();
+    }).catchError((error) {
+      DebugLog.show('Menu bloc getInfoUser: ${error.toString()}');
+      hiddenLoading();
+    });
+  }
+
+  Future<void> _getVersion() async {
+    // PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    // _getVersionAppController.sink.add(packageInfo.version);
+  }
+
+  void _updateDataLocal(ProfileModel? profileModel) {
+    AccountUtil.instance.updateUserData(profileModel);
+  }
+
+  @override
+  void dispose() {
+    _getUserInfoController.close();
+    _getVersionAppController.close();
+  }
+
+  @override
+  void onCreate(BuildContext context) {
+    // Get info user from local
+    _getUserInfoController.sink.add(AccountUtil.instance.getUserData());
+    // Get info user from API
+    getUserInfo();
+    // get version app
+    _getVersion();
+  }
 
   List<ItemSettingsModel> getItemsListOne() {
     return [
@@ -101,16 +101,5 @@ class MenuBloc extends BaseBloc {
           title: S.current.menu_setting,
           image: 'assets/icon/svg/menu_ic_setting.svg')
     ];
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-  }
-
-  @override
-  void onCreate(BuildContext context) {
-    getItemsListOne();
-    getItemsListTwo();
   }
 }

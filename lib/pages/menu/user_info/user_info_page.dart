@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
+import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/bottom_sheet/select_image_bottom_sheet.dart';
@@ -17,6 +18,7 @@ class UserInfoPage extends BasePage {
 
   static const routeName = '/UserInfo';
   final ScreenArguments data;
+
   @override
   BasePageState<BasePage<BaseBloc>> getState() => _UserInfoPagePageState();
 }
@@ -42,72 +44,84 @@ class _UserInfoPagePageState extends BasePageState<UserInfoPage> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.account_information),
+        title: Text(
+          S.current.account_information,
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+              fontSize: ScreenUtil.getInstance().getAdapterSize(18)),
+        ),
         centerTitle: true,
         elevation: 1,
+        backgroundColor: AppColor.colorWhiteDark,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            _imageInfoUser(),
-            _itemInfo(
-                text: S.current.username,
-                trailingText: profileModel?.fullName ?? ''),
-            _showDivider(),
-            _itemInfo(
-                text: S.current.phone_number,
-                trailingText: profileModel?.phone.toString() ?? ''),
-            _showDivider(),
-            _itemInfo(
-                text: S.current.email,
-                trailingText: profileModel?.email.toString() ?? ''),
-            _showDivider(),
-            _itemInfo(
-                text: S.current.id_number,
-                trailingText: profileModel?.identityNumber ?? ''),
-            _showDivider(),
-            _itemBank(
-                text: S.current.account_information,
-                trailingText: profileModel?.bank?.agency ?? '',
-                iconData: Icons.chevron_right,
-                onTap: () {}),
-            _showDivider(),
-            _itemInfo(
-                text: S.current.escrow,
-                trailingText: profileModel?.loyaltyPoint.toString() ?? ''),
-            _showDivider(),
-            _itemInfo(
-                text: S.current.address,
-                trailingText:
-                    '${profileModel?.address?.street ?? ''}, ${profileModel?.address?.districtName ?? ''}, ${profileModel?.address?.cityName ?? ''}'),
-            Container(
-              color: Colors.grey[200],
-              height: ScreenUtil.getInstance().getAdapterSize(10),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(15)),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    S.current.registration_means,
-                    style: TextStyle(
-                        fontSize: ScreenUtil.getInstance().getAdapterSize(20),
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
-            _itemInfo(
-                text: S.current.vehicle,
-                trailingText:
-                    '${profileModel?.vehicle?.name ?? ''} / ${profileModel?.vehicle?.number ?? ''}'),
-            _showDivider(),
-            _itemTeam(
-                text: S.current.joining_service,
-                teamModel: profileModel!.teamModel!,
-                onTap: () {}),
-            _changePassword()
-          ],
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Container(
+          color: AppColor.colorWhiteDark,
+          padding: EdgeInsets.only(
+              bottom: ScreenUtil.getInstance().getAdapterSize(50)),
+          child: Column(
+            children: [
+              _imageInfoUser(),
+              _itemInfo(
+                  text: S.current.username,
+                  trailingText: profileModel?.fullName ?? ''),
+              _showDivider(),
+              _itemInfo(
+                  text: S.current.phone_number,
+                  trailingText: profileModel?.phone.toString() ?? ''),
+              _showDivider(),
+              _itemInfo(
+                  text: S.current.email,
+                  trailingText: profileModel?.email.toString() ?? ''),
+              _showDivider(),
+              _itemInfo(
+                  text: S.current.id_number,
+                  trailingText: profileModel?.identityNumber ?? ''),
+              _showDivider(),
+              _itemBank(
+                  text: S.current.account_information,
+                  trailingText: profileModel?.bank?.agency ?? '',
+                  iconData: Icons.chevron_right,
+                  onTap: () {}),
+              _showDivider(),
+              _itemInfo(
+                  text: S.current.escrow,
+                  trailingText: profileModel?.loyaltyPoint.toString() ?? ''),
+              _showDivider(),
+              _itemInfo(
+                  text: S.current.address,
+                  trailingText:
+                      '${profileModel?.address?.street ?? ''}, ${profileModel?.address?.districtName ?? ''}, ${profileModel?.address?.cityName ?? ''}'),
+              Container(
+                color: Colors.grey[200],
+                height: ScreenUtil.getInstance().getAdapterSize(10),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(15)),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      S.current.registration_means,
+                      style: TextStyle(
+                          fontSize: ScreenUtil.getInstance().getAdapterSize(20),
+                          fontWeight: FontWeight.bold),
+                    )),
+              ),
+              _itemInfo(
+                  text: S.current.vehicle,
+                  trailingText:
+                      '${profileModel?.vehicle?.name ?? ''} / ${profileModel?.vehicle?.number ?? ''}'),
+              _showDivider(),
+              _itemTeam(
+                  text: S.current.joining_service,
+                  teamModel: profileModel!.teamModel!,
+                  onTap: () {}),
+            ],
+          ),
         ),
       ),
     );
@@ -206,7 +220,7 @@ class _UserInfoPagePageState extends BasePageState<UserInfoPage> {
             ),
             placeholder: (context, url) => CircularProgressIndicator(),
             errorWidget: (context, url, error) =>
-                Image.asset('assets/image/user.jpeg'),
+                Image.asset('assets/images/user.jpeg'),
           ),
           Positioned(
             bottom: ScreenUtil.getInstance().getAdapterSize(-25),
@@ -324,33 +338,6 @@ class _UserInfoPagePageState extends BasePageState<UserInfoPage> {
               ),
             )),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _changePassword() {
-    return Padding(
-      padding: EdgeInsets.only(
-          bottom: ScreenUtil.getInstance().getAdapterSize(10),
-          top: ScreenUtil.getInstance().getAdapterSize(10)),
-      child: Container(
-        width: ScreenUtil.getInstance().getAdapterSize(300),
-        height: ScreenUtil.getInstance().getAdapterSize(40),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, ChangePasswordPage.routerName);
-          },
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              )),
-              backgroundColor: MaterialStateProperty.all(Colors.orange)),
-          child: Text(
-            S.current.change_password,
-            style: TextStyle(color: Colors.white),
-          ),
         ),
       ),
     );

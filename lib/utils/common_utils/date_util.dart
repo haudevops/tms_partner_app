@@ -1,6 +1,4 @@
-// @Auth: cuong.nguyen
-// @Description: Date Util
-// @Date: 09/11/2021
+
 
 // Example:
 // String dateStr = "2019-07-09 16:16:16";

@@ -14,7 +14,7 @@ class CustomRouter {
     }
     switch (settings.name) {
       case SplashPage.routeName:
-        return SlideLeftRoute( SplashPage());
+        return SlideLeftRoute(SplashPage());
       case NavigationPage.routeName:
         return SlideLeftRoute(NavigationPage());
       case LoginPage.routeName:
@@ -45,6 +45,18 @@ class CustomRouter {
         return SlideLeftRoute(DetailPointPage(data: arg));
       case ConfirmPickGoodsSuccessPage.routeName:
         return SlideLeftRoute(ConfirmPickGoodsSuccessPage(arguments: arg));
+      case NotificationDetailPage.routeName:
+        return SlideLeftRoute(NotificationDetailPage(
+          data: arg,
+        ));
+      case TempPolicyPage.routeName:
+        return SlideLeftRoute(TempPolicyPage());
+      case HelpPage.routeName:
+        return SlideLeftRoute(HelpPage());
+      case DetailHelpPage.routeName:
+        return SlideLeftRoute(DetailHelpPage(data: arg,));
+      case ContactHelpPage.routeName:
+        return SlideLeftRoute(ContactHelpPage());
       default:
         throw ('this route name does not exist');
     }

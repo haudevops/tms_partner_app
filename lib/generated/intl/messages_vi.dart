@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_information":
             MessageLookupByLibrary.simpleMessage("Thông tin tài khoản"),
         "address": MessageLookupByLibrary.simpleMessage("Địa chỉ"),
+        "agree": MessageLookupByLibrary.simpleMessage("Đồng ý"),
         "alert_choose_warehouse":
             MessageLookupByLibrary.simpleMessage("Vui lòng chọn kho hoàn trả"),
         "alert_time_suggest_duration": MessageLookupByLibrary.simpleMessage(
@@ -47,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Không thể kết nối đến máy chủ."),
         "cancel": MessageLookupByLibrary.simpleMessage("Hủy"),
         "change_car": MessageLookupByLibrary.simpleMessage("ĐỔI XE"),
+        "change_pass":
+            MessageLookupByLibrary.simpleMessage("Thay đổi mật khẩu"),
         "change_password": MessageLookupByLibrary.simpleMessage("ĐỔI MẬT KHẨU"),
         "change_password_low":
             MessageLookupByLibrary.simpleMessage("Đổi mật khẩu"),
@@ -63,9 +66,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Xác nhận mật khẩu"),
         "connect_timeout":
             MessageLookupByLibrary.simpleMessage("Kết nối quá hạn."),
+        "contact_help": MessageLookupByLibrary.simpleMessage("Liên hệ hỗ trợ"),
         "continues": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
         "create_new_password":
             MessageLookupByLibrary.simpleMessage("Tạo mật khẩu mới"),
+        "current_password":
+            MessageLookupByLibrary.simpleMessage("Mật khẩu hiện tại"),
         "customer_service_level":
             MessageLookupByLibrary.simpleMessage("CẤP KHÁCH HÀNG PHỤC VỤ"),
         "delivery": MessageLookupByLibrary.simpleMessage("Giao hàng"),
@@ -95,6 +101,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "group": MessageLookupByLibrary.simpleMessage("Nhóm"),
         "grouped_order_list":
             MessageLookupByLibrary.simpleMessage("Danh sách đơn được nhóm"),
+        "help_center":
+            MessageLookupByLibrary.simpleMessage("Trung tâm trợ giúp"),
         "hint_external_filter":
             MessageLookupByLibrary.simpleMessage("Nhập mã tham chiếu"),
         "id_number": MessageLookupByLibrary.simpleMessage("Số CMND/CCCD"),
@@ -108,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Chờ xử lí"),
         "individual": MessageLookupByLibrary.simpleMessage("Cá nhân"),
         "info_app":
-            MessageLookupByLibrary.simpleMessage("© 2020 - Designed by"),
+            MessageLookupByLibrary.simpleMessage("© 2022 - Designed by"),
         "input_order_code":
             MessageLookupByLibrary.simpleMessage("Nhập mã đơn hàng"),
         "input_phone_number":
@@ -128,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Yêu cầu không hợp lệ"),
         "joining_service":
             MessageLookupByLibrary.simpleMessage("Dịch vụ tham gia"),
+        "language": MessageLookupByLibrary.simpleMessage("Ngôn ngữ"),
         "load_more_fail": MessageLookupByLibrary.simpleMessage(
             "Tải thất bại, vui lòng thử lại."),
         "load_more_no_more":
@@ -137,7 +146,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Đang tải, chờ trong giây lát"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "logout_confirm": MessageLookupByLibrary.simpleMessage(
-            "Bạn có chắc chắn muốn đăng xuất khỏi tài khoản này không ?"),
+            "Bạn thực sự muốn đăng xuất tài khoản?"),
+        "mark_as_read": MessageLookupByLibrary.simpleMessage("Đánh dấu đã đọc"),
         "media_picture":
             MessageLookupByLibrary.simpleMessage("ẢNH PHƯƠNG TIỆN"),
         "menu_help": MessageLookupByLibrary.simpleMessage("Trợ giúp"),
@@ -160,8 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "navigation_notification":
             MessageLookupByLibrary.simpleMessage("THÔNG BÁO"),
         "navigation_order": MessageLookupByLibrary.simpleMessage("ĐƠN HÀNG"),
-        "new_password":
-            MessageLookupByLibrary.simpleMessage("Nhập mật khẩu mới"),
+        "new_password": MessageLookupByLibrary.simpleMessage("Mật khẩu mới"),
         "no_information":
             MessageLookupByLibrary.simpleMessage("Chưa có thông tin"),
         "no_network_connection":
@@ -361,6 +370,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warranty_repair":
             MessageLookupByLibrary.simpleMessage("Bảo hành sửa chữa"),
         "weight": MessageLookupByLibrary.simpleMessage("Cân nặng"),
+        "you_want_mark_as_read": MessageLookupByLibrary.simpleMessage(
+            "Bạn muốn đánh dấu là đã xem tất cả các thông báo?"),
         "your_referral_code":
             MessageLookupByLibrary.simpleMessage("Mã giới thiệu của bạn")
       };

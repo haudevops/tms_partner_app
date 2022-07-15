@@ -54,7 +54,7 @@ class _ShareCodePageState extends BasePageState<ShareCodePage> {
               child: Padding(
                 padding: EdgeInsets.only(
                     top: ScreenUtil.getInstance().getAdapterSize(60)),
-                child: SvgPicture.asset('assets/image/img_share_code.svg'),
+                child: SvgPicture.asset('assets/images/img_share_code.svg'),
               ),
             ),
             Padding(

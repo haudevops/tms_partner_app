@@ -1,7 +1,4 @@
 import 'dart:convert';
-// @Auth: cuong.nguyen
-// @Description: Encrypt Util
-// @Date: 09/11/2021
 
 class EncryptUtil{
 

@@ -40,7 +40,7 @@
   "point": "point",
   "version": "Version",
   "notification_title": "Notification",
-  "info_app": "© 2020 - Designed by",
+  "info_app": "© 2022 - Designed by",
   "load_more_fail": "Load fail, tap to retry",
   "load_more_wait": "Wait for loading.",
   "load_more_wait_moment": "Loading, wait for moment ...",
@@ -208,5 +208,12 @@
   "your_referral_code": "Your Referral Code",
   "delivery_successful": "Delivery successful",
   "delivery_failed": "Delivery failed",
-  "please_enter_phone_and_password": "Please enter your phone number and password to login."
+  "please_enter_phone_and_password": "Please enter your phone number and password to login.",
+  "change_pass": "Change Password",
+  "current_password": "Current password",
+  "mark_as_read": "Mark as read",
+  "you_want_mark_as_read": "Want to mark all notifications as seen?",
+  "agree": "Agree",
+  "help_center": "Help Center",
+  "contact_help": "Contact help"
 }

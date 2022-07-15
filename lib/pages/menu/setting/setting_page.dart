@@ -5,11 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
+import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
 import 'package:tms_partner_app/utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/providers/language_provider.dart';
+import 'package:tms_partner_app/utils/providers/theme_provider.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 
 class SettingPage extends BasePage {
@@ -20,14 +22,19 @@ class SettingPage extends BasePage {
 }
 
 class _SettingPageState extends BasePageState<SettingPage> {
-  bool _isOnline = false;
+  bool _isThemeDark = false;
   late bool _checkLanguage;
 
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.menu_setting),
+        title: Text(
+          S.current.menu_setting,
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: ScreenUtil.getInstance().getAdapterSize(18)),
+        ),
         elevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: AppColor.colorWhiteDark,
@@ -46,6 +53,10 @@ class _SettingPageState extends BasePageState<SettingPage> {
                 indent: ScreenUtil.getInstance().getAdapterSize(75),
                 endIndent: ScreenUtil.getInstance().getAdapterSize(35)),
             _showSheetLanguage(),
+            SizedBox(
+              height: ScreenUtil.getInstance().getAdapterSize(16),
+            ),
+            _itemChangePassword(),
           ],
         ),
       ),
@@ -152,6 +163,7 @@ class _SettingPageState extends BasePageState<SettingPage> {
   }
 
   Widget _itemSafeModeWidget() {
+    final provider = Provider.of<ThemeProvider>(context, listen: false);
     return Container(
       color: AppColor.colorWhiteDark,
       child: SwitchListTile(
@@ -160,19 +172,41 @@ class _SettingPageState extends BasePageState<SettingPage> {
           style:
               TextStyle(fontSize: ScreenUtil.getInstance().getAdapterSize(15)),
         ),
-        value: _isOnline,
+        value: _isThemeDark,
         onChanged: (bool value) {
           setState(() {
-            _isOnline = value;
+            _isThemeDark = !_isThemeDark;
+            provider.toggleTheme(value);
           });
         },
         activeColor: Colors.green,
         secondary: SvgPicture.asset(
-          'assets/icon/svg/setting_ic_safe_mode.svg',
+          'assets/icon/svg/setting_ic_battery.svg',
           width: ScreenUtil.getInstance().getAdapterSize(25),
           height: ScreenUtil.getInstance().getAdapterSize(25),
         ),
       ),
+    );
+  }
+
+  Widget _itemChangePassword() {
+    return Container(
+      color: AppColor.colorWhiteDark,
+      child: ListTile(
+          leading: SvgPicture.asset(
+            'assets/icon/svg/setting_ic_change_password.svg',
+            width: ScreenUtil.getInstance().getAdapterSize(25),
+            height: ScreenUtil.getInstance().getAdapterSize(25),
+          ),
+          title: Text(
+            S.current.change_password_low,
+            style: TextStyle(
+                fontSize: ScreenUtil.getInstance().getAdapterSize(15)),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, ChangePasswordPage.routerName);
+          },
+          trailing: const Icon(Icons.chevron_right_rounded)),
     );
   }
 

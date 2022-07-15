@@ -4,9 +4,9 @@ import 'package:lottie/lottie.dart';
 Widget getLoadingWidget() {
   return Center(
     child: SizedBox(
-      width: 80,
-      height: 80,
-      child: Lottie.asset('assets/image/loading_lottie.json')
+      width: 200,
+      height: 200,
+      child: Lottie.asset('assets/images/delivery_lottie.json')
     )
   );
 }

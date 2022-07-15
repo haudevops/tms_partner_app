@@ -36,24 +36,24 @@ class OrdersBloc extends BaseBloc {
 
   Future<void> getOrders(
       {String? code,
-      String? external,
-      String? phone,
-      String? serviceType,
-      String? status}) async {
+        String? external,
+        String? phone,
+        String? serviceType,
+        String? status}) async {
     showLoading();
-    // _ordersController.sink.add(null);
+    _ordersController.sink.add(null);
     await OrdersService.instance
         .getOrders(
-            status: status,
-            code: code,
-            externalCode: external,
-            phone: phone,
-            serviceType: serviceType,
-            page: '1',
-            limit: '2000',
-            optimize: true)
+        status: status,
+        code: code,
+        externalCode: external,
+        phone: phone,
+        serviceType: serviceType,
+        page: '1',
+        limit: '2000',
+        optimize: true)
         .then((value) {
-      // _ordersController.sink.add(_groupListBillOrder(value.data));
+      _ordersController.sink.add(_groupListBillOrder(value.data));
     }).catchError((error) {
       DebugLog.show('getOrders error: ${error.toString()}');
     });
@@ -82,12 +82,12 @@ class OrdersBloc extends BaseBloc {
         orderCoD: firstOrder.cod,
         points: firstOrder.detail?.points
             ?.map((point) => OrderGroupPoint(
-                id: point.id,
-                externalCode: point.externalCode,
-                location: point.location,
-                status: point.status,
-                type: point.type,
-                products: point.products))
+            id: point.id,
+            externalCode: point.externalCode,
+            location: point.location,
+            status: point.status,
+            type: point.type,
+            products: point.products))
             .toList(),
         packages: firstOrder.packages,
         deliveryOrder: firstOrder.deliveryOrder,
@@ -120,12 +120,12 @@ class OrdersBloc extends BaseBloc {
             orderCoD: order.cod,
             points: order.detail?.points
                 ?.map((point) => OrderGroupPoint(
-                    id: point.id,
-                    externalCode: point.externalCode,
-                    location: point.location,
-                    status: point.status,
-                    type: point.type,
-                    products: point.products))
+                id: point.id,
+                externalCode: point.externalCode,
+                location: point.location,
+                status: point.status,
+                type: point.type,
+                products: point.products))
                 .toList(),
             packages: order.packages,
             deliveryOrder: order.deliveryOrder,
@@ -145,8 +145,8 @@ class OrdersBloc extends BaseBloc {
 
           List<Point>? diffPoint = order.detail?.points
               ?.where((orderPoint) =>
-                  orderPoint.type == PointType.DELIVERY_POINT &&
-                  !locations.contains(orderPoint.location))
+          orderPoint.type == PointType.DELIVERY_POINT &&
+              !locations.contains(orderPoint.location))
               .toList();
           if (diffPoint != null && diffPoint.isNotEmpty) {
             parentOrder.detail?.groupedPoints?.addAll(diffPoint);
@@ -157,8 +157,8 @@ class OrdersBloc extends BaseBloc {
 
           if (parentOrder.groups!
               .where((element) =>
-                  _getSOFromExternal(element.externalCode) ==
-                  _getSOFromExternal(order.externalCode))
+          _getSOFromExternal(element.externalCode) ==
+              _getSOFromExternal(order.externalCode))
               .isEmpty) {
             parentOrder.countSO++;
           }
@@ -170,12 +170,12 @@ class OrdersBloc extends BaseBloc {
             orderCoD: order.cod,
             points: order.detail?.points
                 ?.map((point) => OrderGroupPoint(
-                    id: point.id,
-                    externalCode: point.externalCode,
-                    location: point.location,
-                    status: point.status,
-                    type: point.type,
-                    products: point.products))
+                id: point.id,
+                externalCode: point.externalCode,
+                location: point.location,
+                status: point.status,
+                type: point.type,
+                products: point.products))
                 .toList(),
             packages: order.packages,
             deliveryOrder: order.deliveryOrder,
@@ -281,11 +281,11 @@ class OrdersBloc extends BaseBloc {
         return false;
       }
       if ((i > 0) &&
-              (pointsA[i].storeCode != null &&
-                      pointsA[i].storeCode!.isNotEmpty ||
-                  pointsB[i].storeCode != null &&
-                      pointsB[i].storeCode!.isNotEmpty) &&
-              pointsA[i].storeCode != pointsB[i].storeCode ||
+          (pointsA[i].storeCode != null &&
+              pointsA[i].storeCode!.isNotEmpty ||
+              pointsB[i].storeCode != null &&
+                  pointsB[i].storeCode!.isNotEmpty) &&
+          pointsA[i].storeCode != pointsB[i].storeCode ||
           pointsA[i].scanStore != pointsB[i].scanStore &&
               pointsA[i].scanStore != pointsB[i].scanStore) {
         return false;

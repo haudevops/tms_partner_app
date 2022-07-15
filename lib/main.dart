@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           )
         ],
         child: Builder(builder: (context) => MaterialApp(
-          title: 'STT',
+          title: 'Supra Transportation Technology',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               scaffoldBackgroundColor: const Color(0xFF101010),

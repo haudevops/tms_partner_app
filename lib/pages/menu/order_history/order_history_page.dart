@@ -106,66 +106,69 @@ class _OrderHistoryPageState extends BasePageState<OrderHistoryPage> {
         onRefresh: () async {
           _doGetOrdersHistory();
         },
-        child: StreamBuilder<List<OrderModel>?>(
-          stream: _bloc.streamOrderHistory,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Container(
-                width: ScreenUtil.getInstance().getAdapterSize(200),
-                height: ScreenUtil.getInstance().getAdapterSize(200),
-              );
-            }
-            if (snapshot.data == null) {
-              return ShimmerOrders();
-            }
-            _dataKeys =
-                List.generate(snapshot.data!.length, (index) => GlobalKey());
-
-            if (snapshot.data!.isEmpty) {
-              return Align(
-                alignment: Alignment.center,
-                child: Container(
+        child: Container(
+          padding: EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(5)),
+          child: StreamBuilder<List<OrderModel>?>(
+            stream: _bloc.streamOrderHistory,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return SizedBox(
                   width: ScreenUtil.getInstance().getAdapterSize(200),
-                  height: ScreenUtil.getInstance().getAdapterSize(250),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/image/order_not_found.svg',
-                        height: ScreenUtil.getInstance().getAdapterSize(200),
-                        width: ScreenUtil.getInstance().getAdapterSize(200),
-                      ),
-                      Text(
-                        S.current.no_oder,
-                        style: TextStyle(
-                            fontSize:
-                                ScreenUtil.getInstance().getAdapterSize(16),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                          height: ScreenUtil.getInstance().getAdapterSize(10)),
-                      Text(
-                        S.current.no_new_order,
-                        style: TextStyle(color: AppColor.colorGray),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }
+                  height: ScreenUtil.getInstance().getAdapterSize(200),
+                );
+              }
+              if (snapshot.data == null) {
+                return const ShimmerOrders();
+              }
+              _dataKeys =
+                  List.generate(snapshot.data!.length, (index) => GlobalKey());
 
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, int index) {
-                  return Card(
-                      elevation: 0,
-                      child: OrderWidget(
-                          order: snapshot.data![index],
-                          globalKey: _dataKeys[index],
-                          onTapOrder: (value) {}));
-                });
-          },
+              if (snapshot.data!.isEmpty) {
+                return Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: ScreenUtil.getInstance().getAdapterSize(200),
+                    height: ScreenUtil.getInstance().getAdapterSize(250),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/order_not_found.svg',
+                          height: ScreenUtil.getInstance().getAdapterSize(200),
+                          width: ScreenUtil.getInstance().getAdapterSize(200),
+                        ),
+                        Text(
+                          S.current.no_oder,
+                          style: TextStyle(
+                              fontSize:
+                                  ScreenUtil.getInstance().getAdapterSize(16),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                            height: ScreenUtil.getInstance().getAdapterSize(10)),
+                        Text(
+                          S.current.no_new_order,
+                          style: TextStyle(color: AppColor.colorGray),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, int index) {
+                    return Card(
+                        elevation: 0,
+                        child: OrderWidget(
+                            order: snapshot.data![index],
+                            globalKey: _dataKeys[index],
+                            onTapOrder: (value) {}));
+                  });
+            },
+          ),
         ),
         // child: Container(),
       ),

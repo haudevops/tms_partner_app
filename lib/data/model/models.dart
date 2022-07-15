@@ -32,6 +32,7 @@ export 'location/push_location_response.dart';
 
 // Menu
 export 'menu/item_setting_model.dart';
+export 'menu/item_support_model.dart';
 
 // News
 export 'news/news_response.dart';

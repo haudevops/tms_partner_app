@@ -53,6 +53,7 @@ dependencies:
   syncfusion_flutter_signaturepad: ^20.2.38
   path_provider: ^2.0.11
   google_maps_flutter: ^2.1.8
+  google_maps_flutter_web: ^0.4.0+1
   provider: ^6.0.3
   geolocator: ^9.0.1
   device_info_plus: ^4.0.0
@@ -107,6 +108,7 @@ flutter:
     - assets/icon/ic_scan_qr_black.svg
     - assets/icon/ic_marker_list_delivery_point.png
     - assets/images/loading_lottie.json
+    - assets/images/logo_supra_black.png
 
 
     - assets/icon/svg/menu_ic_history.svg
@@ -143,6 +145,12 @@ flutter:
     - assets/icon/svg/ic_lock.svg
     - assets/icon/svg/ic_otp.svg
     - assets/images/user.jpeg
+    - assets/icon/svg/email.svg
+    - assets/icon/svg/check_noti.svg
+    - assets/icon/svg/setting_ic_battery.svg
+    - assets/icon/svg/setting_ic_language.svg
+    - assets/icon/svg/setting_ic_change_password.svg
+    - assets/images/delivery_lottie.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

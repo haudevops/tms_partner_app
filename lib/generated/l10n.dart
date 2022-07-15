@@ -460,10 +460,10 @@ class S {
     );
   }
 
-  /// `© 2020 - Designed by`
+  /// `© 2022 - Designed by`
   String get info_app {
     return Intl.message(
-      '© 2020 - Designed by',
+      '© 2022 - Designed by',
       name: 'info_app',
       desc: '',
       args: [],
@@ -2145,6 +2145,76 @@ class S {
     return Intl.message(
       'Please enter your phone number and password to login.',
       name: 'please_enter_phone_and_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get change_pass {
+    return Intl.message(
+      'Change Password',
+      name: 'change_pass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current password`
+  String get current_password {
+    return Intl.message(
+      'Current password',
+      name: 'current_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as read`
+  String get mark_as_read {
+    return Intl.message(
+      'Mark as read',
+      name: 'mark_as_read',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Want to mark all notifications as seen?`
+  String get you_want_mark_as_read {
+    return Intl.message(
+      'Want to mark all notifications as seen?',
+      name: 'you_want_mark_as_read',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agree`
+  String get agree {
+    return Intl.message(
+      'Agree',
+      name: 'agree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help Center`
+  String get help_center {
+    return Intl.message(
+      'Help Center',
+      name: 'help_center',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact help`
+  String get contact_help {
+    return Intl.message(
+      'Contact help',
+      name: 'contact_help',
       desc: '',
       args: [],
     );

@@ -1,6 +1,4 @@
-// @Auth: cuong.nguyen
-// @Description: Object Util
-// @Date: 09/11/2021
+
 
 class ObjectUtil{
   /// Returns true if the string is null or 0-length.

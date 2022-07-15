@@ -64,10 +64,10 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
       _permissionGranted = await _location.requestPermission();
       if (_permissionGranted == PermissionStatus.granted) {
         _location.changeNotificationOptions(
-            channelName: 'Kênh thông báo EtonX',
+            channelName: 'Kênh thông báo Supra',
             title: 'Vị trí được sử dụng để nhận đơn hàng mới',
-            description: 'EtonX đang sử dụng vị trí của bạn',
-            iconName: 'assets/icon/etonx_logo_white.png');
+            description: 'Supra đang sử dụng vị trí của bạn',
+            iconName: 'assets/images/supra_logo.png');
         _location.enableBackgroundMode(enable: true);
       } else {
         return;

@@ -27,10 +27,12 @@ class _LoginPageState extends BasePageState<LoginPage> {
   final _formKeyPass = GlobalKey<FormState>();
   final RegExp regExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late LoginBloc _bloc;
 
   @override
   void onCreate() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    _bloc = getBloc();
   }
 
   @override
@@ -132,9 +134,8 @@ class _LoginPageState extends BasePageState<LoginPage> {
                 onPressed: () {
                   if (_formKeyPhone.currentState!.validate() &&
                       _formKeyPass.currentState!.validate()) {
-                    // _bloc.login(_phoneCon-troller.text, _passController.text);
-                    _initToken(true);
-                    // getBloc.login(_phoneController.text, _passController.text);
+                    // _bloc.login(_phoneController.text, _passController.text);
+                    _initToken( true);
                     Navigator.pushReplacementNamed(context, NavigationPage.routeName);
                   }
                 },

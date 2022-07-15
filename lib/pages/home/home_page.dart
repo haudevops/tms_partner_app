@@ -29,31 +29,20 @@ class _HomePageState extends BasePageState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('assets/images/logo_supra_white.png',
+        title: Image.asset('assets/images/supra_logo.png',
             width: ScreenUtil.getInstance().getWidth(100),
             height: ScreenUtil.getInstance().getHeight(30)),
         centerTitle: true,
         elevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: AppColor.colorWhiteDark,
-        actions: [
-          Switch(
-              value: _isOnline,
-              activeColor: Colors.lightGreen,
-              onChanged: (value) {
-                setState(() {
-                  _isOnline = !_isOnline;
-                  provider.toggleTheme(value);
-                });
-              })
-        ],
       ),
       body: GoogleMap(
         myLocationEnabled: true,
         compassEnabled: true,
         zoomControlsEnabled: false,
         tiltGesturesEnabled: true,
-        initialCameraPosition: CameraPosition(
+        initialCameraPosition: const CameraPosition(
           target: LatLng(0, 0),
           zoom: 14,
         ),

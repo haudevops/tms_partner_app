@@ -26,7 +26,7 @@ class DialogInternetConnect extends StatelessWidget {
         Image.asset('assets/image/img_no_network_connection.png'),
         const SizedBox(height: 10),
         Text(
-          'EtonX không nhận được phản hồi từ bạn !Hãy kiểm tra kết nối mạng',
+          'Supra không nhận được phản hồi từ bạn !Hãy kiểm tra kết nối mạng',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: ScreenUtil().getAdapterSize(16), color: Colors.black26),
         ),

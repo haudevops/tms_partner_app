@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
@@ -10,7 +11,7 @@ import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 import 'package:tms_partner_app/utils/logs/logger.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
+// import 'package:tms_partner_app/utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 import '../pages.dart';
@@ -27,7 +28,8 @@ class MenuPage extends BasePage {
 }
 
 class _MenuPageState extends BasePageState<MenuPage> {
-  // late MenuBloc _bloc;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late MenuBloc _bloc;
   bool checkOrder = false;
   String? phone;
 
@@ -74,7 +76,9 @@ class _MenuPageState extends BasePageState<MenuPage> {
   }
 
   @override
-  void onCreate() {}
+  void onCreate() {
+    _bloc = getBloc();
+  }
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -107,14 +111,13 @@ class _MenuPageState extends BasePageState<MenuPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // StreamBuilder<ProfileModel?>(
-                //   stream: _bloc.userInfoStream,
-                //   builder: (context, snapshot) {
-                //     phone = snapshot.data?.phone;
-                //     return _itemInfoUserWidget(snapshot.data);
-                //   },
-                // ),
-                _itemInfoUserWidget(),
+                StreamBuilder<ProfileModel?>(
+                  stream: _bloc.userInfoStream,
+                  builder: (context, snapshot) {
+                    phone = snapshot.data?.phone;
+                    return _itemInfoUserWidget(snapshot.data);
+                  },
+                ),
                 _itemCard(getItemsListOne()),
                 _itemCard(getItemsListTwo()),
                 _itemLogoutWidget(),
@@ -129,7 +132,7 @@ class _MenuPageState extends BasePageState<MenuPage> {
     );
   }
 
-  Widget _itemInfoUserWidget({ProfileModel? userInfo}) {
+  Widget _itemInfoUserWidget(ProfileModel? userInfo) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -146,9 +149,12 @@ class _MenuPageState extends BasePageState<MenuPage> {
                     // _bloc.getUserInfo(),
                   });
         },
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
+        leading: Container(
+          // borderRadius: BorderRadius.circular(25),
+          height: 50,
+          width: 50,
           child: CachedNetworkImage(
+            fit: BoxFit.cover,
             imageUrl: userInfo?.images?[0] ?? '',
             placeholder: (context, url) =>
                 Image.asset('assets/images/user.jpeg'),
@@ -157,7 +163,7 @@ class _MenuPageState extends BasePageState<MenuPage> {
           ),
         ),
         title: Text(
-          userInfo?.fullName ?? 'Tài xế Eton',
+          userInfo?.fullName ?? 'Tài xế Supra',
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: ScreenUtil.getInstance().getAdapterSize(16)),
@@ -232,7 +238,7 @@ class _MenuPageState extends BasePageState<MenuPage> {
         borderRadius: BorderRadius.circular(8),
       ),
       elevation: 0,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: _itemFunctionWidget(
           text: S.of(context).menu_logout,
           imageXML: 'assets/icon/svg/menu_ic_logout.svg',
@@ -243,7 +249,7 @@ class _MenuPageState extends BasePageState<MenuPage> {
                   return BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                     child: AlertDialog(
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       title: Text(S.current.menu_logout,
                           textAlign: TextAlign.center),
@@ -263,22 +269,27 @@ class _MenuPageState extends BasePageState<MenuPage> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                colorTitle: Colors.orange,
+                                colorTitle: AppColor.orderStatusYellow,
                                 backgroundColors: false,
                                 width: ScreenUtil.getInstance()
-                                    .getAdapterSize(120),
+                                    .getAdapterSize(110),
+                                height: ScreenUtil.getInstance()
+                                    .getAdapterSize(40),
                               ),
+                              SizedBox(width: ScreenUtil.getInstance().getAdapterSize(12),),
                               ButtonSubmitWidget(
                                   title: S.current.menu_logout.toUpperCase(),
                                   onPressed: () {
-                                    PrefsUtil.clear();
+                                    _clearToken();
                                     Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
                                             SplashPage.routeName,
                                             (Route<dynamic> route) => false);
                                   },
                                   width: ScreenUtil.getInstance()
-                                      .getAdapterSize(120),
+                                      .getAdapterSize(110),
+                                  height: ScreenUtil.getInstance()
+                                      .getAdapterSize(40),
                                   colorTitle: Colors.white),
                             ],
                           )
@@ -315,7 +326,7 @@ class _MenuPageState extends BasePageState<MenuPage> {
       children: [
         Text(S.of(context).info_app),
         SizedBox(width: ScreenUtil.getInstance().getAdapterSize(5)),
-        Image.asset('assets/images/logo_supra_white.png',
+        Image.asset('assets/images/logo_supra_black.png',
             width: ScreenUtil.getInstance().getAdapterSize(60),
             height: ScreenUtil.getInstance().getAdapterSize(30))
       ],
@@ -329,7 +340,6 @@ class _MenuPageState extends BasePageState<MenuPage> {
         break;
       case Constants.ITEM_MENU_STATISTICAL:
         DebugLog.show('Click STATISTICAL');
-
         break;
       case Constants.ITEM_MENU_WALLET:
         DebugLog.show('Click WALLET');
@@ -343,8 +353,10 @@ class _MenuPageState extends BasePageState<MenuPage> {
         break;
       case Constants.ITEM_MENU_TERMS_POLICY:
         DebugLog.show('Click TERMS POLICY');
+        Navigator.pushNamed(context, TempPolicyPage.routeName);
         break;
       case Constants.ITEM_MENU_HELP:
+        Navigator.pushNamed(context, HelpPage.routeName);
         break;
       case Constants.ITEM_MENU_SETTING:
         Navigator.pushNamed(context, SettingPage.routeName);
@@ -352,6 +364,11 @@ class _MenuPageState extends BasePageState<MenuPage> {
       default:
         break;
     }
+  }
+
+  Future<void> _clearToken() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.clear();
   }
 
   @override

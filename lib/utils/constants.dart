@@ -6,7 +6,7 @@ import 'package:tms_partner_app/utils/order/business_constant.dart';
 class Constants {
   Constants._();
 
-  static const String loadingLottie = 'assets/images/loading_lottie.json';
+  static const String loadingLottie = 'assets/images/delivery_lottie.json';
 
   static const String marvelHeroDetectionName = 'Tìm tên siêu anh hùng';
   static const String marvelHeroDetectionId = 'marvel_detection';
@@ -125,5 +125,10 @@ class Constants {
   static const String ITEM_MENU_TERMS_POLICY = 'ITEM_MENU_TERMS_POLICY';
   static const String ITEM_MENU_HELP = 'ITEM_MENU_HELP';
   static const String ITEM_MENU_SETTING = 'ITEM_MENU_SETTING';
+
+  static const String ITEM_SUPPORT_HOTLINE = 'ITEM_SUPPORT_HOTLINE';
+  static const String ITEM_SUPPORT_FACEBOOK = 'ITEM_SUPPORT_FACEBOOK';
+  static const String ITEM_SUPPORT_WEBSITE = 'ITEM_SUPPORT_WEBSITE';
+  static const String ITEM_SUPPORT_MAIL = 'ITEM_SUPPORT_MAIL';
 
 }
