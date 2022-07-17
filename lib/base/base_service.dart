@@ -29,8 +29,8 @@ class BaseService {
 
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
-      // final token = AccountUtil.instance.getToken();
-      final token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MjFiODIzYTk2YjE3ODI0YjY1NTUyMWUiLCJkYXRhIjp7InVzZXItYWdlbnQiOiJva2h0dHAvMy4xMi42IiwidXVpZCI6ImNvbS5zdXByYS5wYXJ0bmVyLmRldi05ZGEyNThiNC1lNjA2LTM5YzEtOTcxZi1iNGIzN2QyNmUzOGEifSwiaWF0IjoxNjU3ODcxNzU5fQ.aIsrlhec5a2pEGZeUIWGjHJMyDNzDNnuJUVXz6jZ110';
+      final token = AccountUtil.instance.getToken();
+      // final token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MjM2Y2Y2MDgxYjM4MDIyNzBlM2NjZDEiLCJkYXRhIjp7InVzZXItYWdlbnQiOiJQb3N0bWFuUnVudGltZS83LjI5LjAiLCJ1dWlkIjoiY29tLnN1cHJhLnRtc19wYXJ0bmVyX2FwcC5kZXYtbnVsbCJ9LCJpYXQiOjE2NTgwNjg3OTZ9.F5VIshrZHBCJ0hHA598wSRKSCY7JsZdYaAGmnwPSR5g';
       if (token != null) {
         options.headers['content-type'] = 'application/json';
         options.headers['Authorization'] = 'Bearer $token';

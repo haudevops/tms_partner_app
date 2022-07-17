@@ -99,24 +99,24 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
           slivers: [
             _appBarCustom(),
             _makeHeader(),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
             StreamBuilder<List<OrderModel>?>(
               stream: _bloc.ordersStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return SliverToBoxAdapter(
+                  return const SliverToBoxAdapter(
                       child: NoOrderWidget(title: 'Đã có lỗi xảy ra'));
                 }
                 if (snapshot.data == null) {
-                  return SliverToBoxAdapter(child: ShimmerOrders());
+                  return const SliverToBoxAdapter(child: ShimmerOrders());
                 }
                 _dataKeys = List.generate(
                     snapshot.data!.length, (index) => GlobalKey());
 
                 if (snapshot.data!.isEmpty) {
-                  return SliverToBoxAdapter(
+                  return const SliverToBoxAdapter(
                       child: NoOrderWidget(
                         title: 'Không có đơn hàng',
                       ));
@@ -144,7 +144,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                 );
               },
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
           ],
@@ -173,11 +173,11 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
       _isExpanded ? AppColor.lineLayout : AppColor.colorBackground,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.only(left: _isExpanded ? 10 : 0, bottom: 10),
-        title: Container(
+        title: SizedBox(
           width: ScreenUtil.getInstance().screenWidth,
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 width: ScreenUtil.getInstance().screenWidth,
                 child: Text(
                   S.current.order,

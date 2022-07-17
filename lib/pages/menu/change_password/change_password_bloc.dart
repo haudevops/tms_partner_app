@@ -4,8 +4,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/data/service/auth_service.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/logs/logger.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 
 import '../../pages.dart';
 

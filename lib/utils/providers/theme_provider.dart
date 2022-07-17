@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tms_partner_app/res/colors.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 
 import '../prefs_const.dart';
 

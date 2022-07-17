@@ -2,7 +2,7 @@
 import 'package:tms_partner_app/utils/order/business_constant.dart';
 import 'package:tms_partner_app/utils/order/order_utils.dart';
 import 'package:tms_partner_app/utils/order/point_status_enum.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
+import 'package:tms_partner_app/utils/common_utils/object_util.dart';
 
 import '../models.dart';
 

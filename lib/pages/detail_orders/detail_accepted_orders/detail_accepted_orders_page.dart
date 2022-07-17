@@ -35,13 +35,13 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
 
   @override
   void onCreate() {
-    // _bloc = getBloc();
-    // _bloc.initData(orderModel: widget.arguments.arg1);
-    // _bloc.ordersStream.listen((value) {
-    //   if (value != null) {
-    //     _checkStatus(value.status);
-    //   }
-    // });
+    _bloc = getBloc();
+    _bloc.initData(orderModel: widget.arguments.arg1);
+    _bloc.ordersStream.listen((value) {
+      if (value != null) {
+        _checkStatus(value.status);
+      }
+    });
   }
 
   @override
@@ -124,78 +124,78 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
         });
   }
 
-  // @override
-  // Widget buildWidget(BuildContext context) {
-  //   return StreamBuilder<OrderModel?>(
-  //     stream: _bloc.ordersStream,
-  //     builder: (builderContext, snapshot) {
-  //       if (snapshot.hasData) {
-  //         OrderModel _orderModel = snapshot.data!;
-  //         PointTargetFinder pointTargetFinder =
-  //             _bloc.findPointsAction(_orderModel);
-  //         return Scaffold(
-  //           backgroundColor: AppColor.colorItemDarkWhite,
-  //           floatingActionButton: Padding(
-  //             padding: EdgeInsets.symmetric(
-  //                 vertical: ScreenUtil.getInstance().getAdapterSize(60)),
-  //             child: FloatingActionButton(
-  //               onPressed: () {
-  //                 if (pointTargetFinder.point?.contact?.phone != null &&
-  //                     pointTargetFinder.point!.contact!.phone!.isNotEmpty) {
-  //                   PhoneCallBottomSheet().show(
-  //                       context: context,
-  //                       phoneNumber: pointTargetFinder.point!.contact!.phone!);
-  //                 }
-  //               },
-  //               child: Icon(Icons.phone, color: AppColor.colorItemDarkWhite),
-  //               backgroundColor: AppColor.orderGreenLight,
-  //             ),
-  //           ),
-  //           appBar: AppBarCustom(
-  //             showOnBack: true,
-  //             titleWidget: Text(_orderModel.isGrouped()
-  //                 ? 'Nhóm đơn'
-  //                 : 'Đơn hàng ${_orderModel.code}'),
-  //           ),
-  //           body: Stack(
-  //             children: [
-  //               Container(
-  //                 width: ScreenUtil.getInstance().screenWidth,
-  //                 height: ScreenUtil.getInstance().screenHeight,
-  //                 child: SingleChildScrollView(
-  //                   child: Column(
-  //                     children: [
-  //                       _detailWidget(_orderModel),
-  //                       Container(
-  //                           height: ScreenUtil.getInstance().getAdapterSize(8),
-  //                           color: AppColor.lineLayout),
-  //                       _locationWidget(_orderModel),
-  //                       SizedBox(
-  //                           height:
-  //                               ScreenUtil.getInstance().getAdapterSize(90)),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //               Align(
-  //                 alignment: Alignment.bottomCenter,
-  //                 child: _buttonWidget(pointTargetFinder, _orderModel),
-  //               )
-  //             ],
-  //           ),
-  //         );
-  //       } else if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return const SizedBox();
-  //       }
-  //       return NoOrderWidget(title: 'Không có đơn hàng');
-  //     },
-  //   );
-  // }
-
   @override
   Widget buildWidget(BuildContext context) {
-    return Container();
+    return StreamBuilder<OrderModel?>(
+      stream: _bloc.ordersStream,
+      builder: (builderContext, snapshot) {
+        if (snapshot.hasData) {
+          OrderModel _orderModel = snapshot.data!;
+          PointTargetFinder pointTargetFinder =
+              _bloc.findPointsAction(_orderModel);
+          return Scaffold(
+            backgroundColor: AppColor.colorItemDarkWhite,
+            floatingActionButton: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: ScreenUtil.getInstance().getAdapterSize(60)),
+              child: FloatingActionButton(
+                onPressed: () {
+                  if (pointTargetFinder.point?.contact?.phone != null &&
+                      pointTargetFinder.point!.contact!.phone!.isNotEmpty) {
+                    PhoneCallBottomSheet().show(
+                        context: context,
+                        phoneNumber: pointTargetFinder.point!.contact!.phone!);
+                  }
+                },
+                child: Icon(Icons.phone, color: AppColor.colorItemDarkWhite),
+                backgroundColor: AppColor.orderGreenLight,
+              ),
+            ),
+            appBar: AppBarCustom(
+              showOnBack: true,
+              titleWidget: Text(_orderModel.isGrouped()
+                  ? 'Nhóm đơn'
+                  : 'Đơn hàng ${_orderModel.code}'),
+            ),
+            body: Stack(
+              children: [
+                Container(
+                  width: ScreenUtil.getInstance().screenWidth,
+                  height: ScreenUtil.getInstance().screenHeight,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        _detailWidget(_orderModel),
+                        Container(
+                            height: ScreenUtil.getInstance().getAdapterSize(8),
+                            color: AppColor.lineLayout),
+                        _locationWidget(_orderModel),
+                        SizedBox(
+                            height:
+                                ScreenUtil.getInstance().getAdapterSize(90)),
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _buttonWidget(pointTargetFinder, _orderModel),
+                )
+              ],
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox();
+        }
+        return NoOrderWidget(title: 'Không có đơn hàng');
+      },
+    );
   }
+
+  // @override
+  // Widget buildWidget(BuildContext context) {
+  //   return Container();
+  // }
 
   Widget _detailWidget(OrderModel orderModel) {
     String? _storeCode = OrderUtils.getStoreCode(orderModel);

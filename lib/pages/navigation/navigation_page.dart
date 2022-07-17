@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:location/location.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/res/colors.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 import 'package:tms_partner_app/widgets/keep_alive_page.dart';
 
 import '../../base/base_bloc.dart';

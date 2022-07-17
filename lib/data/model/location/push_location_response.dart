@@ -1,6 +1,4 @@
-
-
-import 'package:tms_partner_app/utils/prefs_util.dart';
+import 'package:tms_partner_app/utils/common_utils/object_util.dart';
 
 class PushLocationResponse {
   PushLocationResponse(

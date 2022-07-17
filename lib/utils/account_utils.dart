@@ -1,8 +1,6 @@
-
-
 import 'package:tms_partner_app/data/model/models.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 
 class AccountUtil {
   AccountUtil._internal();
@@ -28,13 +26,13 @@ class AccountUtil {
         PrefsCache.USER_DATA, (v) => ProfileModel.fromJson(v));
   }
 
-  void updateAppSetting(AppSettingModel? appSettingModel){
+  void updateAppSetting(AppSettingModel? appSettingModel) {
     if (appSettingModel != null) {
       PrefsUtil.putObject(PrefsCache.DATA_SETTING, appSettingModel);
     }
   }
 
-  AppSettingModel? getAppSetting(){
+  AppSettingModel? getAppSetting() {
     return PrefsUtil.getObj<AppSettingModel>(
         PrefsCache.DATA_SETTING, (v) => AppSettingModel.fromJson(v));
   }

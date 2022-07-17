@@ -4,9 +4,9 @@ import 'package:location/location.dart';
 import 'package:tms_partner_app/base/base_bloc.dart';
 import 'package:tms_partner_app/data/service/other_service.dart';
 import 'package:tms_partner_app/utils/account_utils.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/logs/logger.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 
 class NavigationBloc extends BaseBloc {
   @override

@@ -6,11 +6,11 @@ import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/utils/account_utils.dart';
 import 'package:tms_partner_app/utils/common_utils/date_util.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 import 'package:tms_partner_app/utils/fcm_token_id.dart';
 import 'package:tms_partner_app/utils/logs/logger.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 
 class LoginBloc extends BaseBloc {
   late BuildContext _context;
@@ -33,7 +33,7 @@ class LoginBloc extends BaseBloc {
         showMsg(
             value.message ?? S.current.something_went_wrong_please_try_again);
       }
-      Navigator.pushReplacementNamed(_context, NavigationPage.routeName);
+      // Navigator.pushReplacementNamed(_context, NavigationPage.routeName);
       hiddenLoading();
     }).catchError((error) {
       hiddenLoading();

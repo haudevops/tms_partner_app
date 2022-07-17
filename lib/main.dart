@@ -16,9 +16,9 @@ import 'utils/providers/theme_provider.dart';
 // void main() {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   // FirebaseDatabase.instance.setPersistenceEnabled(true);
-//   // Firebase.initializeApp();
-//   SystemChrome.setSystemUIOverlayStyle(
-//       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+//   Firebase.initializeApp();
+//   // SystemChrome.setSystemUIOverlayStyle(
+//   //     const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 //   runApp(const MyApp());
 // }
 

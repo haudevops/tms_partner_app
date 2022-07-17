@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:tms_partner_app/base/base.dart';
+import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
-import 'package:tms_partner_app/utils/prefs_util.dart';
 
 import '../pages.dart';
 
