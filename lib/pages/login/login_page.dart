@@ -134,9 +134,9 @@ class _LoginPageState extends BasePageState<LoginPage> {
                 onPressed: () {
                   if (_formKeyPhone.currentState!.validate() &&
                       _formKeyPass.currentState!.validate()) {
-                    // _bloc.login(_phoneController.text, _passController.text);
-                    _initToken( true);
-                    Navigator.pushReplacementNamed(context, NavigationPage.routeName);
+                    _bloc.login(_phoneController.text, _passController.text);
+                    // _initToken( true);
+                    // Navigator.pushReplacementNamed(context, NavigationPage.routeName);
                   }
                 },
                 title: S.of(context).login.toUpperCase(),

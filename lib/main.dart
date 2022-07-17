@@ -26,8 +26,8 @@ Future<Widget> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   //FirebaseDatabase.instance.setPersistenceEnabled(true);
   await PrefsUtil.getInstance();
-  // await Firebase.initializeApp();
-  return MyApp();
+  await Firebase.initializeApp();
+  return const MyApp();
 }
 
 class MyApp extends StatelessWidget {
