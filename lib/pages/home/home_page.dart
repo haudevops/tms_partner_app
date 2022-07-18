@@ -19,9 +19,8 @@ class HomePage extends BasePage<HomeBloc> {
 }
 
 class _HomePageState extends BasePageState<HomePage> {
-  bool _isOnline = false;
   final Completer<GoogleMapController> _controller = Completer();
-  HomeBloc? _bloc;
+  late HomeBloc _bloc;
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -38,7 +37,7 @@ class _HomePageState extends BasePageState<HomePage> {
       body: GoogleMap(
         myLocationEnabled: true,
         compassEnabled: true,
-        zoomControlsEnabled: false,
+        zoomControlsEnabled: true,
         tiltGesturesEnabled: true,
         initialCameraPosition: const CameraPosition(
           target: LatLng(0, 0),
@@ -54,7 +53,7 @@ class _HomePageState extends BasePageState<HomePage> {
   void onCreate() {
     _bloc = getBloc();
 
-    _bloc?.locationStream.listen((position) async {
+    _bloc.locationStream.listen((position) async {
       final GoogleMapController controller = await _controller.future;
       controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(position.latitude, position.longitude),

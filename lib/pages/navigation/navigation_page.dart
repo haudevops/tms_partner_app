@@ -46,7 +46,7 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
       initialPage: 0,
       keepPage: true,
     );
-    // _bloc = getBloc();
+    _bloc = getBloc();
     _locationRequest();
   }
 
@@ -82,7 +82,7 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
             : Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
 
     _location.onLocationChanged.listen((LocationData currentLocation) {
-      // _bloc.sendLocation(currentLocation);
+      _bloc.sendLocation(currentLocation);
     });
   }
 
