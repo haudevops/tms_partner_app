@@ -46,12 +46,11 @@ class ButtonSubmitWidget extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: backgroundColors
                 ? MaterialStateProperty.all(AppColor.colorPrimaryButton)
-                : MaterialStateProperty.all(inactiveColor ? Color(0xFFCFCAC6) : AppColor.colorWhiteDark),
+                : MaterialStateProperty.all(inactiveColor ? const Color(0xFFCFCAC6) : const Color(0xFFCFCAC6)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         ScreenUtil.getInstance().getAdapterSize(8)),
-                    side: inactiveColor ? BorderSide.none : BorderSide(color: AppColor.colorPrimaryButton),
                 ))),
         onPressed: onPressed,
         child: Text(

@@ -28,6 +28,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
   final RegExp regExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late LoginBloc _bloc;
+  bool _isLogin = false;
 
   @override
   void onCreate() {
@@ -89,6 +90,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                   },
                   controller: _phoneController,
                   keyboardType: TextInputType.number,
+                  onChange: (value){},
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return S.of(context).empty_phone_number;
@@ -123,6 +125,18 @@ class _LoginPageState extends BasePageState<LoginPage> {
                       });
                     },
                   ),
+                  onChange: (value){
+                    if (_formKeyPhone.currentState!.validate() &&
+                        _formKeyPass.currentState!.validate()){
+                      setState((){
+                        _isLogin = true;
+                      });
+                    }else{
+                      setState((){
+                        _isLogin = false;
+                      });
+                    }
+                  },
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return S.of(context).empty_pass_word;
@@ -139,6 +153,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                     // Navigator.pushReplacementNamed(context, NavigationPage.routeName);
                   }
                 },
+                backgroundColors: _isLogin,
                 title: S.of(context).login.toUpperCase(),
                 colorTitle: Colors.white,
                 height: ScreenUtil.getInstance().getAdapterSize(44),
@@ -157,6 +172,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
       required bool autoFocus,
       required FocusNode focusNode,
       required ValueChanged<String?> onSubmit,
+      required ValueChanged<String?> onChange,
       required TextEditingController controller,
       required bool obscureText,
       required GlobalKey globalKey,
@@ -172,29 +188,30 @@ class _LoginPageState extends BasePageState<LoginPage> {
         onFieldSubmitted: onSubmit,
         controller: controller,
         obscureText: obscureText,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
+        onChanged: onChange,
         decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
             filled: true,
             fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(color: Color(0x33101010), width: 1),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(color: Color(0x33101010), width: 1),
             ),
-            errorBorder: OutlineInputBorder(
+            errorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(color: Colors.red, width: 1),
             ),
-            focusedErrorBorder: OutlineInputBorder(
+            focusedErrorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(width: 1, color: Colors.red),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 15),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 15),
             suffixIcon: suffixIcon),
         validator: validator,
       ),

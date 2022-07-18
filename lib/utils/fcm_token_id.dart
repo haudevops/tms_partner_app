@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:package_info/package_info.dart';
+import 'package:flutter/foundation.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class FCMGetTokenID{
 
@@ -18,7 +19,10 @@ class FCMGetTokenID{
     var deviceInfo = DeviceInfoPlugin();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-    if (Platform.isIOS) {
+    if(kIsWeb){
+      var webInfo = await deviceInfo.webBrowserInfo;
+      return '${packageInfo.packageName}-${webInfo.vendor}';
+    }else if (Platform.isIOS) {
       var iosDeviceInfo = await deviceInfo.iosInfo;
       return '${packageInfo.packageName}-${iosDeviceInfo.identifierForVendor}';
     } else {
@@ -26,4 +30,9 @@ class FCMGetTokenID{
       return '${packageInfo.packageName}-${androidDeviceInfo.androidId}';
     }
   }
+}
+
+class WebVersionInfo {
+  static const String name = '1.0.0';
+  static const int build = 1;
 }

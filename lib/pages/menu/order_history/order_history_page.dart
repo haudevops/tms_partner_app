@@ -6,6 +6,7 @@ import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/res/colors.dart';
+import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/order/business_constant.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
@@ -80,6 +81,29 @@ class _OrderHistoryPageState extends BasePageState<OrderHistoryPage> {
             FilterModel(id: '22', name: S.current.complete_with_refund),
           ],
         ));
+  }
+
+  void _checkNavigation(OrderModel model) {
+    switch (model.status) {
+      case OrderStatus.FINDING:
+      case OrderStatus.WAITING_CONFIRM:
+      // New order
+        break;
+      case OrderStatus.INCIDENT:
+      case OrderStatus.IN_PROGRESS_INCIDENT:
+      // Incident order
+        break;
+      default:
+      // Accepted order
+        Navigator.pushNamed(context, DetailAcceptedOrderPage.routeName,
+            arguments: ScreenArguments(arg1: model))
+            .then((value) {
+          if (value != null) {
+            _doGetOrdersHistory();
+          }
+        });
+        break;
+    }
   }
 
   @override
@@ -165,7 +189,7 @@ class _OrderHistoryPageState extends BasePageState<OrderHistoryPage> {
                         child: OrderWidget(
                             order: snapshot.data![index],
                             globalKey: _dataKeys[index],
-                            onTapOrder: (value) {}));
+                            onTapOrder: _checkNavigation));
                   });
             },
           ),

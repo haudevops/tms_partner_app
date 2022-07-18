@@ -10,23 +10,29 @@ import 'package:tms_partner_app/routes/route_settings.dart';
 import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/providers/language_provider.dart';
 import 'package:tms_partner_app/utils/screen_util/screen_util_init.dart';
+import 'firebase_options.dart';
 
 import 'utils/providers/theme_provider.dart';
 
-// void main() {
+// void main() async{
 //   WidgetsFlutterBinding.ensureInitialized();
 //   // FirebaseDatabase.instance.setPersistenceEnabled(true);
-//   Firebase.initializeApp();
-//   // SystemChrome.setSystemUIOverlayStyle(
-//   //     const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+//   await PrefsUtil.getInstance();
+//   Firebase.initializeApp(
+//       options: DefaultFirebaseOptions.currentPlatform
+//   );
+//   SystemChrome.setSystemUIOverlayStyle(
+//       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 //   runApp(const MyApp());
 // }
 
 Future<Widget> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //FirebaseDatabase.instance.setPersistenceEnabled(true);
   await PrefsUtil.getInstance();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform
+  );
+  // FirebaseDatabase.instance.setPersistenceEnabled(true);
   return const MyApp();
 }
 

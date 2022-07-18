@@ -242,6 +242,7 @@ class _MenuPageState extends BasePageState<MenuPage> {
       child: _itemFunctionWidget(
           text: S.of(context).menu_logout,
           imageXML: 'assets/icon/svg/menu_ic_logout.svg',
+          textColor: Colors.red ,
           onTap: () {
             showDialog(
                 context: context,
