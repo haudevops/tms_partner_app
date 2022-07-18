@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,7 +12,6 @@ import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 
 import '../pages.dart';
-import 'orders_bloc.dart';
 
 class OrdersPage extends BasePage<OrdersBloc> {
   OrdersPage() : super(bloc: OrdersBloc());
@@ -67,16 +67,16 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
     switch (model.status) {
       case OrderStatus.FINDING:
       case OrderStatus.WAITING_CONFIRM:
-      // New order
+        // New order
         break;
       case OrderStatus.INCIDENT:
       case OrderStatus.IN_PROGRESS_INCIDENT:
-      // Incident order
+        // Incident order
         break;
       default:
-      // Accepted order
+        // Accepted order
         Navigator.pushNamed(context, DetailAcceptedOrderPage.routeName,
-            arguments: ScreenArguments(arg1: model))
+                arguments: ScreenArguments(arg1: model))
             .then((value) {
           if (value != null) {
             _doGetOrders();
@@ -118,13 +118,13 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                 if (snapshot.data!.isEmpty) {
                   return const SliverToBoxAdapter(
                       child: NoOrderWidget(
-                        title: 'Không có đơn hàng',
-                      ));
+                    title: 'Không có đơn hàng',
+                  ));
                 }
 
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                        (context, index) {
+                    (context, index) {
                       return OrderWidget(
                           order: snapshot.data![index],
                           globalKey: _dataKeys[index],
@@ -154,8 +154,8 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
         onPressed: () {
           Navigator.pushNamed(context, ScanPage.routeName,
               arguments: ScreenArguments(arg1: (barCode) {
-                print(barCode);
-              }));
+            log(barCode);
+          }));
         },
         backgroundColor: Colors.black,
         elevation: 0.0,
@@ -170,7 +170,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
       expandedHeight: ScreenUtil.getInstance().getHeight(70),
       elevation: 0.5,
       backgroundColor:
-      _isExpanded ? AppColor.lineLayout : AppColor.colorBackground,
+          _isExpanded ? AppColor.lineLayout : AppColor.colorWhiteDark,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.only(left: _isExpanded ? 10 : 0, bottom: 10),
         title: SizedBox(
@@ -182,8 +182,9 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                 child: Text(
                   S.current.order,
                   textAlign: _isExpanded ? TextAlign.start : TextAlign.center,
-                  style:
-                  TextStyle(fontSize: ScreenUtil.getScaleSp(context, 18), color: Colors.black),
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getScaleSp(context, 18),
+                      color: Colors.black),
                 ),
               ),
               Positioned(
@@ -260,68 +261,68 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
             builder: (context, snapshot) {
               return LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                    return constraints.biggest.height >
+                return constraints.biggest.height >
                         ScreenUtil.getInstance().getAdapterSize(85)
-                        ? Container(
-                      color: _isExpanded
-                          ? AppColor.lineLayout
-                          : AppColor.colorBackground,
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _itemStatistical(
-                              icon: 'assets/icon/ic_order_accepted.svg',
-                              qty: 0,
-                              status: S.current.accepted,
-                              size:
-                              _calculatorSize(constraints.biggest.height),
-                              orderStatus: "${OrderStatus.NEW}"),
-                          _itemStatistical(
-                              icon: 'assets/icon/ic_order_processing.svg',
-                              qty: snapshot.data?.current ?? 0,
-                              status: S.current.processing,
-                              size:
-                              _calculatorSize(constraints.biggest.height),
-                              orderStatus:
-                              "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                          _itemStatistical(
-                            icon: 'assets/icon/ic_order_finish.svg',
-                            qty: snapshot.data?.finished ?? 0,
-                            status: S.current.accomplished,
-                            size: _calculatorSize(constraints.biggest.height),
-                            orderStatus:
-                            "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
-                          )
-                        ],
-                      ),
-                    )
-                        : Container(
-                      //color: AppColor.colorBackground,
-                      decoration: BoxDecoration(
-                          color: AppColor.colorBackground,
-                          border: Border(
-                            bottom: BorderSide(
-                              //                   <--- left side
-                              color: AppColor.lineLayout,
-                              width: 0.5,
-                            ),
-                          )),
-                      child: Row(
+                    ? Container(
+                        color: _isExpanded
+                            ? AppColor.lineLayout
+                            : AppColor.colorWhiteDark,
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            _itemIconHeader(
-                                'assets/icon/ic_order_accepted.svg',
-                                "${OrderStatus.NEW}"),
-                            _itemIconHeader(
-                                'assets/icon/ic_order_processing.svg',
-                                "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                            _itemIconHeader('assets/icon/ic_order_finish.svg',
-                                '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
-                          ]),
-                    );
-                  });
+                            _itemStatistical(
+                                icon: 'assets/icon/ic_order_accepted.svg',
+                                qty: 0,
+                                status: S.current.accepted,
+                                size:
+                                    _calculatorSize(constraints.biggest.height),
+                                orderStatus: "${OrderStatus.NEW}"),
+                            _itemStatistical(
+                                icon: 'assets/icon/ic_order_processing.svg',
+                                qty: snapshot.data?.current ?? 0,
+                                status: S.current.processing,
+                                size:
+                                    _calculatorSize(constraints.biggest.height),
+                                orderStatus:
+                                    "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
+                            _itemStatistical(
+                              icon: 'assets/icon/ic_order_finish.svg',
+                              qty: snapshot.data?.finished ?? 0,
+                              status: S.current.accomplished,
+                              size: _calculatorSize(constraints.biggest.height),
+                              orderStatus:
+                                  "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
+                            )
+                          ],
+                        ),
+                      )
+                    : Container(
+                        //color: AppColor.colorBackground,
+                        decoration: BoxDecoration(
+                            color: AppColor.colorWhiteDark,
+                            border: Border(
+                              bottom: BorderSide(
+                                //                   <--- left side
+                                color: AppColor.lineLayout,
+                                width: 0.5,
+                              ),
+                            )),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              _itemIconHeader(
+                                  'assets/icon/ic_order_accepted.svg',
+                                  "${OrderStatus.NEW}"),
+                              _itemIconHeader(
+                                  'assets/icon/ic_order_processing.svg',
+                                  "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
+                              _itemIconHeader('assets/icon/ic_order_finish.svg',
+                                  '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
+                            ]),
+                      );
+              });
             },
           )),
     );
@@ -329,10 +330,10 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
 
   Widget _itemStatistical(
       {required String icon,
-        required String status,
-        required double size,
-        int? qty,
-        String? orderStatus}) {
+      required String status,
+      required double size,
+      int? qty,
+      String? orderStatus}) {
     return SizedBox(
       width: ScreenUtil.getInstance().getWidth(110),
       child: GestureDetector(
@@ -347,7 +348,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Padding(
-            padding:  EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(5)),
+            padding: EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(5)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -360,7 +361,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                   qty?.toString() ?? '0',
                   style: TextStyle(
                       fontSize:
-                      ScreenUtil.getInstance().getAdapterSize(21.0 * size),
+                          ScreenUtil.getInstance().getAdapterSize(21.0 * size),
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(

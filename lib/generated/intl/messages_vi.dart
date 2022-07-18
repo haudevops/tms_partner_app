@@ -346,6 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Chia sẻ qua Facebook"),
         "share_vie_zalo":
             MessageLookupByLibrary.simpleMessage("Chia sẻ qua Zalo"),
+        "sign_image": MessageLookupByLibrary.simpleMessage("Chữ ký khách hàng"),
         "sign_in_with_another_form": MessageLookupByLibrary.simpleMessage(
             "Đăng nhập bằng hình thức khác"),
         "size": MessageLookupByLibrary.simpleMessage("Kích thước"),

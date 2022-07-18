@@ -111,6 +111,7 @@ class Point {
           : null,
       pointIndex: json['pointIndex'],
       remainingPrePaid: checkDouble(json['remainingPrePaid']),
+      signImage: json['signImage']
     );
   }
 

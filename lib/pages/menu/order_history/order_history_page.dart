@@ -95,12 +95,10 @@ class _OrderHistoryPageState extends BasePageState<OrderHistoryPage> {
         break;
       default:
       // Accepted order
-        Navigator.pushNamed(context, DetailAcceptedOrderPage.routeName,
+        Navigator.pushNamed(context, DetailOrderHistoryPage.routeName,
             arguments: ScreenArguments(arg1: model))
             .then((value) {
-          if (value != null) {
-            _doGetOrdersHistory();
-          }
+          _doGetOrdersHistory();
         });
         break;
     }

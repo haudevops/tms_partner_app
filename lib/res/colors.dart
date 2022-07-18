@@ -46,13 +46,14 @@ class AppColor extends ChangeNotifier {
       colorTextGray = const Color(0xFF686A71);
 
     } else {
-      colorBackground = const Color(0xFF222222);
-      colorDarkGray = const Color(0xFF222222);
-      colorItemDarkWhite = const Color(0xFF333333);
+      colorBackground = Colors.white;
+      colorDarkGray = const Color(0xFFEEEEEE);
+      colorItemDarkWhite = Colors.white;
+      // colorWhiteDark = const Color(0xFF222222);
       colorWhiteDark = Colors.white;
-      colorDivider = const Color(0xFF101010);
-      colorWhiteGrey = Colors.white;
-      colorTextGray = Colors.white;
+      colorDivider = const Color(0xFFF5F5F5);
+      colorWhiteGrey = Colors.grey;
+      colorTextGray = const Color(0xFF686A71);
     }
   }
 }

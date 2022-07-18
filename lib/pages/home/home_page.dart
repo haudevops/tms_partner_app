@@ -20,13 +20,11 @@ class HomePage extends BasePage<HomeBloc> {
 
 class _HomePageState extends BasePageState<HomePage> {
   bool _isOnline = false;
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   HomeBloc? _bloc;
 
   @override
   Widget buildWidget(BuildContext context) {
-    final provider = Provider.of<ThemeProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/supra_logo.png',

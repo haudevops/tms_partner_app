@@ -345,6 +345,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Share vie Facebook"),
         "share_vie_zalo":
             MessageLookupByLibrary.simpleMessage("Share vie Zalo"),
+        "sign_image": MessageLookupByLibrary.simpleMessage("Sign Image"),
         "sign_in_with_another_form":
             MessageLookupByLibrary.simpleMessage("Sign in with another form"),
         "size": MessageLookupByLibrary.simpleMessage("Size"),

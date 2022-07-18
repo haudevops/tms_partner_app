@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class OpenSettings {
-  static const MethodChannel _channel = const MethodChannel('open_settings');
+  static const MethodChannel _channel = MethodChannel('open_settings');
 
   /// Open Wifi settings
   static Future<void> openWIFISetting() async {

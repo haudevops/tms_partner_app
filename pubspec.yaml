@@ -152,6 +152,8 @@ flutter:
     - assets/icon/svg/setting_ic_language.svg
     - assets/icon/svg/setting_ic_change_password.svg
     - assets/images/delivery_lottie.json
+    - assets/images/no_image.png
+    - assets/icon/svg/ic_camera_picture.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

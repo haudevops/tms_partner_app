@@ -30,7 +30,8 @@ Future<Widget> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsUtil.getInstance();
   await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
+      // Open this option when build web app
+      // options: DefaultFirebaseOptions.currentPlatform
   );
   // FirebaseDatabase.instance.setPersistenceEnabled(true);
   return const MyApp();

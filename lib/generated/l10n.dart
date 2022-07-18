@@ -2219,6 +2219,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Sign Image`
+  String get sign_image {
+    return Intl.message(
+      'Sign Image',
+      name: 'sign_image',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

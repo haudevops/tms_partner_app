@@ -57,6 +57,12 @@ class CustomRouter {
         return SlideLeftRoute(DetailHelpPage(data: arg,));
       case ContactHelpPage.routeName:
         return SlideLeftRoute(ContactHelpPage());
+      case DetailOrderHistoryPage.routeName:
+        return SlideLeftRoute(DetailOrderHistoryPage(data: arg,));
+      case DetailPointHistoryPage.routeName:
+        return SlideLeftRoute(DetailPointHistoryPage(data: arg,));
+      case SignImagePage.routeName:
+        return SlideLeftRoute(SignImagePage(data: arg,));
       default:
         throw ('this route name does not exist');
     }

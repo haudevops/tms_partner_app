@@ -32,16 +32,16 @@ class FilterWidget extends StatefulWidget {
 }
 
 class _FilterWidgetState extends State<FilterWidget> {
-  TextEditingController _orderCodeController = TextEditingController();
-  TextEditingController _externalCodeController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  final _orderCodeController = TextEditingController();
+  final _externalCodeController = TextEditingController();
+  final _phoneController = TextEditingController();
   bool _checkedServices = false;
   bool _checkedOrderStatus = false;
   bool _checkCollections = false;
   List<String> _selectedServices = [];
   List<String> _selectedOrderStatus = [];
   List<String> _selectedCollections = [];
-  OrderWorkingFilterModel _filterModel = OrderWorkingFilterModel();
+  final _filterModel = OrderWorkingFilterModel();
 
   @override
   void initState() {
@@ -87,11 +87,11 @@ class _FilterWidgetState extends State<FilterWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: ScreenUtil.getInstance().screenHeight * 0.9,
-      decoration: new BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: new BorderRadius.only(
-          topLeft: const Radius.circular(20),
-          topRight: const Radius.circular(20),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -221,7 +221,7 @@ class _FilterWidgetState extends State<FilterWidget> {
   }
 
   Widget _headerWidget() {
-    return Container(
+    return SizedBox(
       width: ScreenUtil.getInstance().screenWidth,
       height: ScreenUtil.getInstance().getAdapterSize(50),
       child: Stack(
@@ -295,7 +295,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                 keyboardType: keyboardType,
                 decoration: InputDecoration(
                   hintText: hintText,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   hintStyle:
                       TextStyle(fontSize: ScreenUtil.getInstance().getSp(13)),
                   focusedBorder: OutlineInputBorder(
@@ -370,7 +370,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                     : AppColor.colorDivider,
                 width: 2),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           selected: listSelected.contains(item),
           onSelected: (selected) {
             setState(() {

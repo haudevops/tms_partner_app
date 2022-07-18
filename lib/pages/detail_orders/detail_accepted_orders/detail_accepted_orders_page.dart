@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tms_partner_app/base/base.dart';
@@ -130,11 +129,11 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
       stream: _bloc.ordersStream,
       builder: (builderContext, snapshot) {
         if (snapshot.hasData) {
-          OrderModel _orderModel = snapshot.data!;
+          OrderModel orderModel = snapshot.data!;
           PointTargetFinder pointTargetFinder =
-              _bloc.findPointsAction(_orderModel);
+              _bloc.findPointsAction(orderModel);
           return Scaffold(
-            backgroundColor: AppColor.colorItemDarkWhite,
+            backgroundColor: AppColor.colorWhiteDark,
             floatingActionButton: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: ScreenUtil.getInstance().getAdapterSize(60)),
@@ -147,47 +146,59 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                         phoneNumber: pointTargetFinder.point!.contact!.phone!);
                   }
                 },
-                child: Icon(Icons.phone, color: AppColor.colorItemDarkWhite),
                 backgroundColor: AppColor.orderGreenLight,
+                child: Icon(Icons.phone, color: AppColor.colorItemDarkWhite),
               ),
             ),
-            appBar: AppBarCustom(
-              showOnBack: true,
-              titleWidget: Text(_orderModel.isGrouped()
-                  ? 'Nhóm đơn'
-                  : 'Đơn hàng ${_orderModel.code}'),
+            appBar: AppBar(
+              title: Text(
+                orderModel.isGrouped()
+                    ? 'Nhóm đơn'
+                    : 'Đơn hàng ${orderModel.code}',
+                style: const TextStyle(color: Colors.black),
+              ),
+              centerTitle: true,
+              elevation: 1,
+              iconTheme: const IconThemeData(color: Colors.black),
+              backgroundColor: AppColor.colorWhiteDark,
             ),
-            body: Stack(
-              children: [
-                Container(
-                  width: ScreenUtil.getInstance().screenWidth,
-                  height: ScreenUtil.getInstance().screenHeight,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        _detailWidget(_orderModel),
-                        Container(
-                            height: ScreenUtil.getInstance().getAdapterSize(8),
-                            color: AppColor.lineLayout),
-                        _locationWidget(_orderModel),
-                        SizedBox(
-                            height:
-                                ScreenUtil.getInstance().getAdapterSize(90)),
-                      ],
+            body: Container(
+              width: ScreenUtil.getInstance().screenWidth,
+              height: ScreenUtil.getInstance().screenHeight,
+              color: AppColor.colorWhiteDark,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          _detailWidget(orderModel),
+                          Container(
+                              height:
+                                  ScreenUtil.getInstance().getAdapterSize(8),
+                              color: AppColor.lineLayout),
+                          _locationWidget(orderModel),
+                          SizedBox(
+                              height:
+                                  ScreenUtil.getInstance().getAdapterSize(90)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _buttonWidget(pointTargetFinder, _orderModel),
-                )
-              ],
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _buttonWidget(pointTargetFinder, orderModel),
+                  )
+                ],
+              ),
             ),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox();
+          return Container(
+            color: AppColor.colorWhiteDark,
+          );
         }
-        return NoOrderWidget(title: 'Không có đơn hàng');
+        return const NoOrderWidget(title: 'Không có đơn hàng');
       },
     );
   }
@@ -198,10 +209,10 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
   // }
 
   Widget _detailWidget(OrderModel orderModel) {
-    String? _storeCode = OrderUtils.getStoreCode(orderModel);
-    String? _pointsExternalCode = OrderUtils.getPointsExternalCode(orderModel);
+    String? storeCode = OrderUtils.getStoreCode(orderModel);
+    String? pointsExternalCode = OrderUtils.getPointsExternalCode(orderModel);
     return Container(
-      color: AppColor.colorItemDarkWhite,
+      color: AppColor.colorWhiteDark,
       padding: EdgeInsets.only(
           left: ScreenUtil.getInstance().getAdapterSize(14),
           top: ScreenUtil.getInstance().getAdapterSize(14),
@@ -216,14 +227,14 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
             child: Row(
               children: [
                 Text(
-                  '${orderModel.serviceName ?? ''}',
+                  orderModel.serviceName ?? '',
                   style: TextStyle(
                       fontSize: ScreenUtil.getInstance().getAdapterSize(15),
                       color: AppColor.colorGray),
                 ),
                 const Spacer(),
                 Text(
-                  '${DateUtil.convertTimeStamp(orderModel.expectedTime) ?? ''}',
+                  DateUtil.convertTimeStamp(orderModel.expectedTime) ?? '',
                   style: TextStyle(
                       fontSize: ScreenUtil.getInstance().getAdapterSize(14),
                       color: AppColor.orderGreenLight),
@@ -242,16 +253,15 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                 2: FixedColumnWidth(34),
               },
               children: [
-                (_storeCode != null && _storeCode.isNotEmpty)
+                (storeCode != null && storeCode.isNotEmpty)
                     ? _itemInfoWidget(
                         title: '${S.of(context).store_code}: ',
-                        content: _storeCode)
+                        content: storeCode)
                     : _tableRowNull(),
-                (_pointsExternalCode != null && _pointsExternalCode.isNotEmpty)
+                (pointsExternalCode != null && pointsExternalCode.isNotEmpty)
                     ? _itemInfoWidget(
                         title: '${S.of(context).externalCode}: ',
-                        content: _pointsExternalCode,
-                        showIcon: true,
+                        content: pointsExternalCode,
                         onTap: () {})
                     : _tableRowNull(),
                 orderModel.isGrouped()
@@ -269,27 +279,23 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                             orderModel.detail!.goodsCheckRequired!)
                         ? 'Kiểm tra hàng'
                         : 'Không kiểm tra hàng'),
-                _itemInfoWidget(
-                    title: 'Thu hộ: ',
-                    content: OrderUtils.getTotalCod(orderModel) != null
-                        ? OrderUtils.getCurrencyText(
-                            OrderUtils.getTotalCod(orderModel))
-                        : '0'),
-                _itemInfoWidget(
-                    title: 'Tổng phí: ',
-                    content: OrderUtils.getCurrencyText(orderModel.isGrouped()
-                        ? OrderUtils.getTotalCost(orderModel.groups)
-                        : orderModel.servicerCost)),
+                // _itemInfoWidget(
+                //     title: 'Thu hộ: ',
+                //     content: OrderUtils.getTotalCod(orderModel) != null
+                //         ? OrderUtils.getCurrencyText(
+                //             OrderUtils.getTotalCod(orderModel))
+                //         : '0'),
+                // _itemInfoWidget(
+                //     title: 'Tổng phí: ',
+                //     content: OrderUtils.getCurrencyText(orderModel.isGrouped()
+                //         ? OrderUtils.getTotalCost(orderModel.groups)
+                //         : orderModel.servicerCost)),
                 _itemInfoWidget(
                     title: 'Thanh toán: ',
                     content:
                         OrderUtils.getPaymentType(orderModel.paymentMethod)),
-                _itemInfoWidget(
-                    title: 'Kích thước: ',
-                    content: '1'),
-                _itemInfoWidget(
-                    title: 'Thể tích: ',
-                    content: '1'),
+                _itemInfoWidget(title: 'Kích thước: ', content: '1'),
+                _itemInfoWidget(title: 'Thể tích: ', content: '1'),
                 _itemInfoWidget(
                     title: 'Cân nặng: ',
                     content: orderModel.weight != null
@@ -305,7 +311,7 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
 
   Widget _locationWidget(OrderModel orderModel) {
     return Container(
-      color: AppColor.colorItemDarkWhite,
+      color: AppColor.colorWhiteDark,
       padding: EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(14)),
       width: ScreenUtil.getInstance().screenWidth,
       child: Column(
@@ -364,13 +370,13 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                 width: ScreenUtil.getInstance().getAdapterSize(24),
                 height: ScreenUtil.getInstance().getAdapterSize(24),
               )
-            : SizedBox(),
+            : const SizedBox(),
       )
     ]);
   }
 
   TableRow _tableRowNull() {
-    return TableRow(children: [
+    return const TableRow(children: [
       SizedBox(),
       SizedBox(),
       SizedBox(),
@@ -379,18 +385,22 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
 
   Widget _pointsChildWidget(OrderModel orderModel) {
     List<Point>? points = orderModel.detail?.points;
-    List<Widget> _listPointsWidget = [];
+    List<Widget> listPointsWidget = [];
 
     if (points != null) {
       for (int i = 0; i < points.length; i++) {
         if (i == 0) {
-          _listPointsWidget.add(_locationChildWidget(
-              image: SvgPicture.asset('assets/icon/svg/ic_location_black.svg'),
+          listPointsWidget.add(_locationChildWidget(
+              image: SizedBox(
+                  width: ScreenUtil.getInstance().getAdapterSize(27),
+                  height: ScreenUtil.getInstance().getAdapterSize(25),
+                  child: SvgPicture.asset(
+                      'assets/icon/svg/ic_location_start.svg')),
               point: points[i],
               position: 0,
               orderModel: orderModel));
         } else if (i == points.length - 1) {
-          _listPointsWidget.add(_locationChildWidget(
+          listPointsWidget.add(_locationChildWidget(
               point: points[i],
               image: Padding(
                 padding: EdgeInsets.only(
@@ -400,7 +410,7 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
               position: 2,
               orderModel: orderModel));
         } else {
-          _listPointsWidget.add(_locationChildWidget(
+          listPointsWidget.add(_locationChildWidget(
               point: points[i],
               image: Padding(
                 padding: EdgeInsets.only(
@@ -414,7 +424,7 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
     }
 
     return Column(
-      children: _listPointsWidget,
+      children: listPointsWidget,
     );
   }
 
@@ -504,18 +514,36 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-              top: BorderSide(color: Color(0xFF101010).withOpacity(0.1)))),
+              top:
+                  BorderSide(color: const Color(0xFF101010).withOpacity(0.1)))),
       child: Row(
         children: [
           Expanded(
-            child: ButtonSubmitWidget(
-              onPressed: () {
-                OpenSettings.openMap(pointTargetFinder.point?.location?.lat,
-                    pointTargetFinder.point?.location?.lng);
-              },
-              title: 'Xem đường đi'.toUpperCase(),
-              colorTitle: AppColor.colorPrimaryButton,
-              backgroundColors: false,
+            child: Container(
+              width: ScreenUtil.getInstance().screenWidth,
+              height: ScreenUtil.getInstance().getAdapterSize(40),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColor.orderTextGreen),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          ScreenUtil.getInstance().getAdapterSize(8)),
+                    ))),
+                onPressed: () {
+                  OpenSettings.openMap(pointTargetFinder.point?.location?.lat,
+                      pointTargetFinder.point?.location?.lng);
+                },
+                child: Text(
+                  'Xem đường đi'.toUpperCase(),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenUtil.getInstance().getAdapterSize(14)),
+                ),
+              ),
             ),
           ),
           SizedBox(width: ScreenUtil.getInstance().getAdapterSize(12)),
