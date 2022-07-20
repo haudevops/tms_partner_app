@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
@@ -46,12 +45,14 @@ class ButtonSubmitWidget extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: backgroundColors
                 ? MaterialStateProperty.all(AppColor.colorPrimaryButton)
-                : MaterialStateProperty.all(inactiveColor ? const Color(0xFFCFCAC6) : const Color(0xFFCFCAC6)),
+                : MaterialStateProperty.all(inactiveColor
+                    ? const Color(0xFFCFCAC6)
+                    : const Color(0xFFCFCAC6)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        ScreenUtil.getInstance().getAdapterSize(8)),
-                ))),
+              borderRadius: BorderRadius.circular(
+                  ScreenUtil.getInstance().getAdapterSize(8)),
+            ))),
         onPressed: onPressed,
         child: Text(
           title,

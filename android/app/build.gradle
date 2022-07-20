@@ -62,17 +62,17 @@ android {
         }
     }
 
-    flavorDimensions "partner_app"
+    flavorDimensions "tms_partner_app"
 
     productFlavors {
         dev {
-            dimension "partner_app"
+            dimension "tms_partner_app"
             applicationIdSuffix ".dev"
             resValue "string", "app_name", "STT Dev"
             versionNameSuffix ".dev"
         }
         prod {
-            dimension "partner_app"
+            dimension "tms_partner_app"
             applicationIdSuffix ".prod"
             resValue "string", "app_name", "STT Driver"
             versionNameSuffix ".prod"

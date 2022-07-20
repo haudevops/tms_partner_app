@@ -152,6 +152,8 @@ class _LoginPageState extends BasePageState<LoginPage> {
                     // _initToken( true);
                     // Navigator.pushReplacementNamed(context, NavigationPage.routeName);
                   }
+
+                  // _bloc.login(_phoneController.text, _passController.text);
                 },
                 backgroundColors: _isLogin,
                 title: S.of(context).login.toUpperCase(),

@@ -19,6 +19,7 @@ class AppColor extends ChangeNotifier {
   static Color colorBlue = const Color(0xFF007AFF);
   static Color lineLayout = const Color(0xFFE5E5E5);
   static Color colorTextGray = const Color(0xFF686A71);
+  static Color colorTitle = const Color(0xFFD29B00);
 
   // Color background status
   static Color orderStatusRed = const Color(0xFFF20A39);

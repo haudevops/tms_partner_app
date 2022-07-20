@@ -47,27 +47,27 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDjBJi_TaQOPpR52QWUpdUcuP5bEx3XD_w',
-    appId: '1:197266515424:web:65a67472e168e710dc7785',
-    messagingSenderId: '197266515424',
-    projectId: 'tms-partner-app',
-    authDomain: 'tms-partner-app.firebaseapp.com',
-    storageBucket: 'tms-partner-app.appspot.com',
+    apiKey: 'AIzaSyCrNOxRWg_xk1tpYPo8CZBShtCP0IAwYT4',
+    appId: '1:972940910705:web:fb193ea4149c27f9707bd0',
+    messagingSenderId: '972940910705',
+    projectId: 'stt-supra-prod',
+    authDomain: 'stt-supra-prod.firebaseapp.com',
+    storageBucket: 'stt-supra-prod.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBYEIedJyXL4m8AHqHdXZfYdiMoIrUKx0M',
-    appId: '1:197266515424:android:cc7e8511d26e0260dc7785',
-    messagingSenderId: '197266515424',
-    projectId: 'tms-partner-app',
-    storageBucket: 'tms-partner-app.appspot.com',
+    appId: '1:972940910705:android:dd2db748ac6ed1e2707bd0',
+    messagingSenderId: '972940910705',
+    projectId: 'stt-supra-prod',
+    storageBucket: 'tms-stt-supra-prod-app.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCjAL_keDABM4ptCOSi7QIHBz9wfzTtFlQ',
     appId: '1:197266515424:ios:ba39cdf0f3f51fd2dc7785',
-    messagingSenderId: '197266515424',
-    projectId: 'tms-partner-app',
+    messagingSenderId: '972940910705',
+    projectId: 'stt-supra-prod',
     storageBucket: 'tms-partner-app.appspot.com',
     iosClientId: '197266515424-ar4c65h577t79bqs14liviljrac2rng9.apps.googleusercontent.com',
     iosBundleId: 'com.supra.tmsPartnerApp',

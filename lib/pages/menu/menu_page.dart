@@ -265,17 +265,34 @@ class _MenuPageState extends BasePageState<MenuPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ButtonSubmitWidget(
-                                title: S.current.skip.toUpperCase(),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                colorTitle: AppColor.orderStatusYellow,
-                                backgroundColors: false,
+                              Container(
                                 width: ScreenUtil.getInstance()
                                     .getAdapterSize(110),
                                 height: ScreenUtil.getInstance()
                                     .getAdapterSize(40),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 0),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 0),
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(AppColor.colorWhiteDark),
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                ScreenUtil.getInstance().getAdapterSize(8)),
+                                            side: BorderSide(color: AppColor.orderStatusYellow)
+                                          ))),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    S.current.cancel.toUpperCase(),
+                                    style: TextStyle(
+                                        color: AppColor.orderStatusYellow,
+                                        fontSize: ScreenUtil.getInstance().getAdapterSize(14)),
+                                  ),
+                                ),
                               ),
                               SizedBox(width: ScreenUtil.getInstance().getAdapterSize(12),),
                               ButtonSubmitWidget(

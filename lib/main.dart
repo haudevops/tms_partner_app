@@ -19,7 +19,7 @@ import 'utils/providers/theme_provider.dart';
 //   // FirebaseDatabase.instance.setPersistenceEnabled(true);
 //   await PrefsUtil.getInstance();
 //   Firebase.initializeApp(
-//       options: DefaultFirebaseOptions.currentPlatform
+//       // options: DefaultFirebaseOptions.currentPlatform
 //   );
 //   SystemChrome.setSystemUIOverlayStyle(
 //       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));

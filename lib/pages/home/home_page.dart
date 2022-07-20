@@ -22,11 +22,16 @@ class _HomePageState extends BasePageState<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
   late HomeBloc _bloc;
 
+  double? _latitude;
+  double? _longitude;
+  late Set<Marker> markers = {};
+
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('assets/images/supra_logo.png',
+        title: Image.asset('assets/images/logo_supra_black.png',
             width: ScreenUtil.getInstance().getWidth(100),
             height: ScreenUtil.getInstance().getHeight(30)),
         centerTitle: true,
@@ -34,17 +39,23 @@ class _HomePageState extends BasePageState<HomePage> {
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: AppColor.colorWhiteDark,
       ),
-      body: GoogleMap(
-        myLocationEnabled: true,
-        compassEnabled: true,
-        zoomControlsEnabled: true,
-        tiltGesturesEnabled: true,
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(0, 0),
-          zoom: 14,
+      body: Container(
+        height: ScreenUtil.getInstance().screenHeight,
+        width: ScreenUtil.getInstance().screenWidth,
+        color: AppColor.colorWhiteDark,
+        child: GoogleMap(
+          myLocationEnabled: true,
+          compassEnabled: true,
+          zoomControlsEnabled: true,
+          tiltGesturesEnabled: true,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(_latitude ?? 0, _longitude ?? 0),
+            zoom: 14,
+          ),
+          onMapCreated: onMapCreated,
+          onTap: (LatLng location) {},
+          markers: markers,
         ),
-        onMapCreated: onMapCreated,
-        onTap: (LatLng location) {},
       ),
     );
   }
@@ -54,6 +65,21 @@ class _HomePageState extends BasePageState<HomePage> {
     _bloc = getBloc();
 
     _bloc.locationStream.listen((position) async {
+      _latitude = position.latitude;
+      _longitude = position.longitude;
+
+      markers = {
+        Marker(
+          markerId: MarkerId('aaaa'),
+          position: LatLng(_latitude ?? 0, _longitude ?? 0),
+          infoWindow: const InfoWindow(
+            //popup info
+            title: 'My Custom Title ',
+            snippet: 'My Custom Subtitle',
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        )
+      };
       final GoogleMapController controller = await _controller.future;
       controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(position.latitude, position.longitude),

@@ -120,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "input_order_code":
             MessageLookupByLibrary.simpleMessage("Nhập mã đơn hàng"),
         "input_phone_number":
-            MessageLookupByLibrary.simpleMessage("Nhập số điện thoại."),
+            MessageLookupByLibrary.simpleMessage("Nhập số điện thoại"),
         "input_received_phone": MessageLookupByLibrary.simpleMessage(
             "Nhập số điện thoại người nhận"),
         "installation": MessageLookupByLibrary.simpleMessage("Lắp đặt"),
@@ -243,7 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "please_enter_code_has_sent": MessageLookupByLibrary.simpleMessage(
             "Vui lòng nhập mã xác nhận được gửi đến số"),
         "please_enter_phone_and_password": MessageLookupByLibrary.simpleMessage(
-            "Vui lòng nhập số điện thoại và mât khẩu để đăng nhập."),
+            "Vui lòng nhập số điện thoại và mật khẩu để đăng nhập."),
         "point": MessageLookupByLibrary.simpleMessage("điểm"),
         "point_install": MessageLookupByLibrary.simpleMessage("Điểm lắp đặt"),
         "point_pickup": MessageLookupByLibrary.simpleMessage("Điểm lấy hàng"),

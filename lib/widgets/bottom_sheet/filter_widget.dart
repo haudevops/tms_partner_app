@@ -341,7 +341,7 @@ class _FilterWidgetState extends State<FilterWidget> {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: ScreenUtil.getInstance().getSp(15)),
+              fontSize: ScreenUtil.getInstance().getSp(15), color: Colors.black),
         ),
         value: isChecked,
         controlAffinity: ListTileControlAffinity.leading,

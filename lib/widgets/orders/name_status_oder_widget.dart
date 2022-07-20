@@ -79,6 +79,8 @@ class NameAndStatusOderWidget extends StatelessWidget {
     return Text(title,
         style: TextStyle(
             fontSize: ScreenUtil.getInstance().getAdapterSize(15),
-            color: AppColor.colorPrimaryButton));
+            color: AppColor.colorTitle,
+          fontWeight: FontWeight.w800
+        ));
   }
 }

@@ -77,7 +77,7 @@ class _NotificationPageState extends BasePageState<NotificationPage> {
           centerTitle: true,
           elevation: 1,
           titleSpacing: ScreenUtil.getInstance().getAdapterSize(16),
-          actions: <Widget> [
+          actions: <Widget>[
             Container(
               margin: EdgeInsets.only(
                   right: ScreenUtil.getInstance().getAdapterSize(16)),
@@ -106,22 +106,46 @@ class _NotificationPageState extends BasePageState<NotificationPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    ButtonSubmitWidget(
-                                      title: S.current.cancel.toUpperCase(),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      colorTitle: AppColor.orderStatusYellow,
-                                      backgroundColors: false,
+                                    Container(
                                       width: ScreenUtil.getInstance()
                                           .getAdapterSize(110),
                                       height: ScreenUtil.getInstance()
                                           .getAdapterSize(40),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 0),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 0),
+                                      child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor: MaterialStateProperty.all(
+                                                AppColor.colorWhiteDark),
+                                            shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                        ScreenUtil.getInstance()
+                                                            .getAdapterSize(8)),
+                                                    side: BorderSide(
+                                                        color: AppColor
+                                                            .orderStatusYellow)))),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          S.current.cancel.toUpperCase(),
+                                          style: TextStyle(
+                                              color: AppColor.orderStatusYellow,
+                                              fontSize: ScreenUtil.getInstance()
+                                                  .getAdapterSize(14)),
+                                        ),
+                                      ),
                                     ),
-                                    SizedBox(width: ScreenUtil.getInstance().getAdapterSize(12),),
+                                    SizedBox(
+                                      width: ScreenUtil.getInstance()
+                                          .getAdapterSize(12),
+                                    ),
                                     ButtonSubmitWidget(
-                                        title:
-                                            S.current.agree.toUpperCase(),
+                                        title: S.current.agree.toUpperCase(),
                                         onPressed: () {},
                                         width: ScreenUtil.getInstance()
                                             .getAdapterSize(110),
@@ -303,7 +327,10 @@ class _NotificationPageState extends BasePageState<NotificationPage> {
                       content: e.content ?? '',
                       day: e.day ?? '',
                       onTap: () {
-                        Navigator.pushNamed(context, NotificationDetailPage.routeName, arguments: ScreenArguments(arg1: e.name, arg2: e.content));
+                        Navigator.pushNamed(
+                            context, NotificationDetailPage.routeName,
+                            arguments:
+                                ScreenArguments(arg1: e.name, arg2: e.content));
                       }),
                 ]))
             .toList(),

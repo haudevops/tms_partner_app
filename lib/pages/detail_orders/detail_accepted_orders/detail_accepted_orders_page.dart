@@ -139,15 +139,15 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                   vertical: ScreenUtil.getInstance().getAdapterSize(60)),
               child: FloatingActionButton(
                 onPressed: () {
-                  if (pointTargetFinder.point?.contact?.phone != null &&
-                      pointTargetFinder.point!.contact!.phone!.isNotEmpty) {
-                    PhoneCallBottomSheet().show(
-                        context: context,
-                        phoneNumber: pointTargetFinder.point!.contact!.phone!);
-                  }
+                  // if (pointTargetFinder.point?.contact?.phone != null &&
+                  //     pointTargetFinder.point!.contact!.phone!.isNotEmpty) {
+                  //   PhoneCallBottomSheet().show(
+                  //       context: context,
+                  //       phoneNumber: pointTargetFinder.point!.contact!.phone!);
+                  // }
                 },
                 backgroundColor: AppColor.orderGreenLight,
-                child: Icon(Icons.phone, color: AppColor.colorItemDarkWhite),
+                child: Icon(Icons.phone, color: AppColor.colorWhiteDark),
               ),
             ),
             appBar: AppBar(
@@ -526,13 +526,16 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
               margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(AppColor.orderTextGreen),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColor.colorWhiteDark),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                           ScreenUtil.getInstance().getAdapterSize(8)),
-                    ))),
+                      side: BorderSide(width: 1, color: AppColor.colorPrimaryButton),
+                    ),
+                  ),
+                ),
                 onPressed: () {
                   OpenSettings.openMap(pointTargetFinder.point?.location?.lat,
                       pointTargetFinder.point?.location?.lng);
@@ -540,7 +543,7 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                 child: Text(
                   'Xem đường đi'.toUpperCase(),
                   style: TextStyle(
-                      color: Colors.white,
+                      color: AppColor.orderStatusYellow,
                       fontSize: ScreenUtil.getInstance().getAdapterSize(14)),
                 ),
               ),

@@ -183,9 +183,10 @@ class OrderWidget extends StatelessWidget {
                           fontSize: ScreenUtil.getInstance().getAdapterSize(14),
                           color: Colors.black)),
                   TextSpan(
-                      text: value.length > 13
-                          ? '${value.substring(0, 13)}...'
-                          : value,
+                      // text: value.length > 13
+                      //     ? '${value.substring(0, 13)}...'
+                      //     : value,
+                      text: value,
                       style: TextStyle(
                           fontSize: ScreenUtil.getInstance().getAdapterSize(14),
                           fontWeight: FontWeight.bold,

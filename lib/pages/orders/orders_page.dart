@@ -60,7 +60,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
         external: _filterModel.externalCode,
         phone: _filterModel.phone,
         serviceType: _filterModel.services,
-        status: _filterModel.status ?? "3,7,9,20");
+        status: _filterModel.status ?? "1,2,3,7,9,20");
   }
 
   void _checkNavigation(OrderModel model) {
@@ -210,8 +210,8 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
         widget: FilterWidget(
           filterModel: _filterModel,
           onFilter: (data) {
-            _filterModel = data;
-            _doGetOrders();
+            // _filterModel = data;
+            // _doGetOrders();
           },
           service: [
             FilterModel(id: ServiceType.DELIVERY, name: S.current.delivery),
@@ -262,7 +262,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
               return LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                 return constraints.biggest.height >
-                        ScreenUtil.getInstance().getAdapterSize(85)
+                        ScreenUtil.getInstance().getAdapterSize(70)
                     ? Container(
                         color: _isExpanded
                             ? AppColor.lineLayout
@@ -287,14 +287,14 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                                     _calculatorSize(constraints.biggest.height),
                                 orderStatus:
                                     "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                            _itemStatistical(
-                              icon: 'assets/icon/ic_order_finish.svg',
-                              qty: snapshot.data?.finished ?? 0,
-                              status: S.current.accomplished,
-                              size: _calculatorSize(constraints.biggest.height),
-                              orderStatus:
-                                  "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
-                            )
+                            // _itemStatistical(
+                            //   icon: 'assets/icon/ic_order_finish.svg',
+                            //   qty: snapshot.data?.finished ?? 0,
+                            //   status: S.current.accomplished,
+                            //   size: _calculatorSize(constraints.biggest.height),
+                            //   orderStatus:
+                            //       "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
+                            // )
                           ],
                         ),
                       )
@@ -334,42 +334,48 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
       required double size,
       int? qty,
       String? orderStatus}) {
-    return SizedBox(
-      width: ScreenUtil.getInstance().getWidth(110),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, OrderStatusFilterPage.routeName,
-              arguments: ScreenArguments(arg1: orderStatus));
-        },
-        onDoubleTap: () {},
-        child: Card(
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(5)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Expanded(
+      child: SizedBox(
+        height: ScreenUtil.getInstance().getWidth(70),
+        child: GestureDetector(
+          onTap: () {
+            // Navigator.pushNamed(context, OrderStatusFilterPage.routeName,
+            //     arguments: ScreenArguments(arg1: orderStatus));
+          },
+          onDoubleTap: () {},
+          child: Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
               children: [
-                SvgPicture.asset(icon,
-                    width: ScreenUtil.getInstance().getAdapterSize(40),
-                    height: ScreenUtil.getInstance().getAdapterSize(40)),
-                SizedBox(
-                    height: ScreenUtil.getInstance().getAdapterSize(5 * size)),
-                Text(
-                  qty?.toString() ?? '0',
-                  style: TextStyle(
-                      fontSize:
-                          ScreenUtil.getInstance().getAdapterSize(21.0 * size),
-                      fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenUtil.getInstance().getAdapterSize(13), left: ScreenUtil.getInstance().getAdapterSize(16)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(status,
+                          style: TextStyle(
+                              fontSize: ScreenUtil.getInstance()
+                                  .getAdapterSize(12.0 * size))),
+                      Text(
+                        qty?.toString() ?? '0',
+                        style: TextStyle(
+                            fontSize: ScreenUtil.getInstance()
+                                .getAdapterSize(22.0 * size),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                    height: ScreenUtil.getInstance().getAdapterSize(5 * size)),
-                Text(status,
-                    style: TextStyle(
-                        fontSize: ScreenUtil.getInstance()
-                            .getAdapterSize(10.0 * size)))
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: SvgPicture.asset(icon,
+                      width: ScreenUtil.getInstance().getAdapterSize(40),
+                      height: ScreenUtil.getInstance().getAdapterSize(40)),
+                ),
               ],
             ),
           ),
