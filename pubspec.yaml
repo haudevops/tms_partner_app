@@ -64,6 +64,7 @@ dependencies:
   firebase_messaging: ^12.0.0
   firebase_database: ^9.0.19
   package_info_plus: ^1.4.2
+  permission_handler: ^10.0.0
 
 
 dev_dependencies:
@@ -90,6 +91,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/the_supra.png
     - assets/images/supra_logo.png
     - lib/data/model/demo/notificate.json
     - assets/images/bg_login.png
@@ -154,6 +156,7 @@ flutter:
     - assets/images/delivery_lottie.json
     - assets/images/no_image.png
     - assets/icon/svg/ic_camera_picture.svg
+    - assets/icon/svg/ic_flag_address.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

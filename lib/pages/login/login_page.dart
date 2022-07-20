@@ -52,7 +52,6 @@ class _LoginPageState extends BasePageState<LoginPage> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Container(
           color: AppColor.colorWhiteDark,
           height: ScreenUtil.getInstance().screenHeight,

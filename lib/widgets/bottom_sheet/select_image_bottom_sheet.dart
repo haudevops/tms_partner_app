@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tms_partner_app/base/base.dart';
@@ -23,11 +22,18 @@ class SelectImageBottomSheet {
     BaseBottomSheet().show(
         context: context,
         widget: Container(
-          color: AppColor.colorWhiteDark,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(
+                    ScreenUtil.getInstance().getAdapterSize(20)),
+                topRight: Radius.circular(
+                    ScreenUtil.getInstance().getAdapterSize(20))),
+            color: AppColor.colorWhiteDark,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              headerWidget(context: context, title: 'Thêm hình ảnh/Video'),
+              headerWidget(context: context, title: 'Thêm hình ảnh '),
               Divider(
                 height: 1,
                 color: Colors.black.withOpacity(0.2),

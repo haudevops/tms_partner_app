@@ -49,28 +49,6 @@ class _DetailOrderHistoryPageState
     // TODO: implement onDestroy
   }
 
-  void _pickGoods(PointTargetFinder pointTargetFinder, OrderModel orderModel) {
-    PickGoodsBottomSheet().showPickGoodsOption(
-        buildContext: context,
-        orderModel: orderModel,
-        pointTargetFinder: pointTargetFinder,
-        onSubmit: (value) {
-          switch (value) {
-            case PickGoodsOption.PICK_SUCCESS:
-              Navigator.pushNamed(
-                  context, ConfirmPickGoodsSuccessPage.routeName,
-                  arguments: ScreenArguments(
-                      arg1: orderModel, arg2: pointTargetFinder));
-              break;
-            case PickGoodsOption.PICK_FAILED:
-              DebugLog.show('click PICK_SUCCESS');
-              break;
-            default:
-              DebugLog.show('click default');
-              break;
-          }
-        });
-  }
 
   void _showWarningDialog({required String content, required bool onBack}) {
     showDialog(
@@ -231,21 +209,6 @@ class _DetailOrderHistoryPageState
                             orderModel.detail!.goodsCheckRequired!)
                         ? 'Kiểm tra hàng'
                         : 'Không kiểm tra hàng'),
-                // _itemInfoWidget(
-                //     title: 'Thu hộ: ',
-                //     content: OrderUtils.getTotalCod(orderModel) != null
-                //         ? OrderUtils.getCurrencyText(
-                //         OrderUtils.getTotalCod(orderModel))
-                //         : '0'),
-                // _itemInfoWidget(
-                //     title: 'Tổng phí: ',
-                //     content: OrderUtils.getCurrencyText(orderModel.isGrouped()
-                //         ? OrderUtils.getTotalCost(orderModel.groups)
-                //         : orderModel.servicerCost)),
-                // _itemInfoWidget(
-                //     title: 'Thanh toán: ',
-                //     content:
-                //     OrderUtils.getPaymentType(orderModel.paymentMethod)),
                 _itemInfoWidget(title: 'Kích thước: ', content: '1'),
                 _itemInfoWidget(title: 'Thể tích: ', content: '1'),
                 _itemInfoWidget(
@@ -305,75 +268,6 @@ class _DetailOrderHistoryPageState
       SizedBox(),
       SizedBox(),
     ]);
-  }
-
-  Widget _buttonWidget(
-      PointTargetFinder pointTargetFinder, OrderModel orderModel) {
-    return Container(
-      width: ScreenUtil.getInstance().screenWidth,
-      padding: EdgeInsets.symmetric(
-          horizontal: ScreenUtil.getInstance().getAdapterSize(16),
-          vertical: ScreenUtil.getInstance().getAdapterSize(8)),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-              top: BorderSide(color: Color(0xFF101010).withOpacity(0.1)))),
-      child: Row(
-        children: [
-          Expanded(
-            child: ButtonSubmitWidget(
-              onPressed: () {
-                OpenSettings.openMap(pointTargetFinder.point?.location?.lat,
-                    pointTargetFinder.point?.location?.lng);
-              },
-              title: 'Xem đường đi'.toUpperCase(),
-              colorTitle: AppColor.colorPrimaryButton,
-              backgroundColors: false,
-            ),
-          ),
-          SizedBox(width: ScreenUtil.getInstance().getAdapterSize(12)),
-          Expanded(
-              child: ButtonSubmitWidget(
-                  onPressed: () {
-                    switch (pointTargetFinder.status) {
-                      case PointStatus.NEW:
-                      case PointStatus.IN_PROGRESS:
-                        // _bloc.arrived(pointTargetFinder, orderModel);
-                        break;
-                      case PointStatus.POINT_ARRIVED:
-                        switch (pointTargetFinder.type) {
-                          case PointType.PICK_POINT:
-                            _pickGoods(pointTargetFinder, orderModel);
-                            break;
-                          case PointType.DELIVERY_POINT:
-                          case PointType.DELIVERY_INSTALLATION_POINT:
-                            //deliveryGoods();
-                            break;
-                          case PointType.INSTALLATION_POINT:
-                            // installation();
-                            break;
-                          case PointType.RETURN_POINT:
-                            // returnGoods();
-                            break;
-                          case PointType.RETURN_WAREHOUSE:
-                            //returnWarehouse();
-                            break;
-                        }
-                        break;
-                      default:
-                        _showWarningDialog(
-                            content: S
-                                .of(context)
-                                .something_went_wrong_please_try_again,
-                            onBack: false);
-                        break;
-                    }
-                  },
-                  title: 'Lấy hàng'.toUpperCase(),
-                  colorTitle: Colors.white)),
-        ],
-      ),
-    );
   }
 
   Widget _locationWidget(OrderModel orderModel) {

@@ -5,10 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/data/service/cloud_service.dart';
+import 'package:tms_partner_app/pages/pages.dart';
+import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/common_utils/date_util.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
@@ -29,7 +32,8 @@ class ConfirmPickGoodsSuccessPage
   final ScreenArguments arguments;
 
   @override
-  BasePageState<BasePage<BaseBloc>> getState() => _ConfirmPickGoodsSuccessState();
+  BasePageState<BasePage<BaseBloc>> getState() =>
+      _ConfirmPickGoodsSuccessState();
 }
 
 class _ConfirmPickGoodsSuccessState
@@ -49,7 +53,7 @@ class _ConfirmPickGoodsSuccessState
   void onCreate() {
     _orderModel = widget.arguments.arg1;
     _pointTargetFinder = widget.arguments.arg2;
-    // _bloc = getBloc();
+    _bloc = getBloc();
     _products = _getProductPoints();
   }
 
@@ -125,36 +129,48 @@ class _ConfirmPickGoodsSuccessState
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      appBar: AppBarCustom(
-        showOnBack: true,
-        titleWidget: Text('Xác nhận lấy hàng thành công'),
+      appBar: AppBar(
+        title: const Text(
+          'Xác nhận lấy hàng thành công',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: AppColor.colorWhiteDark,
       ),
-      body: CustomScrollView(
-        slivers: [
-          _imageWidget(),
-          _dividerWidget(),
-          _products.isNotEmpty
-              ? SliverToBoxAdapter(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                              ScreenUtil.getInstance().getAdapterSize(16)),
-                      child: Row(children: [
-                        _textTitle('Sản phẩm lấy tại đây'),
-                        const Spacer(),
-                        _textTitle('Số lượng')
-                      ])))
-              : SliverToBoxAdapter(),
-          _products.isNotEmpty
-              ? SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil.getInstance().getAdapterSize(16)),
-                  sliver: _listProductWidget())
-              : SliverToBoxAdapter(),
-          _signaturePadWidget(),
-          _totalCostWidget(),
-          _submitWidget()
-        ],
+      body: Container(
+        width: ScreenUtil.getInstance().screenWidth,
+        height: ScreenUtil.getInstance().screenHeight,
+        color: AppColor.colorWhiteDark,
+        child: CustomScrollView(
+          slivers: [
+            _imageWidget(),
+            _dividerWidget(),
+            _products.isNotEmpty
+                ? SliverToBoxAdapter(
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                ScreenUtil.getInstance().getAdapterSize(16)),
+                        child: Row(children: [
+                          _textTitle('Sản phẩm lấy tại đây'),
+                          const Spacer(),
+                          _textTitle('Số lượng')
+                        ])))
+                : SliverToBoxAdapter(),
+            _products.isNotEmpty
+                ? SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal:
+                            ScreenUtil.getInstance().getAdapterSize(16)),
+                    sliver: _listProductWidget())
+                : SliverToBoxAdapter(),
+            _signaturePadWidget(),
+            // _totalCostWidget(),
+            _submitWidget()
+          ],
+        ),
       ),
     );
   }
@@ -215,8 +231,9 @@ class _ConfirmPickGoodsSuccessState
           child: Container(
             width: ScreenUtil.getInstance().getAdapterSize(54),
             height: ScreenUtil.getInstance().getAdapterSize(54),
-            color: Color(0xFFFAFAFA),
-            child: Center(child: Icon(Icons.add, color: Color(0xFFA49F9B))),
+            color: const Color(0xFFFAFAFA),
+            child:
+                const Center(child: Icon(Icons.add, color: Color(0xFFA49F9B))),
           ),
         ),
       ),
@@ -231,7 +248,7 @@ class _ConfirmPickGoodsSuccessState
         onTap: () {
           _showPhotoView(imagePicked);
         },
-        child: Container(
+        child: SizedBox(
           width: ScreenUtil.getInstance().getAdapterSize(54),
           height: ScreenUtil.getInstance().getAdapterSize(54),
           child: Stack(
@@ -289,7 +306,7 @@ class _ConfirmPickGoodsSuccessState
                       flex: 8,
                       child: Text(_products[index].name ?? '',
                           style: TextStyle(
-                              color: Color(0xFF666462),
+                              color: const Color(0xFF666462),
                               fontSize:
                                   ScreenUtil.getInstance().getAdapterSize(14))),
                     ),
@@ -328,7 +345,7 @@ class _ConfirmPickGoodsSuccessState
           Container(
               height: ScreenUtil.getInstance().getAdapterSize(180),
               decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFA49F9B)),
+                  border: Border.all(color: const Color(0xFFA49F9B)),
                   borderRadius: BorderRadius.circular(8)),
               child: Stack(
                 children: [
@@ -352,7 +369,7 @@ class _ConfirmPickGoodsSuccessState
                             ],
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   SfSignaturePad(
                       key: _signatureGlobalKey,
                       strokeColor: Colors.black,
@@ -420,13 +437,13 @@ class _ConfirmPickGoodsSuccessState
             style: TextStyle(
                 color: Colors.black,
                 fontSize: ScreenUtil.getInstance().getAdapterSize(14)))
-        : SizedBox();
+        : const SizedBox();
   }
 
   SliverToBoxAdapter _totalCostWidget() {
     return SliverToBoxAdapter(
       child: Container(
-        color: Color(0xFFFFF1E5),
+        color: const Color(0xFFFFF1E5),
         padding: EdgeInsets.symmetric(
             horizontal: ScreenUtil.getInstance().getAdapterSize(16),
             vertical: ScreenUtil.getInstance().getAdapterSize(7)),
@@ -477,8 +494,16 @@ class _ConfirmPickGoodsSuccessState
           //     await Permission.storage.request();
           //   }
           // }
-
-          CloudService().upload(_imageResult);
+          //
+          // CloudService().upload(_imageResult);
+          Navigator.pushNamed(
+            context,
+            EstimatedTimePage.routeName,
+            arguments: ScreenArguments(
+                arg1:
+                    '331C Trần Hưng Đạo, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh',
+                arg2: '1'),
+          );
         },
       ),
     );

@@ -31,7 +31,7 @@ class _HomePageState extends BasePageState<HomePage> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('assets/images/logo_supra_black.png',
+        title: Image.asset('assets/images/the_supra.png',
             width: ScreenUtil.getInstance().getWidth(100),
             height: ScreenUtil.getInstance().getHeight(30)),
         centerTitle: true,
@@ -45,6 +45,7 @@ class _HomePageState extends BasePageState<HomePage> {
         color: AppColor.colorWhiteDark,
         child: GoogleMap(
           myLocationEnabled: true,
+          myLocationButtonEnabled: true,
           compassEnabled: true,
           zoomControlsEnabled: true,
           tiltGesturesEnabled: true,

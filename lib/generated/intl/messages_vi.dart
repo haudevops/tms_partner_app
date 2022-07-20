@@ -91,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "empty_phone_number": MessageLookupByLibrary.simpleMessage(
             "Số điện thoại không được để trống"),
         "escrow": MessageLookupByLibrary.simpleMessage("Ký quỹ"),
+        "estimated_time":
+            MessageLookupByLibrary.simpleMessage("Dự kiến thời gian"),
         "externalCode": MessageLookupByLibrary.simpleMessage("Mã tham chiếu"),
         "external_code_title":
             MessageLookupByLibrary.simpleMessage("Mã tham chiếu"),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tms_partner_app/base/base.dart';
@@ -134,22 +136,6 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
               _bloc.findPointsAction(orderModel);
           return Scaffold(
             backgroundColor: AppColor.colorWhiteDark,
-            floatingActionButton: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: ScreenUtil.getInstance().getAdapterSize(60)),
-              child: FloatingActionButton(
-                onPressed: () {
-                  // if (pointTargetFinder.point?.contact?.phone != null &&
-                  //     pointTargetFinder.point!.contact!.phone!.isNotEmpty) {
-                  //   PhoneCallBottomSheet().show(
-                  //       context: context,
-                  //       phoneNumber: pointTargetFinder.point!.contact!.phone!);
-                  // }
-                },
-                backgroundColor: AppColor.orderGreenLight,
-                child: Icon(Icons.phone, color: AppColor.colorWhiteDark),
-              ),
-            ),
             appBar: AppBar(
               title: Text(
                 orderModel.isGrouped()
@@ -279,17 +265,6 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                             orderModel.detail!.goodsCheckRequired!)
                         ? 'Kiểm tra hàng'
                         : 'Không kiểm tra hàng'),
-                // _itemInfoWidget(
-                //     title: 'Thu hộ: ',
-                //     content: OrderUtils.getTotalCod(orderModel) != null
-                //         ? OrderUtils.getCurrencyText(
-                //             OrderUtils.getTotalCod(orderModel))
-                //         : '0'),
-                // _itemInfoWidget(
-                //     title: 'Tổng phí: ',
-                //     content: OrderUtils.getCurrencyText(orderModel.isGrouped()
-                //         ? OrderUtils.getTotalCost(orderModel.groups)
-                //         : orderModel.servicerCost)),
                 _itemInfoWidget(
                     title: 'Thanh toán: ',
                     content:
@@ -519,70 +494,39 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              width: ScreenUtil.getInstance().screenWidth,
-              height: ScreenUtil.getInstance().getAdapterSize(40),
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(AppColor.colorWhiteDark),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          ScreenUtil.getInstance().getAdapterSize(8)),
-                      side: BorderSide(width: 1, color: AppColor.colorPrimaryButton),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  OpenSettings.openMap(pointTargetFinder.point?.location?.lat,
-                      pointTargetFinder.point?.location?.lng);
-                },
-                child: Text(
-                  'Xem đường đi'.toUpperCase(),
-                  style: TextStyle(
-                      color: AppColor.orderStatusYellow,
-                      fontSize: ScreenUtil.getInstance().getAdapterSize(14)),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: ScreenUtil.getInstance().getAdapterSize(12)),
-          Expanded(
               child: ButtonSubmitWidget(
-                  onPressed: () {
+                  onPressed: (){
                     switch (pointTargetFinder.status) {
                       case PointStatus.NEW:
                       case PointStatus.IN_PROGRESS:
+                        _pickGoods(pointTargetFinder, orderModel, 'Lấy hàng thành công',
+                            'Lấy hàng thất bại');
                         // _bloc.arrived(pointTargetFinder, orderModel);
                         break;
                       case PointStatus.POINT_ARRIVED:
                         switch (pointTargetFinder.type) {
                           case PointType.PICK_POINT:
-                            _pickGoods(pointTargetFinder, orderModel);
+                            _pickGoods(pointTargetFinder, orderModel, 'Giao hàng thành công',
+                                'Giao hàng thất bại');
                             break;
                           case PointType.DELIVERY_POINT:
                           case PointType.DELIVERY_INSTALLATION_POINT:
-                            //deliveryGoods();
+                          // deliveryGoods();
                             break;
                           case PointType.INSTALLATION_POINT:
-                            // installation();
+                          // installation();
                             break;
                           case PointType.RETURN_POINT:
-                            // returnGoods();
+                          // returnGoods();
                             break;
                           case PointType.RETURN_WAREHOUSE:
-                            //returnWarehouse();
+                          //returnWarehouse();
                             break;
                         }
                         break;
                       default:
                         _showWarningDialog(
-                            content: S
-                                .of(context)
-                                .something_went_wrong_please_try_again,
+                            content: S.of(context).something_went_wrong_please_try_again,
                             onBack: false);
                         break;
                     }
@@ -594,7 +538,8 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
     );
   }
 
-  void _pickGoods(PointTargetFinder pointTargetFinder, OrderModel orderModel) {
+  void _pickGoods(PointTargetFinder pointTargetFinder, OrderModel orderModel,
+      String pickSuccess, String pickFail) {
     PickGoodsBottomSheet().showPickGoodsOption(
         buildContext: context,
         orderModel: orderModel,
@@ -614,6 +559,8 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
               DebugLog.show('click default');
               break;
           }
-        });
+        },
+        pickSuccess: pickSuccess,
+        pickFailed: pickFail);
   }
 }

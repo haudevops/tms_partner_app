@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
+
+import '../../res/colors.dart';
 
 Widget headerWidget({required BuildContext context, required String title}) {
   return Container(
@@ -16,7 +17,10 @@ Widget headerWidget({required BuildContext context, required String title}) {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.close)),
+              child: Icon(
+                Icons.close,
+                color: Colors.black,
+              )),
         ),
         Center(
           child: Text(

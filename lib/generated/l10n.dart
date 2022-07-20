@@ -2229,6 +2229,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Dự kiến thời gian`
+  String get estimated_time {
+    return Intl.message(
+      'Dự kiến thời gian',
+      name: 'estimated_time',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

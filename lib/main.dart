@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
@@ -10,19 +11,19 @@ import 'package:tms_partner_app/routes/route_settings.dart';
 import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/providers/language_provider.dart';
 import 'package:tms_partner_app/utils/screen_util/screen_util_init.dart';
+import 'config/configuration_dev.dart';
 import 'firebase_options.dart';
 
 import 'utils/providers/theme_provider.dart';
 
 // void main() async{
 //   WidgetsFlutterBinding.ensureInitialized();
+//   GlobalConfiguration().loadFromMap(debugAppSettings);
 //   // FirebaseDatabase.instance.setPersistenceEnabled(true);
 //   await PrefsUtil.getInstance();
 //   Firebase.initializeApp(
-//       // options: DefaultFirebaseOptions.currentPlatform
+//       options: DefaultFirebaseOptions.currentPlatform
 //   );
-//   SystemChrome.setSystemUIOverlayStyle(
-//       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 //   runApp(const MyApp());
 // }
 
@@ -31,7 +32,7 @@ Future<Widget> initializeApp() async {
   await PrefsUtil.getInstance();
   await Firebase.initializeApp(
       // Open this option when build web app
-      options: DefaultFirebaseOptions.currentPlatform
+      // options: DefaultFirebaseOptions.currentPlatform
   );
   // FirebaseDatabase.instance.setPersistenceEnabled(true);
   return const MyApp();

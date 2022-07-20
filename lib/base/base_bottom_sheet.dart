@@ -14,7 +14,7 @@ class BaseBottomSheet {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        backgroundColor: AppColor.colorBackground,
+        backgroundColor: AppColor.colorWhiteDark,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),

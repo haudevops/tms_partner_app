@@ -59,3 +59,5 @@ export 'forgot_password/forgot_password_bloc.dart';
 export 'notification/notification_detail/notification_detail_page.dart';
 
 export 'sign_image_user/sign_image_page.dart';
+
+export 'estimate_time/estimate_time_page.dart';

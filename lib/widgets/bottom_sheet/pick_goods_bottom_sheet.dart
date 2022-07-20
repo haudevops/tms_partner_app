@@ -24,7 +24,10 @@ class PickGoodsBottomSheet {
       {required BuildContext buildContext,
       required OrderModel orderModel,
       required PointTargetFinder pointTargetFinder,
-      required Function(PickGoodsOption) onSubmit}) {
+      required Function(PickGoodsOption) onSubmit,
+        required String pickSuccess,
+        required String pickFailed
+      }) {
     BaseBottomSheet().show(
         context: buildContext,
         widget: StatefulBuilder(builder: (context, StateSetter state) {
@@ -38,11 +41,11 @@ class PickGoodsBottomSheet {
                 color: Colors.black.withOpacity(0.2),
               ),
               _radioCheckOption(
-                  nameOption: 'Giao hàng thành công',
+                  nameOption: pickSuccess,
                   option: PickGoodsOption.PICK_SUCCESS,
                   state: state),
               _radioCheckOption(
-                  nameOption: 'Giao hàng thất bại',
+                  nameOption: pickFailed,
                   option: PickGoodsOption.PICK_FAILED,
                   state: state),
               _checkPickUpLater(orderModel, pointTargetFinder, state),
@@ -67,16 +70,17 @@ class PickGoodsBottomSheet {
           color: _groupOption == option ? Color(0xFFFFF1E5) : Colors.white,
           border: Border.all(
               color: _groupOption == option
-                  ? Color(0xFFF28022)
-                  : Color(0xFFA49F9B))),
+                  ? AppColor.orderStatusYellow
+                  : const Color(0xFFA49F9B))),
       child: RadioListTile(
         title: Text(nameOption,
             style: TextStyle(
                 fontSize: ScreenUtil.getInstance().getAdapterSize(14),
                 color: _groupOption == option
                     ? AppColor.colorPrimaryButton
-                    : Color(0xFF666462))),
+                    : const Color(0xFF666462))),
         value: option,
+        activeColor: AppColor.orderStatusYellow,
         groupValue: _groupOption,
         onChanged: (PickGoodsOption? value) {
           state(() {

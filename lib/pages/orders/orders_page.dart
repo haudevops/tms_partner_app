@@ -318,8 +318,8 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                               _itemIconHeader(
                                   'assets/icon/ic_order_processing.svg',
                                   "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                              _itemIconHeader('assets/icon/ic_order_finish.svg',
-                                  '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
+                              // _itemIconHeader('assets/icon/ic_order_finish.svg',
+                              //     '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
                             ]),
                       );
               });
