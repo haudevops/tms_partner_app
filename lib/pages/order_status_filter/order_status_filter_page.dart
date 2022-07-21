@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tms_partner_app/base/base.dart';
@@ -6,13 +5,12 @@ import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/routes/screen_arguments.dart';
+import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 
 import '../pages.dart';
 
 class OrderStatusFilterPage extends BasePage<OrderStatusFilterBloc> {
-
-
   static const routeName = '/OrderStatusFilterPage';
   final ScreenArguments? data;
 
@@ -33,56 +31,65 @@ class _OrderStatusFilterState extends BasePageState<OrderStatusFilterPage> {
     return Scaffold(
       backgroundColor: AppColor.lineLayout,
       appBar: AppBar(
-          title: Text(S.current.order),
-          centerTitle: true,
-          automaticallyImplyLeading: true),
+        title: Text(
+          S.current.order,
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+              fontSize: ScreenUtil.getInstance().getAdapterSize(18)),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: AppColor.colorWhiteDark,
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
-          // _doGetOrders(status);
+          _doGetOrders(status);
         },
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            // StreamBuilder<List<OrderModel>?>(
-            //   stream: _bloc.ordersStream,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasError) {
-            //       return SliverToBoxAdapter(
-            //         child: Container(
-            //           width: 200,
-            //           height: 200,
-            //         ),
-            //       );
-            //     }
-            //     if (snapshot.data == null) {
-            //       return SliverToBoxAdapter(child: ShimmerOrders());
-            //     }
-            //     _dataKeys = List.generate(
-            //         snapshot.data!.length, (index) => GlobalKey());
-            //     return SliverList(
-            //       delegate: SliverChildBuilderDelegate(
-            //         (context, index) {
-            //           return OrderWidget(
-            //             order: snapshot.data![index],
-            //             globalKey: _dataKeys[index],
-            //             onTapOrder: (orderModel) {
-            //               _bloc.updateUIExpand(snapshot.data!, index);
-            //
-            //               if (!snapshot.data![index].expandGroup) {
-            //                 Scrollable.ensureVisible(
-            //                     _dataKeys[index].currentContext!);
-            //               }
-            //             },
-            //           );
-            //         },
-            //         childCount: snapshot.data?.length,
-            //       ),
-            //     );
-            //   },
-            // ),
-            SliverToBoxAdapter(
+            StreamBuilder<List<OrderModel>?>(
+              stream: _bloc.ordersStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const SliverToBoxAdapter(
+                    child: SizedBox(
+                      width: 200,
+                      height: 200,
+                    ),
+                  );
+                }
+                if (snapshot.data == null) {
+                  return const SliverToBoxAdapter(child: ShimmerOrders());
+                }
+                _dataKeys = List.generate(
+                    snapshot.data!.length, (index) => GlobalKey());
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return OrderWidget(
+                        order: snapshot.data![index],
+                        globalKey: _dataKeys[index],
+                        onTapOrder: (orderModel) {
+                          _bloc.updateUIExpand(snapshot.data!, index);
+
+                          if (!snapshot.data![index].expandGroup) {
+                            Scrollable.ensureVisible(
+                                _dataKeys[index].currentContext!);
+                          }
+                        },
+                      );
+                    },
+                    childCount: snapshot.data?.length,
+                  ),
+                );
+              },
+            ),
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
           ],
@@ -106,7 +113,7 @@ class _OrderStatusFilterState extends BasePageState<OrderStatusFilterPage> {
   void onCreate() {
     // TODO: implement onCreate
     status = widget.data!.arg1.toString();
-    // _bloc = getBloc();
+    _bloc = getBloc();
     _doGetOrders(status);
   }
 
@@ -116,6 +123,6 @@ class _OrderStatusFilterState extends BasePageState<OrderStatusFilterPage> {
   }
 
   void _doGetOrders(String? status) {
-    // _bloc.getOrders(status: status);
+    _bloc.getOrders(status: status);
   }
 }

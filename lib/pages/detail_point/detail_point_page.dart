@@ -81,22 +81,6 @@ class _DetailPointPageState extends BasePageState<DetailPointPage>
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-            bottom: ScreenUtil.getInstance().getAdapterSize(60)),
-        child: FloatingActionButton(
-          onPressed: () {
-            if (_pointCurrent?.contact?.phone != null &&
-                _pointCurrent!.contact!.phone!.isNotEmpty) {
-              PhoneCallBottomSheet().show(
-                  context: context,
-                  phoneNumber: _pointCurrent!.contact!.phone!);
-            }
-          },
-          child: Icon(Icons.phone, color: AppColor.colorItemDarkWhite),
-          backgroundColor: AppColor.orderGreenLight,
-        ),
-      ),
       appBar: AppBar(
         title: Text(
           _title ?? '',

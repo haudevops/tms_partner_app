@@ -1,8 +1,8 @@
 class ArrivedGroupRequest {
-  ArrivedGroupRequest({this.orderId, this.pointId, this.lat, this.lng});
+  ArrivedGroupRequest({this.orderId, this.pointId});
 
   String? orderId;
   String? pointId;
-  double? lat;
-  double? lng;
+  // double? lat;
+  // double? lng;
 }

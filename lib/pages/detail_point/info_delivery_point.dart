@@ -50,26 +50,6 @@ class InfoDeliveryPoint extends StatelessWidget {
             SizedBox(height: ScreenUtil.getInstance().getAdapterSize(120))
           ],
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                    top:
-                        BorderSide(color: Color(0xFF101010).withOpacity(0.1)))),
-            child: ButtonSubmitWidget(
-              marginHorizontal: ScreenUtil.getInstance().getAdapterSize(16),
-              marginVertical: ScreenUtil.getInstance().getAdapterSize(8),
-              title: 'XEM ĐƯỜNG ĐI',
-              onPressed: () {
-                OpenSettings.openMap(
-                    pointCurrent?.location?.lat, pointCurrent?.location?.lng);
-              },
-              colorTitle: Colors.white,
-            ),
-          ),
-        )
       ],
     );
   }

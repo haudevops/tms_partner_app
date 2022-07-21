@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tms_partner_app/data/model/models.dart';
+import 'package:tms_partner_app/res/colors.dart';
 import 'package:tms_partner_app/utils/open_settings/open_settings.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
@@ -14,65 +15,117 @@ class ProductsDeliveryPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                    top:
-                        BorderSide(color: Color(0xFF101010).withOpacity(0.1)))),
-            child: ButtonSubmitWidget(
-              marginHorizontal: ScreenUtil.getInstance().getAdapterSize(16),
-              marginVertical: ScreenUtil.getInstance().getAdapterSize(8),
-              title: 'XEM ĐƯỜNG ĐI',
-              onPressed: () {
-                OpenSettings.openMap(
-                    pointCurrent?.location?.lat, pointCurrent?.location?.lng);
-              },
-              colorTitle: Colors.white,
+    return Container(
+      width: ScreenUtil.getInstance().screenWidth,
+      height: ScreenUtil.getInstance().screenHeight,
+      color: AppColor.colorWhiteDark,
+      padding: EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(16)),
+      child: Column(
+        children: [
+          Table(
+            columnWidths: const <int, TableColumnWidth>{
+              0: FlexColumnWidth(3),
+              1: FlexColumnWidth(5),
+            },
+            children: [_itemInfo(pointCurrent?.externalCode)],
+          ),
+          const Divider(
+            thickness: 1,
+          ),
+          Row(
+            children: [
+              Text('Sản phẩm',
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getInstance().getAdapterSize(16),
+                      fontWeight: FontWeight.w600)),
+              const Spacer(),
+              Text('Số lượng',
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getInstance().getAdapterSize(16),
+                      fontWeight: FontWeight.w600)),
+            ],
+          ),
+          SizedBox(
+            height: ScreenUtil.getInstance().getAdapterSize(8),
+          ),
+          _listProduct()
+        ],
+      ),
+    );
+  }
+
+  TableRow _itemInfo(String? content) {
+    return TableRow(children: [
+      Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: ScreenUtil.getInstance().getAdapterSize(4)),
+        child: Text('Mã tham chiếu: ',
+            style: TextStyle(
+                fontSize: ScreenUtil.getInstance().getAdapterSize(16),
+                color: AppColor.colorGray)),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: ScreenUtil.getInstance().getAdapterSize(4)),
+        child: Text(content ?? '',
+            style: TextStyle(
+              fontSize: ScreenUtil.getInstance().getAdapterSize(16),
+              color: AppColor.colorBlack,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis),
+      ),
+    ]);
+  }
+
+  Widget _listProduct() {
+    return Expanded(
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: pointCurrent?.products?.length ?? 0,
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemBuilder: (context, index) {
+          return _productWidget(pointCurrent?.products?[index]);
+        },
+      ),
+    );
+  }
+
+  Widget _productWidget(ProductModel? data) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              data?.name ?? '',
+              style: TextStyle(
+                color: AppColor.colorGray,
+                fontSize: ScreenUtil.getInstance().getAdapterSize(14),
+              ),
+              maxLines: 2 ,
+            ),
+            Text(
+              '${data?.quantity}',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: ScreenUtil.getInstance().getAdapterSize(14),
+              ),
+            ),
+
+          ],
+        ),
+        SizedBox(
+          height: ScreenUtil.getInstance().getAdapterSize(5),
+        ),
+        Text(
+          data?.sku ?? '',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: ScreenUtil.getInstance().getAdapterSize(14),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.all(ScreenUtil.getInstance().getAdapterSize(16)),
-          child: ListView.separated(
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Row(
-                    children: [
-                      Text('Sản phẩm',
-                          style: TextStyle(
-                              fontSize:
-                                  ScreenUtil.getInstance().getAdapterSize(16),
-                              fontWeight: FontWeight.w600)),
-                      const Spacer(),
-                      Text('Số lượng',
-                          style: TextStyle(
-                              fontSize:
-                                  ScreenUtil.getInstance().getAdapterSize(16),
-                              fontWeight: FontWeight.w600)),
-                    ],
-                  );
-                } else {
-                  return Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical:
-                              ScreenUtil.getInstance().getAdapterSize(12)),
-                  child: Row(
-                    children: [
-
-                    ],
-                  ),);
-                }
-              },
-              separatorBuilder: (context, index) {
-                return index == 0 ? SizedBox() : Divider();
-              },
-              itemCount: products.length + 1),
-        )
       ],
     );
   }

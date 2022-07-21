@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:tms_partner_app/base/base.dart';
@@ -94,19 +92,41 @@ class OrdersService {
     return OrderModel.fromJson(response.data!);
   }
 
-// Future<bool> doArrivedInOrderGroup({required List<ArrivedGroupRequest> arrivedGroupRequests}) async {
-//   final BaseResponse response =
-//   await _baseService.post(Apis.patchArrivedInOrderGroup, params: arrivedGroupRequests);
-//
-//   if (response.errorCode == Constants.ERROR_CODE) {
-//     return OrderModel(
-//         errorCode: response.errorCode,
-//         message: response.message,
-//         isChildOrder: false,
-//         expandGroup: false,
-//         countSO: 0);
-//   }
-//
-//   return OrderModel.fromJson(response.data!);
-// }
+  Future<OrderModel> doArrivedInOrderGroup(
+      {required String? orderID, required String? pointId}) async {
+    String uriArrivedInOrderGroup =
+        '${Apis.patchArrivedInOrderGroup}/$orderID/point/$pointId/arrived';
+    final BaseResponse response =
+        await _baseService.post(uriArrivedInOrderGroup);
+
+    if (response.errorCode == Constants.ERROR_CODE) {
+      return OrderModel(
+          errorCode: response.errorCode,
+          message: response.message,
+          isChildOrder: false,
+          expandGroup: false,
+          countSO: 0);
+    }
+
+    return OrderModel.fromJson({'message': response.message});
+  }
+
+  Future<OrderModel> doPickupSuccess(
+      {required String? orderID, required String? pointId}) async {
+    String uriArrivedInOrderGroup =
+        '${Apis.patchPickupOrder}/$orderID/point/$pointId/pickup';
+    final BaseResponse response =
+    await _baseService.post(uriArrivedInOrderGroup);
+
+    if (response.errorCode == Constants.ERROR_CODE) {
+      return OrderModel(
+          errorCode: response.errorCode,
+          message: response.message,
+          isChildOrder: false,
+          expandGroup: false,
+          countSO: 0);
+    }
+
+    return OrderModel.fromJson({'message': response.message});
+  }
 }

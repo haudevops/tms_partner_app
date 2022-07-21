@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:rxdart/rxdart.dart';
@@ -184,21 +183,80 @@ class DetailAcceptedOrderBloc extends BaseBloc {
 
   Future<void> arrived(
       PointTargetFinder pointTargetFinder, OrderModel orderModel) async {
-    if (pointTargetFinder.point == null) {
-      return;
-    }
-    if (orderModel.isGrouped()) {
-      LocationData _locationData = await Location().getLocation();
-      List<ArrivedGroupRequest> arrivedGroupRequests = [];
-
-      for (final orderGroup in orderModel.groups!) {
-        arrivedGroupRequests.add(ArrivedGroupRequest(
-            orderId: orderGroup.id,
-            pointId:
-                orderGroup.points?[pointTargetFinder.currentPointIndex!].id,
-            lat: _locationData.latitude,
-            lng: _locationData.longitude));
-      }
-    } else {}
+    showLoading();
+    await OrdersService.instance
+        .doArrivedInOrderGroup(
+        orderID: orderModel.id,
+        pointId: orderModel
+            .detail?.points?[0].id)
+        .then((value) => {
+      if (value.errorCode != Constants.ERROR_CODE)
+        {getOrder(orderModel)}
+      else
+        {
+          showMsg(value.message ??
+              S.current.something_went_wrong_please_try_again)
+        }
+    });
+    // LocationData _locationData = await Location().getLocation();
+    // List<ArrivedGroupRequest> arrivedGroupRequests = [];
+    // if (pointTargetFinder.point == null) {
+    //   hiddenLoading();
+    //   return;
+    //
+    // }else{
+    //   await OrdersService.instance
+    //       .doArrivedInOrderGroup(
+    //       orderID: orderModel.id,
+    //       pointId: orderModel
+    //           .groups?[0].points?[pointTargetFinder.currentPointIndex!].id)
+    //       .then((value) => {
+    //     if (value.errorCode != Constants.ERROR_CODE)
+    //       {_orderController.sink.add(value)}
+    //     else
+    //       {
+    //         showMsg(value.message ??
+    //             S.current.something_went_wrong_please_try_again)
+    //       }
+    //   });
+    // }
+    // if (orderModel.isGrouped()) {
+    //   for (final orderGroup in orderModel.groups!) {
+    //     arrivedGroupRequests.add(ArrivedGroupRequest(
+    //       orderId: orderModel.id,
+    //       pointId: orderGroup.points?[pointTargetFinder.currentPointIndex!].id,
+    //     ));
+    //     OrdersService.instance
+    //         .doArrivedInOrderGroup(
+    //         orderID: orderModel.id,
+    //         pointId: orderModel
+    //             .groups?[0].points?[pointTargetFinder.currentPointIndex!].id).then((value) => {
+    //       if (value.errorCode != Constants.ERROR_CODE)
+    //         {_orderController.sink.add(value)}
+    //       else
+    //         {
+    //           showMsg(value.message ??
+    //               S.current.something_went_wrong_please_try_again)
+    //         }
+    //     });
+    //   }
+    //
+    // } else {
+    //   OrdersService.instance
+    //       .doArrivedInOrderGroup(
+    //           orderID: orderModel.id,
+    //           pointId: orderModel
+    //               .groups?[0].points?[pointTargetFinder.currentPointIndex!].id)
+    //       .then((value) => {
+    //             if (value.errorCode != Constants.ERROR_CODE)
+    //               {_orderController.sink.add(value)}
+    //             else
+    //               {
+    //                 showMsg(value.message ??
+    //                     S.current.something_went_wrong_please_try_again)
+    //               }
+    //           });
+    // }
+    hiddenLoading();
   }
 }

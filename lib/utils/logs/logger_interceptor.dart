@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tms_partner_app/config/define_service_api.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 
@@ -50,7 +51,9 @@ class LoggerInterceptor extends Interceptor {
   }
 
   void logPrint(String msg) {
-    log('${DateTime.now()} Api: $msg');
+    if (kDebugMode) {
+      print('${DateTime.now()} Api: $msg');
+    }
   }
 
   void printAll(msg) {

@@ -62,10 +62,9 @@ class OrderWidget extends StatelessWidget {
                   _titleWidget(
                       title: order.serviceName,
                       contentLeft: order.serviceType != ServiceType.INSTALL
-                          ? '${order.detail?.distance}km - '
+                          ? '${order.detail?.distance}km'
                           : '',
-                      contentRight:
-                          '${OrderUtils.getCurrencyText((order.groups != null && order.groups!.length > 1) ? OrderUtils.getTotalCost(order.groups!) : order.servicerCost)}'),
+                      contentRight: ''),
                   _itemPadding(),
                   _titleWidget(
                       title: DateUtil.convertTimeStamp(order.expectedTime),

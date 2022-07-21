@@ -56,8 +56,8 @@ class _OrderHistoryPageState extends BasePageState<OrderHistoryPage> {
         widget: FilterWidget(
           filterModel: _filterModel,
           onFilter: (data) {
-            // _filterModel = data;
-            // _doGetOrdersHistory();
+            _filterModel = data;
+            _doGetOrdersHistory();
           },
           service: [
             FilterModel(id: ServiceType.DELIVERY, name: S.current.delivery),

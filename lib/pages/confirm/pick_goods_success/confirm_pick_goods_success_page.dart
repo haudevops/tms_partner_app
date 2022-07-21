@@ -85,7 +85,7 @@ class _ConfirmPickGoodsSuccessState
   }
 
   void _showPhotoView(XFile xFile) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
+    Navigator.of(context).push(MaterialPageRoute<Null>(
         builder: (BuildContext context) {
           return PhotoView(
             arguments: ScreenArguments(arg1: xFile.path),
@@ -168,7 +168,7 @@ class _ConfirmPickGoodsSuccessState
                 : SliverToBoxAdapter(),
             _signaturePadWidget(),
             // _totalCostWidget(),
-            _submitWidget()
+            _submitWidget(_pointTargetFinder, _orderModel)
           ],
         ),
       ),
@@ -258,7 +258,8 @@ class _ConfirmPickGoodsSuccessState
                   child: Image.file(File(imagePicked.path),
                       fit: BoxFit.cover,
                       width: ScreenUtil.getInstance().getAdapterSize(54),
-                      height: ScreenUtil.getInstance().getAdapterSize(54))),
+                      height: ScreenUtil.getInstance().getAdapterSize(54)),
+              ),
               Positioned(
                   top: ScreenUtil.getInstance().getAdapterSize(2),
                   right: ScreenUtil.getInstance().getAdapterSize(2),
@@ -476,7 +477,7 @@ class _ConfirmPickGoodsSuccessState
     );
   }
 
-  SliverToBoxAdapter _submitWidget() {
+  SliverToBoxAdapter _submitWidget(PointTargetFinder pointTargetFinder, OrderModel orderModel) {
     return SliverToBoxAdapter(
       child: ButtonSubmitWidget(
         title: 'XÁC NHẬN',
@@ -485,25 +486,17 @@ class _ConfirmPickGoodsSuccessState
         marginHorizontal: ScreenUtil.getInstance().getAdapterSize(16),
         marginVertical: ScreenUtil.getInstance().getAdapterSize(16),
         onPressed: () async {
-          // bool _checkValidate = await _validateData();
-          // if (_checkValidate) {
-          //   var status = await Permission.storage.status;
-          //   if (status.isGranted) {
-          //     _saveSignaturePad();
-          //   } else {
-          //     await Permission.storage.request();
-          //   }
-          // }
-          //
-          // CloudService().upload(_imageResult);
-          Navigator.pushNamed(
-            context,
-            EstimatedTimePage.routeName,
-            arguments: ScreenArguments(
-                arg1:
-                    '331C Trần Hưng Đạo, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh',
-                arg2: '1'),
-          );
+          bool _checkValidate = await _validateData();
+          if (_checkValidate) {
+            var status = await Permission.storage.status;
+            if (status.isGranted) {
+              _saveSignaturePad();
+            } else {
+              await Permission.storage.request();
+            }
+          }
+          CloudService().upload(_imageResult);
+          _bloc.doPickupSuccess(pointTargetFinder, orderModel);
         },
       ),
     );

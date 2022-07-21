@@ -15,6 +15,7 @@ import '../pages.dart';
 
 class OrdersPage extends BasePage<OrdersBloc> {
   OrdersPage() : super(bloc: OrdersBloc());
+  static const routeName = '/OrdersPage';
 
   @override
   BasePageState<BasePage> getState() => _OrdersPageState();
@@ -100,7 +101,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
             _appBarCustom(),
             _makeHeader(),
             const SliverToBoxAdapter(
-              child: SizedBox(height: 10),
+              child: SizedBox(height: 5),
             ),
             StreamBuilder<List<OrderModel>?>(
               stream: _bloc.ordersStream,
@@ -210,8 +211,8 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
         widget: FilterWidget(
           filterModel: _filterModel,
           onFilter: (data) {
-            // _filterModel = data;
-            // _doGetOrders();
+            _filterModel = data;
+            _doGetOrders();
           },
           service: [
             FilterModel(id: ServiceType.DELIVERY, name: S.current.delivery),
@@ -262,7 +263,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
               return LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                 return constraints.biggest.height >
-                        ScreenUtil.getInstance().getAdapterSize(70)
+                        ScreenUtil.getInstance().getAdapterSize(100)
                     ? Container(
                         color: _isExpanded
                             ? AppColor.lineLayout
@@ -287,14 +288,6 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                                     _calculatorSize(constraints.biggest.height),
                                 orderStatus:
                                     "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                            // _itemStatistical(
-                            //   icon: 'assets/icon/ic_order_finish.svg',
-                            //   qty: snapshot.data?.finished ?? 0,
-                            //   status: S.current.accomplished,
-                            //   size: _calculatorSize(constraints.biggest.height),
-                            //   orderStatus:
-                            //       "${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}",
-                            // )
                           ],
                         ),
                       )
@@ -318,8 +311,6 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                               _itemIconHeader(
                                   'assets/icon/ic_order_processing.svg',
                                   "${OrderStatus.ACCEPTED},${OrderStatus.PROCESSING}"),
-                              // _itemIconHeader('assets/icon/ic_order_finish.svg',
-                              //     '${OrderStatus.FINISHED},${OrderStatus.FINISHED_RETURNED}')
                             ]),
                       );
               });
@@ -336,7 +327,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
       String? orderStatus}) {
     return Expanded(
       child: SizedBox(
-        height: ScreenUtil.getInstance().getWidth(70),
+        height: ScreenUtil.getInstance().getWidth(100),
         child: GestureDetector(
           onTap: () {
             // Navigator.pushNamed(context, OrderStatusFilterPage.routeName,
@@ -351,7 +342,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: ScreenUtil.getInstance().getAdapterSize(13), left: ScreenUtil.getInstance().getAdapterSize(16)),
+                  padding: EdgeInsets.only(top: ScreenUtil.getInstance().getAdapterSize(28), left: ScreenUtil.getInstance().getAdapterSize(16)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

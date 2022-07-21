@@ -103,11 +103,11 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         _navigationBarItem(
-            icon: 'assets/icon/ic_navigation_orders.svg',
-            label: S.of(context).navigation_order),
-        _navigationBarItem(
             icon: 'assets/icon/ic_navigation_home.svg',
             label: S.of(context).navigation_home),
+        _navigationBarItem(
+            icon: 'assets/icon/ic_navigation_orders.svg',
+            label: S.of(context).navigation_order),
         _navigationBarItem(
             icon: 'assets/icon/ic_navigation_notifications.svg',
             label: S.of(context).navigation_notification),
@@ -131,8 +131,8 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
       physics: const NeverScrollableScrollPhysics(),
       onPageChanged: _pageChanged,
       children: <Widget>[
-        KeepAlivePage(child: OrdersPage()),
         KeepAlivePage(child: HomePage()),
+        KeepAlivePage(child: OrdersPage()),
         KeepAlivePage(child: NotificationPage()),
         KeepAlivePage(child: MenuPage())
       ],

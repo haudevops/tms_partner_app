@@ -14,8 +14,8 @@ class Apis {
       '/order/api/servicer/order/statistical';
   static const String patchGetOrders = '/order/api/servicer/orders';
   static const String patchGetOrder = '/order/api/servicer/order';
-  static const String patchArrivedInOrderGroup =
-      '/delivery/api/servicer/order/arrived';
+  static const String patchArrivedInOrderGroup = '/delivery/api/servicer/order';
+  static const String patchPickupOrder = '/delivery/api/servicer/order';
 
   static const String patchactivities = '/activity/api/servicer/activities';
 

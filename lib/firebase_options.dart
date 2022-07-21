@@ -56,11 +56,11 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBYEIedJyXL4m8AHqHdXZfYdiMoIrUKx0M',
+    apiKey: 'AIzaSyDXm1PNPUX3IjTcCoJv2NcgEg-oevB3kCc',
     appId: '1:972940910705:android:dd2db748ac6ed1e2707bd0',
     messagingSenderId: '972940910705',
     projectId: 'stt-supra-prod',
-    storageBucket: 'tms-stt-supra-prod-app.appspot.com',
+    storageBucket: 'stt-supra-prod.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(

@@ -40,7 +40,7 @@ class CloudService {
       "files": xFile
           .map((e) => MultipartFile.fromFileSync(e.path,
               filename: _getNameFile(e.path),
-              contentType: new MediaType("image", "png")))
+              contentType: MediaType("image", "png")))
           .toList(),
     });
 

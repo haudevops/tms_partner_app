@@ -59,7 +59,6 @@ class _ChangePasswordPageState extends BasePageState<ChangePasswordPage> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           S.current.change_pass,
@@ -242,7 +241,7 @@ class _ChangePasswordPageState extends BasePageState<ChangePasswordPage> {
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 )),
-            backgroundColor: MaterialStateProperty.all(Colors.orange)),
+            backgroundColor: MaterialStateProperty.all(AppColor.orderStatusYellow)),
         child: Text(
           S.current.change_password,
           style: TextStyle(color: Colors.white),

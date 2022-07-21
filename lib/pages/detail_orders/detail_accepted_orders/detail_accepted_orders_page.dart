@@ -33,6 +33,7 @@ class DetailAcceptedOrderPage extends BasePage<DetailAcceptedOrderBloc> {
 
 class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
   late DetailAcceptedOrderBloc _bloc;
+  String? _title;
 
   @override
   void onCreate() {
@@ -134,6 +135,9 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
           OrderModel orderModel = snapshot.data!;
           PointTargetFinder pointTargetFinder =
               _bloc.findPointsAction(orderModel);
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            _checkTitleButton(pointTargetFinder.status, pointTargetFinder);
+          });
           return Scaffold(
             backgroundColor: AppColor.colorWhiteDark,
             appBar: AppBar(
@@ -189,11 +193,6 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
     );
   }
 
-  // @override
-  // Widget buildWidget(BuildContext context) {
-  //   return Container();
-  // }
-
   Widget _detailWidget(OrderModel orderModel) {
     String? storeCode = OrderUtils.getStoreCode(orderModel);
     String? pointsExternalCode = OrderUtils.getPointsExternalCode(orderModel);
@@ -248,7 +247,11 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                     ? _itemInfoWidget(
                         title: '${S.of(context).externalCode}: ',
                         content: pointsExternalCode,
-                        onTap: () {})
+                        onTap: () {
+                          _showDialogCode();
+                        },
+                        showIcon: true,
+                      )
                     : _tableRowNull(),
                 orderModel.isGrouped()
                     ? _itemInfoWidget(
@@ -260,18 +263,6 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                         onTap: () {})
                     : _tableRowNull(),
                 _itemInfoWidget(
-                    title: 'Yêu cầu: ',
-                    content: (orderModel.detail?.goodsCheckRequired != null &&
-                            orderModel.detail!.goodsCheckRequired!)
-                        ? 'Kiểm tra hàng'
-                        : 'Không kiểm tra hàng'),
-                _itemInfoWidget(
-                    title: 'Thanh toán: ',
-                    content:
-                        OrderUtils.getPaymentType(orderModel.paymentMethod)),
-                _itemInfoWidget(title: 'Kích thước: ', content: '1'),
-                _itemInfoWidget(title: 'Thể tích: ', content: '1'),
-                _itemInfoWidget(
                     title: 'Cân nặng: ',
                     content: orderModel.weight != null
                         ? '${OrderUtils.round(orderModel.weight!, 3)} kg'
@@ -281,6 +272,37 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
           )
         ],
       ),
+    );
+  }
+
+  _showDialogCode() async{
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(ScreenUtil.getInstance().getAdapterSize(16)),
+          topRight: Radius.circular(ScreenUtil.getInstance().getAdapterSize(16)),
+        ),
+      ),
+      backgroundColor: AppColor.colorWhiteDark,
+      builder: (BuildContext context) {
+        return SizedBox(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Align(alignment: Alignment.topCenter,
+                    child: const Text('Modal BottomSheet')),
+                ElevatedButton(
+                  child: const Text('Close BottomSheet'),
+                  onPressed: () => Navigator.pop(context),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -495,47 +517,88 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
         children: [
           Expanded(
               child: ButtonSubmitWidget(
-                  onPressed: (){
+                  onPressed: () {
                     switch (pointTargetFinder.status) {
                       case PointStatus.NEW:
                       case PointStatus.IN_PROGRESS:
-                        _pickGoods(pointTargetFinder, orderModel, 'Lấy hàng thành công',
-                            'Lấy hàng thất bại');
-                        // _bloc.arrived(pointTargetFinder, orderModel);
+                        _bloc.arrived(pointTargetFinder, orderModel);
                         break;
                       case PointStatus.POINT_ARRIVED:
                         switch (pointTargetFinder.type) {
                           case PointType.PICK_POINT:
-                            _pickGoods(pointTargetFinder, orderModel, 'Giao hàng thành công',
-                                'Giao hàng thất bại');
+                            Navigator.pushNamed(
+                                context, ConfirmPickGoodsSuccessPage.routeName,
+                                arguments: ScreenArguments(
+                                    arg1: orderModel, arg2: pointTargetFinder));
+
                             break;
                           case PointType.DELIVERY_POINT:
                           case PointType.DELIVERY_INSTALLATION_POINT:
-                          // deliveryGoods();
+                            // deliveryGoods();
+                            _pickGoods(pointTargetFinder, orderModel,
+                                'Giao hàng thành công', 'Giao hàng thất bại');
                             break;
                           case PointType.INSTALLATION_POINT:
-                          // installation();
+                            // installation();
                             break;
                           case PointType.RETURN_POINT:
-                          // returnGoods();
+                            // returnGoods();
                             break;
                           case PointType.RETURN_WAREHOUSE:
-                          //returnWarehouse();
+                            //returnWarehouse();
                             break;
                         }
                         break;
                       default:
                         _showWarningDialog(
-                            content: S.of(context).something_went_wrong_please_try_again,
+                            content: S
+                                .of(context)
+                                .something_went_wrong_please_try_again,
                             onBack: false);
                         break;
                     }
                   },
-                  title: 'Lấy hàng'.toUpperCase(),
+                  title: _title?.toUpperCase() ?? 'OK',
                   colorTitle: Colors.white)),
         ],
       ),
     );
+  }
+
+  void _checkTitleButton(int? status, PointTargetFinder pointTargetFinder) {
+    if (mounted) {
+      switch (status) {
+        case PointStatus.NEW:
+          setState(() {
+            _title = 'Đến nơi lấy hàng';
+          });
+          break;
+        case PointStatus.IN_PROGRESS:
+          setState(() {
+            _title = 'Đến nơi giao hàng';
+          });
+          break;
+        case PointStatus.POINT_ARRIVED:
+          switch (pointTargetFinder.type) {
+            case PointType.PICK_POINT:
+              setState(() {
+                _title = 'Lấy hàng thành công';
+              });
+              break;
+            case PointType.DELIVERY_POINT:
+              setState(() {
+                _title = 'Giao hàng thành công';
+              });
+              break;
+          }
+          break;
+        default:
+          setState(() {
+            _title = 'Giao hàng';
+          });
+          break;
+      }
+    }
   }
 
   void _pickGoods(PointTargetFinder pointTargetFinder, OrderModel orderModel,

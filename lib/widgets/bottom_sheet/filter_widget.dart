@@ -254,6 +254,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                   _selectedOrderStatus = [];
                 });
                 widget.onFilter(_filterModel);
+                Navigator.pop(context);
               },
               onDoubleTap: () {},
               child: Text(
