@@ -4,6 +4,7 @@ import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/data/service/auth_service.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
+import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/account_utils.dart';
 import 'package:tms_partner_app/utils/common_utils/date_util.dart';
 import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
@@ -27,7 +28,7 @@ class LoginBloc extends BaseBloc {
         AccountUtil.instance.saveToken(value.token);
         AccountUtil.instance.updateUserData(value.profile);
         PrefsUtil.putBool(PrefsCache.IS_LOGIN, true);
-        Navigator.pushReplacementNamed(_context, NavigationPage.routeName);
+        Navigator.pushReplacementNamed(_context, NavigationPage.routeName, arguments: ScreenArguments(arg1: 0));
         _getAppSetting();
       } else {
         showMsg(

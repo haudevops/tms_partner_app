@@ -125,6 +125,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nhập số điện thoại"),
         "input_received_phone": MessageLookupByLibrary.simpleMessage(
             "Nhập số điện thoại người nhận"),
+        "input_store_code":
+            MessageLookupByLibrary.simpleMessage("Nhập mã cửa hàng"),
         "installation": MessageLookupByLibrary.simpleMessage("Lắp đặt"),
         "installation_failed":
             MessageLookupByLibrary.simpleMessage("Lắp đặt thất bại"),
@@ -226,6 +228,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otp_code": MessageLookupByLibrary.simpleMessage("Mã OTP"),
         "overheads_cost": MessageLookupByLibrary.simpleMessage("Tổng phí"),
         "package": MessageLookupByLibrary.simpleMessage("Kiện"),
+        "package_code": MessageLookupByLibrary.simpleMessage("Mã kiện"),
         "paid": MessageLookupByLibrary.simpleMessage("Đã nộp tiền"),
         "partial_payment": MessageLookupByLibrary.simpleMessage("Nộp một phần"),
         "pass_word": MessageLookupByLibrary.simpleMessage("Mật khẩu"),

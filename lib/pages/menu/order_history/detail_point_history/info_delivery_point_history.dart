@@ -30,14 +30,14 @@ class InfoDeliveryPointHistory extends StatelessWidget {
         ListView(
           children: [
             _infoWidget(context),
-            _getListServiceWidget().isNotEmpty
-                ? Container(
-                    width: ScreenUtil.getInstance().screenWidth,
-                    height: ScreenUtil.getInstance().getAdapterSize(12),
-                    color: Color(0xFFEDEDED),
-                  )
-                : SizedBox(),
-            _servicesWidget(),
+            // _getListServiceWidget().isNotEmpty
+            //     ? Container(
+            //         width: ScreenUtil.getInstance().screenWidth,
+            //         height: ScreenUtil.getInstance().getAdapterSize(12),
+            //         color: Color(0xFFEDEDED),
+            //       )
+            //     : SizedBox(),
+            // _servicesWidget(),
             SizedBox(height: ScreenUtil.getInstance().getAdapterSize(120))
           ],
         ),

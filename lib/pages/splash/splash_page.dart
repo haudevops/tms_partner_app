@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/pages/pages.dart';
+import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 
 import '../../utils/common_utils/prefs_util.dart';
@@ -51,12 +52,12 @@ class _SplashPageState extends BasePageState<SplashPage> {
         prefs.getBool(PrefsCache.IS_LOGIN) ?? false;
     log('$isLogin');
     startScreen(
-        isLogin ? NavigationPage.routeName : LoginPage.routeName, context);
+        isLogin ? NavigationPage.routeName : LoginPage.routeName, context, 0);
   }
 
-  void startScreen(String route, BuildContext context) {
+  void startScreen(String route, BuildContext context, int indexPage) {
     Future.delayed(const Duration(seconds: 2),
-        () => {Navigator.pushReplacementNamed(context, route)});
+        () => {Navigator.pushReplacementNamed(context, route, arguments: ScreenArguments(arg1: indexPage))});
   }
 
   @override

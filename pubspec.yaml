@@ -158,6 +158,7 @@ flutter:
     - assets/images/no_image.png
     - assets/icon/svg/ic_camera_picture.svg
     - assets/icon/svg/ic_flag_address.svg
+    - assets/images/delivery.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

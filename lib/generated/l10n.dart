@@ -2239,6 +2239,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Package Code`
+  String get package_code {
+    return Intl.message(
+      'Package Code',
+      name: 'package_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Input store code`
+  String get input_store_code {
+    return Intl.message(
+      'Input store code',
+      name: 'input_store_code',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

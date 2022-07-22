@@ -7,12 +7,13 @@ Widget getLoadingWidget() {
     height: ScreenUtil.getInstance().screenHeight,
     width: ScreenUtil.getInstance().screenWidth,
     color: Colors.black26,
-    child: Center(
-      child: SizedBox(
-        width: 200,
-        height: 200,
-        child: Lottie.asset('assets/images/delivery_lottie.json')
-      )
-    ),
+    // child: Center(
+    //   child: SizedBox(
+    //     width: 150,
+    //     height: 150,
+    //     child: Image.asset('assets/images/delivery.gif',fit: BoxFit.fill),
+    //   )
+    // ),
+    child: Container()
   );
 }

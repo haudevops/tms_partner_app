@@ -486,16 +486,16 @@ class _ConfirmPickGoodsSuccessState
         marginHorizontal: ScreenUtil.getInstance().getAdapterSize(16),
         marginVertical: ScreenUtil.getInstance().getAdapterSize(16),
         onPressed: () async {
-          bool _checkValidate = await _validateData();
-          if (_checkValidate) {
-            var status = await Permission.storage.status;
-            if (status.isGranted) {
-              _saveSignaturePad();
-            } else {
-              await Permission.storage.request();
-            }
-          }
-          CloudService().upload(_imageResult);
+          // bool _checkValidate = await _validateData();
+          // if (_checkValidate) {
+          //   var status = await Permission.storage.status;
+          //   if (status.isGranted) {
+          //     _saveSignaturePad();
+          //   } else {
+          //     await Permission.storage.request();
+          //   }
+          // }
+          // CloudService().upload(_imageResult);
           _bloc.doPickupSuccess(pointTargetFinder, orderModel);
         },
       ),

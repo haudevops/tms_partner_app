@@ -124,6 +124,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter your phone number."),
         "input_received_phone": MessageLookupByLibrary.simpleMessage(
             "Enter the recipient\'s phone number"),
+        "input_store_code":
+            MessageLookupByLibrary.simpleMessage("Input store code"),
         "installation": MessageLookupByLibrary.simpleMessage("Installation"),
         "installation_failed":
             MessageLookupByLibrary.simpleMessage("Installation Failed"),
@@ -221,6 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "overheads_cost":
             MessageLookupByLibrary.simpleMessage("Overheads Cost"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
+        "package_code": MessageLookupByLibrary.simpleMessage("Package Code"),
         "paid": MessageLookupByLibrary.simpleMessage("Paid"),
         "partial_payment":
             MessageLookupByLibrary.simpleMessage("Partial payment"),

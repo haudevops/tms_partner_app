@@ -22,7 +22,7 @@ import 'utils/providers/theme_provider.dart';
 //   // FirebaseDatabase.instance.setPersistenceEnabled(true);
 //   await PrefsUtil.getInstance();
 //   Firebase.initializeApp(
-//       options: DefaultFirebaseOptions.currentPlatform
+//       // options: DefaultFirebaseOptions.currentPlatform
 //   );
 //   runApp(const MyApp());
 // }
@@ -32,7 +32,7 @@ Future<Widget> initializeApp() async {
   await PrefsUtil.getInstance();
   await Firebase.initializeApp(
       // Open this option when build web app
-      options: DefaultFirebaseOptions.currentPlatform
+      // options: DefaultFirebaseOptions.currentPlatform
   );
   // FirebaseDatabase.instance.setPersistenceEnabled(true);
   return const MyApp();

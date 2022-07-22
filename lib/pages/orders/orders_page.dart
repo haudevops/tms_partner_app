@@ -59,9 +59,10 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
     _bloc.getOrders(
         code: _filterModel.code,
         external: _filterModel.externalCode,
-        phone: _filterModel.phone,
+        store: _filterModel.store,
         serviceType: _filterModel.services,
-        status: _filterModel.status ?? "1,2,3,7,9,20");
+        // status: _filterModel.status ?? "1,2,3,7,9,20");
+        status: _filterModel.status ?? "3,7");
   }
 
   void _checkNavigation(OrderModel model) {
@@ -216,18 +217,18 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
           },
           service: [
             FilterModel(id: ServiceType.DELIVERY, name: S.current.delivery),
-            FilterModel(id: ServiceType.INSTALL, name: S.current.installation),
-            FilterModel(
-                id: ServiceType.DELIVERY_INSTALL,
-                name: S.current.delivery_and_installation)
+            // FilterModel(id: ServiceType.INSTALL, name: S.current.installation),
+            // FilterModel(
+            //     id: ServiceType.DELIVERY_INSTALL,
+            //     name: S.current.delivery_and_installation)
           ],
           orderStatus: [
-            FilterModel(id: 'accepted', name: S.current.accepted),
-            FilterModel(id: 'processing', name: S.current.processing),
-            FilterModel(
-                id: 'order_status_pending',
-                name: S.current.order_status_pending),
-            FilterModel(id: 'delivery_return', name: S.current.delivery_return),
+            FilterModel(id: '3', name: S.current.accepted),
+            FilterModel(id: '7', name: S.current.processing),
+            // FilterModel(
+            //     id: 'order_status_pending',
+            //     name: S.current.order_status_pending),
+            // FilterModel(id: 'delivery_return', name: S.current.delivery_return),
           ],
         ));
   }
@@ -268,7 +269,7 @@ class _OrdersPageState extends BasePageState<OrdersPage> {
                         color: _isExpanded
                             ? AppColor.lineLayout
                             : AppColor.colorWhiteDark,
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,

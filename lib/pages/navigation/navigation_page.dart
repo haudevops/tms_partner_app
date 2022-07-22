@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:location/location.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/res/colors.dart';
+import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/common_utils/prefs_util.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
@@ -13,8 +14,9 @@ import '../../base/base_page.dart';
 import '../pages.dart';
 
 class NavigationPage extends BasePage {
-  NavigationPage({Key? key}) : super(bloc: NavigationBloc());
+  NavigationPage({Key? key, required this.data}) : super(bloc: NavigationBloc());
   static const routeName = '/NavigationPage';
+  final ScreenArguments data;
 
   @override
   BasePageState<BasePage<BaseBloc>> getState() => _NavigationPageState();
@@ -23,14 +25,15 @@ class NavigationPage extends BasePage {
 class _NavigationPageState extends BasePageState<NavigationPage> {
   late PageController _pageController;
   late NavigationBloc _bloc;
-  int _selectedIndex = 0;
-  Location _location = Location();
+  int? _selectedIndex;
+
+  final _location = Location();
 
   void _updateTabSelection(int index) {
     setState(() {
       _selectedIndex = index;
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 10), curve: Curves.ease);
+          duration: const Duration(milliseconds: 10), curve: Curves.ease);
     });
   }
 
@@ -42,8 +45,10 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
 
   @override
   void onCreate() {
+    _selectedIndex = widget.data.arg1;
+    print('Select Index: $_selectedIndex');
     _pageController = PageController(
-      initialPage: 0,
+      initialPage: _selectedIndex ?? 0,
       keepPage: true,
     );
     _bloc = getBloc();
@@ -115,7 +120,7 @@ class _NavigationPageState extends BasePageState<NavigationPage> {
             icon: 'assets/icon/ic_navigation_menu.svg',
             label: S.of(context).navigation_more)
       ],
-      currentIndex: _selectedIndex,
+      currentIndex: _selectedIndex ?? 0,
       selectedItemColor: AppColor.colorPrimaryButton,
       onTap: _updateTabSelection,
       type: BottomNavigationBarType.fixed,

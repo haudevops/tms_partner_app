@@ -217,5 +217,7 @@
   "help_center": "Help Center",
   "contact_help": "Contact help",
   "sign_image": "Sign Image",
-  "estimated_time": "Dự kiến thời gian"
+  "estimated_time": "Dự kiến thời gian",
+  "package_code": "Package Code",
+  "input_store_code": "Input store code"
 }

@@ -16,9 +16,9 @@ class CustomRouter {
       case SplashPage.routeName:
         return SlideLeftRoute(SplashPage());
       case NavigationPage.routeName:
-        return SlideLeftRoute(NavigationPage());
+        return SlideLeftRoute(NavigationPage(data: arg,));
       case LoginPage.routeName:
-        return SlideLeftRoute(LoginPage());
+        return SlideLeftRoute(LoginPage(data: arg,));
       case SettingPage.routeName:
         return SlideLeftRoute(SettingPage());
       case ScanPage.routeName:

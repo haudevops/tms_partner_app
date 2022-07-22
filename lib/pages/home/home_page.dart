@@ -69,18 +69,20 @@ class _HomePageState extends BasePageState<HomePage> {
       _latitude = position.latitude;
       _longitude = position.longitude;
 
-      markers = {
-        Marker(
-          markerId: MarkerId('aaaa'),
-          position: LatLng(_latitude ?? 0, _longitude ?? 0),
-          infoWindow: const InfoWindow(
-            //popup info
-            title: 'My Custom Title ',
-            snippet: 'My Custom Subtitle',
-          ),
-          icon: BitmapDescriptor.defaultMarker,
-        )
-      };
+      setState(() {
+        markers = {
+          Marker(
+            markerId: MarkerId('aaaa'),
+            position: LatLng(_latitude ?? 0, _longitude ?? 0),
+            infoWindow: const InfoWindow(
+              //popup info
+              title: 'My Custom Title ',
+              snippet: 'My Custom Subtitle',
+            ),
+            icon: BitmapDescriptor.defaultMarker,
+          )
+        };
+      });
       final GoogleMapController controller = await _controller.future;
       controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(position.latitude, position.longitude),

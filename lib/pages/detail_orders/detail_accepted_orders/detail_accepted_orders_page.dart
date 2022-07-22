@@ -248,9 +248,9 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                         title: '${S.of(context).externalCode}: ',
                         content: pointsExternalCode,
                         onTap: () {
-                          _showDialogCode();
+                          // _showDialogCode();
                         },
-                        showIcon: true,
+                        // showIcon: true,
                       )
                     : _tableRowNull(),
                 orderModel.isGrouped()
@@ -259,7 +259,7 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
                         content: OrderUtils.getPackageCodeChildOrderGroup(
                                 orderModel) ??
                             '',
-                        showIcon: true,
+                        showIcon: false,
                         onTap: () {})
                     : _tableRowNull(),
                 _itemInfoWidget(
@@ -292,8 +292,7 @@ class _DetailNewOrderState extends BasePageState<DetailAcceptedOrderPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Align(alignment: Alignment.topCenter,
-                    child: const Text('Modal BottomSheet')),
+                const Text('Modal BottomSheet'),
                 ElevatedButton(
                   child: const Text('Close BottomSheet'),
                   onPressed: () => Navigator.pop(context),

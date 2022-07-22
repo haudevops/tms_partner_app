@@ -14,7 +14,7 @@ class OrderHistoryBloc extends BaseBloc {
   Future<void> getOrdersHistory(
       {String? code,
       String? external,
-      String? phone,
+      String? store,
       String? serviceType,
       String? status,
       String? submitted}) async {
@@ -24,7 +24,7 @@ class OrderHistoryBloc extends BaseBloc {
             code: code,
             status: status,
             externalCode: external,
-            phone: phone,
+        store: store,
             serviceType: serviceType,
             limit: '15',
             submitted: submitted,

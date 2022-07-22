@@ -5,13 +5,15 @@ import 'package:tms_partner_app/base/base.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
 import 'package:tms_partner_app/res/colors.dart';
+import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/prefs_const.dart';
 import 'package:tms_partner_app/utils/screen_util.dart';
 import 'package:tms_partner_app/widgets/widgets.dart';
 
 class LoginPage extends BasePage {
-  LoginPage({Key? key}) : super(bloc: LoginBloc());
+  LoginPage({Key? key, required this.data}) : super(bloc: LoginBloc());
   static const routeName = '/LoginPage';
+  final ScreenArguments data;
 
   @override
   BasePageState<BasePage<BaseBloc>> getState() => _LoginPageState();
@@ -29,10 +31,12 @@ class _LoginPageState extends BasePageState<LoginPage> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late LoginBloc _bloc;
   bool _isLogin = false;
+  late int indexPage;
 
   @override
   void onCreate() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    indexPage = widget.data.arg1;
     _bloc = getBloc();
   }
 

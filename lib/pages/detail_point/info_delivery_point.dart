@@ -39,14 +39,14 @@ class InfoDeliveryPoint extends StatelessWidget {
         ListView(
           children: [
             _infoWidget(),
-            _getListServiceWidget().isNotEmpty
-                ? Container(
-                    width: ScreenUtil.getInstance().screenWidth,
-                    height: ScreenUtil.getInstance().getAdapterSize(12),
-                    color: Color(0xFFEDEDED),
-                  )
-                : SizedBox(),
-            _servicesWidget(),
+            // _getListServiceWidget().isNotEmpty
+            //     ? Container(
+            //         width: ScreenUtil.getInstance().screenWidth,
+            //         height: ScreenUtil.getInstance().getAdapterSize(12),
+            //         color: Color(0xFFEDEDED),
+            //       )
+            //     : SizedBox(),
+            // _servicesWidget(),
             SizedBox(height: ScreenUtil.getInstance().getAdapterSize(120))
           ],
         ),
@@ -202,17 +202,17 @@ class InfoDeliveryPoint extends StatelessWidget {
                     maxLines: _maxLine,
                     overflow: TextOverflow.ellipsis),
               ),
-              GestureDetector(
-                onDoubleTap: () {},
-                onTap: () {},
-                child: _showButtonExternalCode
-                    ? SvgPicture.asset(
-                        'assets/icon/svg/ic_dots.svg',
-                        width: ScreenUtil.getInstance().getAdapterSize(24),
-                        height: ScreenUtil.getInstance().getAdapterSize(24),
-                      )
-                    : SizedBox(),
-              )
+              // GestureDetector(
+              //   onDoubleTap: () {},
+              //   onTap: () {},
+              //   child: _showButtonExternalCode
+              //       ? SvgPicture.asset(
+              //           'assets/icon/svg/ic_dots.svg',
+              //           width: ScreenUtil.getInstance().getAdapterSize(24),
+              //           height: ScreenUtil.getInstance().getAdapterSize(24),
+              //         )
+              //       : SizedBox(),
+              // )
             ],
           ),
         ),

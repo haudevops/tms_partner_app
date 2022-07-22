@@ -44,7 +44,7 @@ class _OrderHistoryPageState extends BasePageState<OrderHistoryPage> {
     _bloc.getOrdersHistory(
         code: _filterModel.code,
         external: _filterModel.externalCode,
-        phone: _filterModel.phone,
+        store: _filterModel.store,
         serviceType: _filterModel.services,
         status: _filterModel.status,
         submitted: _filterModel.submitted);

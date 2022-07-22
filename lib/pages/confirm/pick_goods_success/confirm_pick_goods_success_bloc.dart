@@ -5,6 +5,7 @@ import 'package:tms_partner_app/data/model/models.dart';
 import 'package:tms_partner_app/data/service/orders_service.dart';
 import 'package:tms_partner_app/generated/l10n.dart';
 import 'package:tms_partner_app/pages/pages.dart';
+import 'package:tms_partner_app/routes/screen_arguments.dart';
 import 'package:tms_partner_app/utils/constants.dart';
 
 class ConfirmPickGoodsSuccessBloc extends BaseBloc {
@@ -20,13 +21,11 @@ class ConfirmPickGoodsSuccessBloc extends BaseBloc {
         .doPickupSuccess(
             orderID: orderModel.id, pointId: orderModel.detail?.points?[0].id)
         .then((value) => {
-              if (value.errorCode != Constants.ERROR_CODE)
-                Navigator.pushNamedAndRemoveUntil(_context, NavigationPage.routeName, (route) => false)
-              else
-                {
-                  showMsg(value.message ??
-                      S.current.something_went_wrong_please_try_again)
-                }
+              if (value.errorCode != Constants.ERROR_CODE) {
+                Navigator.pushNamedAndRemoveUntil(_context, NavigationPage.routeName, (route) => false, arguments: ScreenArguments(arg1: 1))
+              } else {
+                  showMsg(value.message ?? S.current.something_went_wrong_please_try_again)
+              }
             });
     hiddenLoading();
   }

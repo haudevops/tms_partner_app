@@ -37,7 +37,7 @@ class OrdersBloc extends BaseBloc {
   Future<void> getOrders(
       {String? code,
         String? external,
-        String? phone,
+        String? store,
         String? serviceType,
         String? status}) async {
     showLoading();
@@ -47,7 +47,7 @@ class OrdersBloc extends BaseBloc {
         status: status,
         code: code,
         externalCode: external,
-        phone: phone,
+        store: store,
         serviceType: serviceType,
         page: '1',
         limit: '2000',

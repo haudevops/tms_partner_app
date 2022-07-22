@@ -34,7 +34,7 @@ class FilterWidget extends StatefulWidget {
 class _FilterWidgetState extends State<FilterWidget> {
   final _orderCodeController = TextEditingController();
   final _externalCodeController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _storeCodeController = TextEditingController();
   bool _checkedServices = false;
   bool _checkedOrderStatus = false;
   bool _checkCollections = false;
@@ -50,7 +50,7 @@ class _FilterWidgetState extends State<FilterWidget> {
     if (widget.filterModel != null) {
       _orderCodeController.text = widget.filterModel?.code ?? '';
       _externalCodeController.text = widget.filterModel?.externalCode ?? '';
-      _phoneController.text = widget.filterModel?.phone ?? '';
+      _storeCodeController.text = widget.filterModel?.store ?? '';
 
       final filterServices = widget.filterModel?.services;
       if (filterServices != null) {
@@ -107,7 +107,7 @@ class _FilterWidgetState extends State<FilterWidget> {
               child: ListView(
             children: [
               _itemScanCode(
-                  title: S.current.order_code,
+                  title: S.current.package_code,
                   hintText: S.current.input_order_code,
                   isScan: true,
                   controller: _orderCodeController,
@@ -123,11 +123,11 @@ class _FilterWidgetState extends State<FilterWidget> {
                     _openScanner(_externalCodeController);
                   }),
               _itemScanCode(
-                  title: S.current.received_phone,
-                  hintText: S.current.input_received_phone,
-                  isScan: false,
+                  title: S.current.store_code,
+                  hintText: S.current.input_store_code,
+                  isScan: true,
                   keyboardType: TextInputType.number,
-                  controller: _phoneController),
+                  controller: _storeCodeController),
               widget.service != null ? _serviceWidget() : Container(),
               widget.orderStatus != null ? _orderStatus() : Container(),
               widget.collections != null ? _collectionWidget() : Container(),
@@ -246,7 +246,7 @@ class _FilterWidgetState extends State<FilterWidget> {
               onTap: () {
                 _orderCodeController.clear();
                 _externalCodeController.clear();
-                _phoneController.clear();
+                _storeCodeController.clear();
                 setState(() {
                   _checkedServices = false;
                   _checkedOrderStatus = false;
@@ -394,7 +394,7 @@ class _FilterWidgetState extends State<FilterWidget> {
         onPressed: () {
           _filterModel.code = _orderCodeController.text;
           _filterModel.externalCode = _externalCodeController.text;
-          _filterModel.phone = _phoneController.text;
+          _filterModel.store = _storeCodeController.text;
           _filterModel.services = _selectedServices.join(',');
           _filterModel.status = _selectedOrderStatus.isNotEmpty
               ? _selectedOrderStatus.join(',')

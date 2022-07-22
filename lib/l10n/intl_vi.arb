@@ -217,5 +217,7 @@
   "help_center": "Trung tâm trợ giúp",
   "contact_help": "Liên hệ hỗ trợ",
   "sign_image": "Chữ ký khách hàng",
-  "estimated_time": "Dự kiến thời gian"
+  "estimated_time": "Dự kiến thời gian",
+  "package_code": "Mã kiện",
+  "input_store_code": "Nhập mã cửa hàng"
 }

@@ -204,14 +204,6 @@ class _DetailOrderHistoryPageState
                         onTap: () {})
                     : _tableRowNull(),
                 _itemInfoWidget(
-                    title: 'Yêu cầu: ',
-                    content: (orderModel.detail?.goodsCheckRequired != null &&
-                            orderModel.detail!.goodsCheckRequired!)
-                        ? 'Kiểm tra hàng'
-                        : 'Không kiểm tra hàng'),
-                _itemInfoWidget(title: 'Kích thước: ', content: '1'),
-                _itemInfoWidget(title: 'Thể tích: ', content: '1'),
-                _itemInfoWidget(
                     title: 'Cân nặng: ',
                     content: orderModel.weight != null
                         ? '${OrderUtils.round(orderModel.weight!, 3)} kg'

@@ -39,14 +39,14 @@ class _MenuPageState extends BasePageState<MenuPage> {
           id: Constants.ITEM_MENU_HISTORY,
           title: S.current.menu_history,
           image: 'assets/icon/svg/menu_ic_history.svg'),
-      ItemSettingsModel(
-          id: Constants.ITEM_MENU_STATISTICAL,
-          title: S.current.menu_statistical,
-          image: 'assets/icon/svg/menu_ic_statistical.svg'),
-      ItemSettingsModel(
-          id: Constants.ITEM_MENU_WALLET,
-          title: S.current.menu_wallet,
-          image: 'assets/icon/svg/menu_ic_wallet.svg'),
+      // ItemSettingsModel(
+      //     id: Constants.ITEM_MENU_STATISTICAL,
+      //     title: S.current.menu_statistical,
+      //     image: 'assets/icon/svg/menu_ic_statistical.svg'),
+      // ItemSettingsModel(
+      //     id: Constants.ITEM_MENU_WALLET,
+      //     title: S.current.menu_wallet,
+      //     image: 'assets/icon/svg/menu_ic_wallet.svg'),
       ItemSettingsModel(
           id: Constants.ITEM_MENU_SHARE_CODE,
           title: S.current.menu_share_code,
@@ -56,10 +56,10 @@ class _MenuPageState extends BasePageState<MenuPage> {
 
   List<ItemSettingsModel> getItemsListTwo() {
     return [
-      ItemSettingsModel(
-          id: Constants.ITEM_MENU_NEWS,
-          title: S.current.menu_news,
-          image: 'assets/icon/svg/menu_ic_news.svg'),
+      // ItemSettingsModel(
+      //     id: Constants.ITEM_MENU_NEWS,
+      //     title: S.current.menu_news,
+      //     image: 'assets/icon/svg/menu_ic_news.svg'),
       ItemSettingsModel(
           id: Constants.ITEM_MENU_TERMS_POLICY,
           title: S.current.terms_policy,
